@@ -1,0 +1,46 @@
+<template>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-info shadow">
+            <div class="container">
+                <router-link class="navbar-brand text-light" to="/">
+                    <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                    Propy-X</router-link>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            
+                            <router-link class="nav-link active text-light" aria-current="page" :to="{name:'home.service'}">
+                                <i class="fa-solid fa-screwdriver-wrench"></i> Serviços</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link active text-light" aria-current="page" :to="{name:'home.contacto'}">
+                                <i class="fa-solid fa-phone"></i> Contactos</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link text-light" :to="{name:'home.sobre'}">
+                                <i class="fa-solid fa-circle-info"></i> Sobre</router-link>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <router-link class="nav-link text-light" :to="{ name:'home.login' }">
+                                <i class="fa-solid fa-right-to-bracket"></i> Entrar</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link text-light" :to="{name:'home.register'}">
+                                <i class="fa-solid fa-user"></i> Criar conta</router-link>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+    </div>
+</template>
