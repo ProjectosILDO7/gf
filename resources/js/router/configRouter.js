@@ -18,6 +18,12 @@ const routes = [
                 component:()=>import('../home/pages/RegisterComponent.vue')
             },
 
+            // {
+            //     path:'/update-senha',
+            //     name:'reset.password',
+            //     component:()=>import('../home/pages/ResetPassword.vue')
+            // },
+
             {
                 path:'/reset',
                 name:'home.reset',

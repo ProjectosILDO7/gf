@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/auth', [AuthApiController::class, 'auth']);
-Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
+Route::post('/forget-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

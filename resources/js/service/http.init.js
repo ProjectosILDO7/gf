@@ -1,11 +1,10 @@
 import axios from 'axios'
-
-import { URL_API, TOKEN_NAME } from '@/configs'
+import { URL_API, TOKEN_NAME } from '../configs/index.js'
 
 export default class Http {
     constructor (status) {
         const token = localStorage.getItem(TOKEN_NAME)
-
+        
         const headers = status.auth ? {
             Authorization: `Bearer ${token}`
         } : {}

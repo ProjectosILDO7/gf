@@ -15,11 +15,18 @@ class AuthApiController extends Controller
  
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['As credenciais informadas estão incorretas.'],
             ]);
         }
      
-         $user->createToken($request->device_name)->plainTextToken;
-         return response()->json(['token'=>$user]);
+        //  $user->createToken($request->device_name)->plainTextToken;
+        //  return response()->json(['token'=>$user]);
+        $user->tokens()->delete();
+
+        $token = $user->createToken($request->device_name)->plainTextToken;
+
+        return response()->json([
+            'token' => $token
+        ]);
     }
 }

@@ -21,14 +21,23 @@
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-at"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="E-mail" aria-label="E-mail"
+                    <input type="text" class="form-control" placeholder="E-mail" v-model="email" aria-label="E-mail"
                         aria-describedby="addon-wrapping">
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button class="btn btn-info text-light" type="button">
-                        <i class="fa-solid fa-rotate"></i>
-                        Enviar pedido de redefinição de senha
+                    <button 
+                    :class="[
+                        'btn','btn-info', 'text-light',
+                        loading ? 'loading':''
+                    ]" 
+                    type="button" @click.prevent="resetPassword">
+                        <span v-if="loading">
+                            <i class="fa-solid fa-rotate"></i> Enviar pedido...
+                        </span>
+                        <span v-else>
+                            <i class="fa-solid fa-rotate"></i> Enviar pedido de redefinição de senha
+                        </span>
                     </button>
                 </div>
                 <br>
@@ -52,6 +61,31 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+export default {
+
+    setup() {
+    const email = ref("")
+    const store = useStore()
+    const loading = ref(false)
+
+    const resetPassword = () => {
+        loading.value = true
+        store.dispatch('forgetPassword', { email:email.value } )
+             .then(() => alert('Confira no seu e-mail'))
+             .catch(() => alert('algo deu errado'))
+             .finally(() => loading.value=false)   
+    }
+
+    return {
+        email,
+        resetPassword,
+        loading
+    }
+}
+}
 
 </script>
 

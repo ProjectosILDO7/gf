@@ -79,7 +79,7 @@ export default{
             store.dispatch('auth', {
                 email:email.value,
                 password:password.value,
-                device_name:'auth_propy_x: '
+                device_name:'auth_propy_x'
             })
             .then(() => router.push({name:'admin.home'}))
             .catch(()=>alert('Erro'))
