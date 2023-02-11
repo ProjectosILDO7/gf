@@ -43,7 +43,7 @@ class ResetPasswordNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = "http://propy-x.test/api/actualizarSenha/{$this->token}";
+        $url = "http://propy-x.test/api/resetPassword/{$this->token}";
 
         return (new MailMessage)
                     ->subject('Nova senha')

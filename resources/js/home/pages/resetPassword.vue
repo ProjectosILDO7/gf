@@ -3,7 +3,7 @@
 
         <div class="card-header text-center">
             <span class="">
-                <b>Propy-x: Login</b>
+                <b>Propy-x: Actualização de senha</b>
             </span>
         </div>
         <br>
@@ -32,10 +32,10 @@
                         loading ? 'loading' : ''
                     ]" type="button" @click.prevent="auth">
                         <span v-if="loading">
-                            <i class="fa-solid fa-spinner"></i> Carregar...
+                            <i class="fa-solid fa-spinner"></i> Actualizando...
                         </span>
                         <span v-else>
-                            <i class="fa-solid fa-right-to-bracket"></i> Entrar
+                            <i class="fa-solid fa-right-to-bracket"></i> Alterar a senha
                         </span>
                     </button>
                 </div>
@@ -43,9 +43,6 @@
                 <hr>
                 <div class="form-group text-md-center text-align-sm">
                     <ul>
-                        <li><router-link class="text-secondary" :to="{ name: 'home.reset' }">
-                                Esqueci minha senha
-                            </router-link></li>
                         <li>
                             <router-link class="text-secondary" :to="{ name: 'home.register' }">
                                 Criar uma conta
@@ -61,33 +58,45 @@
 
 <script>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
 import router from '../../router/'
 import { notify } from "@kyvg/vue3-notification";
+import ResetPasswordService from '@/service/reset.password.service.js'
 
 export default {
-    name: "auth",
-    setup() {
-        const store = useStore()
+    name: "resetPassword",
+    props:{
+        token:{
+            require:true,
+        }
+    },
+    setup(props) {
         const email = ref("")
         const password = ref("")
         const loading = ref(false)
 
         const auth = () => {
             loading.value = true
-            store.dispatch('auth', {
+            ResetPasswordService.reset({
                 email: email.value,
                 password: password.value,
-                device_name: 'auth_propy_x'
+                token: props.token,
             })
-                .then(() => router.push({ name: 'admin.home' }))
+                .then(() => {
+                    notify({
+                        title:'Sucesso',
+                        text:'A sua senha foi actualizada com sucesso',
+                        type:'success'
+                    })
+                    router.push({ name: 'home.login' })
+                })
                 .catch((error) => {
-                    let msmErro = 'Falha na requisição'
-                    if (error.status === 422) msmErro = 'Dados inválidos'
-                    if (error.status === 404) msmErro = 'Usuário não encontrado'
+                    console.log(error)
+                    let msmErro = 'Falha na actualização de senha'
+                    if (error.status == 422) msmErro = 'Dados inválidos'
+                    if (error.status == 404) msmErro = 'Usuário não encontrado'
 
                     notify({
-                        title: "Falha na autenticação",
+                        title: "Falha na actualização",
                         text: msmErro,
                         type:"warn"
                     });

@@ -17,6 +17,7 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "@kyvg/vue3-notification": "^2.8.0",
         "@vitejs/plugin-vue": "^4.0.0",
         "ui": "^0.2.4",
         "vue": "^3.2.36",

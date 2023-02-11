@@ -63,6 +63,7 @@
 <script>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
 
@@ -74,8 +75,22 @@ export default {
     const resetPassword = () => {
         loading.value = true
         store.dispatch('forgetPassword', { email:email.value } )
-             .then(() => alert('Confira no seu e-mail'))
-             .catch(() => alert('algo deu errado'))
+             .then(() => notify({
+                title:'Sucesso',
+                text:'Enviamos um link de redefinição da sua senha no seu e-mail',
+                type:'success'
+             }))
+             .catch((error) => {
+                    let msmErro = 'Falha na requisição'
+                    if (error.status === 422) msmErro = 'Dados inválidos'
+                    if (error.status === 404) msmErro = 'Usuário não encontrado'
+
+                    notify({
+                        title: "Falha na solicitação",
+                        text: msmErro,
+                        type:"warn"
+                    });
+                })
              .finally(() => loading.value=false)   
     }
 
