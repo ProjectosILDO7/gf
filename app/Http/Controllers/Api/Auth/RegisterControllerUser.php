@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Controllers\Api\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterUserRequest;
+use App\Repositories\User\UserRepository;
+
+class RegisterControllerUser extends Controller
+{
+    protected $repository;
+
+    public function __construct(UserRepository $repo)
+    {
+        $this->repository = $repo;
+    }
+    public function crear(RegisterUserRequest $request)
+    {
+       return $this->repository->save($request);
+    }
+}

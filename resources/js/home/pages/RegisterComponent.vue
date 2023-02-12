@@ -38,7 +38,7 @@
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-user-lock"></i>
                     </span>
-                    <input type="password_repite" class="form-control" placeholder="Repetir senha" aria-label="Repetir senha"
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Repetir senha" aria-label="Repetir senha"
                         aria-describedby="addon-wrapping">
                 </div>
 
