@@ -1,10 +1,14 @@
 <template>
     <div class="main-container d-flex">
-        <div class="sidebar" id="side_nav">
+        <div class="sidebar bg-success" id="side_nav">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
                 <h1 class="fs-4">
-                    <span class="bg-white text-dark rounded  px-2">CL</span>
-                    <span class="text-white">Propy-x</span>
+                    <span class="bg-success rounded border border-white px-2 py-2">
+                        <i class="fa-solid fa-circle-dollar-to-slot fa-lg text-white"></i>
+                    </span>
+                    <span class="text-white">
+                         Propy-x
+                    </span>
                 </h1>
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i
                         class="fa-solid fa-bars"></i></button>

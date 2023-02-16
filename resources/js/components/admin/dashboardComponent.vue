@@ -1,5 +1,6 @@
 <template>
     <div class="container mt-4">
+        <h3 class="text-secondary">Painel de controle</h3>
         <div class="row">
             <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="card text-white bg-primary mb-3">
@@ -62,7 +63,7 @@
                 </div>
             </div>
 
-            <!-- Charts -->
+            <!-- Charts (Gráficos) -->
             <report/>
 
         </div>

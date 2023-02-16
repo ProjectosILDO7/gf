@@ -1,6 +1,6 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <nav class="navbar navbar-expand-lg navbar-light bg-info shadow">
             <div class="container">
                 <div class="d-flex justify-content-between d-md-none d-block">
                     <a class="navbar-brand fs-4" href="#">Propy-x</a>
@@ -17,26 +17,44 @@
                 <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active text-white" aria-current="page" href="#">
+                                <i class="fa-solid fa-house"></i>
+                                Home
+                            </a>
                         </li>
                     </ul>
                 </div>
                 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                    <ul class="navbar-nav d-flex justify-content-end ml-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <router-link class="nav-link text-white" to="#">
+                                <i class="fa-solid fa-bell"></i><sup>10+</sup>
+                            </router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link text-white" to="#">
+                                <i class="fa-solid fa-envelope"></i><sup>15+</sup>
+                            </router-link>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                User
+                                <i class="fa-solid fa-user-tie"></i> Name user
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i> Perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users-gear"></i> Usuários</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i> Sair</a></li>
+                            </ul>  
+                        </li>
+                        <li class="nav-link">
+                            <button class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-right-from-bracket"></i> Terminar
+                            </button>
                         </li>
                     </ul>
                 </div>
