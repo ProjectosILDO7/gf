@@ -48,10 +48,19 @@ const routes = [
             }
         ]
     },
+
+    // Routas admin precisa estar autenticado
     {
         path:'/admin',
         name:'admin.home',
-        component:()=>import('../components/admin/home.vue')
+        component:()=>import('../components/admin/home.vue'),
+        children:[
+            {
+                path:'',
+                name:'admin.dashboard',
+                component:()=>import('../components/admin/dashboardComponent.vue')
+            }
+        ]
     }
 ]
 

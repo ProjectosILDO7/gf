@@ -25,5 +25,14 @@ export default class AuthService extends BaseService {
                 .catch(error => reject(error.response))
         })
     }
+    
+    static async userSave (params) {
+        return new Promise((resolve, reject) => {
+            this.request()
+                .post('/registerUser', params)
+                .then(response => resolve(response.data))
+                .catch(error => reject(error.response))
+        })
+    }
 
 }

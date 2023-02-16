@@ -398,6 +398,8 @@
 <body class="antialiased">
     <div id="app"></div>
     @vite('resources/js/app.js')
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/SelectItemSidebar.js') }}"></script> --}}
 </body>
 
 </html>

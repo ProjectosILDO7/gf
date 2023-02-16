@@ -30,6 +30,11 @@ export default{
         forgetPassword({state}, params){
             state.loggedIn
             return AuthService.forgetPassword(params)
+        },
+
+        userSave({state}, params){
+            state.loggedIn
+            return AuthService.userSave(params)
         }
     },
 }
