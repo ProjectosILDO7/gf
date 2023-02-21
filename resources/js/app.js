@@ -9,4 +9,8 @@ const app = createApp(App)
       app.use(router)
       app.use(Notifications)
       app.mount('#app');
+      
+
+// store.dispatch('chacklogin')
+//       .then(()=>router.push({name:'admin.home'}))
  

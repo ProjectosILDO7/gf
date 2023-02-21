@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header">Radar Chart</div>
+        <div class="card-header">Radar de pagamentos</div>
         <div class="card-body">
             <Radar :data="data" :options="options" />
         </div>

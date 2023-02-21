@@ -8,14 +8,14 @@
         </div>
         <br>
         <div class="card-body">
-            <form method="">
+            <form @submit.prevent="auth">
 
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-at"></i>
                     </span>
                     <input type="text" class="form-control" placeholder="Utilizador" aria-label="Utilizador"
-                        aria-describedby="addon-wrapping" v-model="email">
+                        aria-describedby="addon-wrapping" v-model="user.email">
                 </div>
 
                 <div class="input-group flex-nowrap mb-3">
@@ -23,14 +23,14 @@
                         <i class="fa-solid fa-user-lock"></i>
                     </span>
                     <input type="password" class="form-control" placeholder="Senha" aria-label="Senha"
-                        aria-describedby="addon-wrapping" v-model="password">
+                        aria-describedby="addon-wrapping" v-model="user.password">
                 </div>
 
                 <div class="d-grid gap-2">
                     <button :class="[
                         'btn', 'btn-info', 'text-light',
                         loading ? 'loading' : ''
-                    ]" type="button" @click.prevent="auth">
+                    ]" type="submit">
                         <span v-if="loading">
                             <i class="fa-solid fa-spinner"></i> Carregar...
                         </span>
@@ -67,44 +67,22 @@ import { notify } from "@kyvg/vue3-notification";
 
 export default {
     name: "auth",
-    setup() {
-        const store = useStore()
-        const email = ref("")
-        const password = ref("")
-        const loading = ref(false)
-
-        const auth = () => {
-            loading.value = true
-            store.dispatch('auth', {
-                email: email.value,
-                password: password.value,
-                device_name: 'auth_propy_x'
-            })
-                .then(() => router.push({ name: 'admin.home' }))
-                .catch((error) => {
-                    let msmErro = 'Falha na requisição'
-                    if (error.status === 422) msmErro = 'Dados inválidos'
-                    if (error.status === 404) msmErro = 'Usuário não encontrado'
-
-                    notify({
-                        title: "Falha na autenticação",
-                        text: msmErro,
-                        type:"warn"
-                    });
-                })
-                .finally(() => loading.value = false)
-        }
-        return {
-            auth,
-            email,
-            password,
-            loading
-
+    data(){
+        return{
+            user:{ email:'', password:'',device_name:'propy'},
+            loading:false
         }
     },
-    created() {
 
-    }
+    methods: {
+        auth(){
+            this.loading=true
+            this.$store.dispatch('auth', this.user)
+                        .then(()=>{this.$router.push({name:'admin.home'})})
+                        
+        }
+    },
+
 }
 
 </script>

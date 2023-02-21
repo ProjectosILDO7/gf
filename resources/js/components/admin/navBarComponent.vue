@@ -22,19 +22,46 @@
                                 Home
                             </a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-database"></i> Cadastros
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-graduation-cap"></i> Cursos</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-graduate"></i> Graduação</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users-line"></i> Estudantes</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-id-card-clip"></i> Emolumentos</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hand-holding-dollar"></i> Mensalidade</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-tie"></i> Uniforme</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bus"></i> Transporte</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-hand-holding-medical"></i> Multas</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clipboard-check"></i> Confirmação de matrículas</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-spell-check"></i> Provas atrasadas</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-graduate"></i> T. C. C</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-network-wired"></i> Outros</a></li>
+                            </ul>  
+                        </li>
                     </ul>
                 </div>
                 
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <router-link class="nav-link text-white" to="#">
-                                <i class="fa-solid fa-bell"></i><sup>10+</sup>
+                            <router-link router-link :to="{name:'admin.notify'}" class="nav-link text-white">
+                                <i class="fa-solid fa-bell"></i><sup><span class="rounded-pill py-1 px-1 bg-success text-white small">10</span></sup>
                             </router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link text-white" to="#">
-                                <i class="fa-solid fa-envelope"></i><sup>15+</sup>
+                            <router-link class="nav-link text-white" :to="{name:'admin.message'}">
+                                <i class="fa-solid fa-envelope"></i><sup><span class="rounded-pill py-1 px-1 bg-success text-white small">15</span></sup>
                             </router-link>
                         </li>
                         <li class="nav-item dropdown">
@@ -43,8 +70,8 @@
                                 <i class="fa-solid fa-user-tie"></i> Name user
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"></i> Perfil</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users-gear"></i> Usuários</a></li>
+                                <li><router-link class="dropdown-item" :to="{name:'admin.perfil'}"><i class="fa-solid fa-user"></i> Perfil</router-link></li>
+                                <li><router-link class="dropdown-item" :to="{name:'admin.users'}"><i class="fa-solid fa-users-gear"></i> Usuários</router-link></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

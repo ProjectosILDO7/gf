@@ -15,26 +15,26 @@
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class="active"><a href="#" class="text-decoration-none d-block"><i
-                            class="fa-solid fa-house ml-2"></i> Painel de controle</a> </li>
-                <li><a href="#" class="text-decoration-none d-block"><i class="fa-solid fa-user ml-2"></i> Perfil</a>
+                <li class="active"><router-link :to="{name:'admin.dashboard'}" class="text-decoration-none d-block"><i
+                            class="fa-solid fa-house ml-2"></i> Painel de controle</router-link> </li>
+                <li><router-link :to="{name:'admin.perfil'}" class="text-decoration-none d-block"><i class="fa-solid fa-user ml-2"></i> Perfil</router-link>
                 </li>
-                <li><a href="#" class="text-decoration-none d-block"><i class="fa-solid fa-list ml-2"></i> Serviços</a>
+                <li><router-link :to="{name:'admin.pagamento'}" class="text-decoration-none d-block"><i class="fa-solid fa-list ml-2"></i> Serviços / Pagamentos</router-link>
                 </li>
             </ul>
             <hr class="h-color max-2">
             <ul class="list-unstyled px-2">
                 <li>
-                    <a href="#" class="text-decoration-none d-block d-flex justify-content-between mt-2">
+                    <router-link :to="{name:'admin.message'}" class="text-decoration-none d-block d-flex justify-content-between mt-2">
                         <span><i class="fa-solid fa-envelope-open-text ml-2"></i> Mensagens</span>
-                        <span class="bg-dark rounded-pill text-white py-0 px-2 small">02+</span>
-                    </a>
+                        <span class="bg-dark rounded-pill text-white py-0 px-2 small">02</span>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#" class="text-decoration-none d-block d-flex justify-content-between mt-2">
+                    <router-link :to="{name:'admin.notify'}" class="text-decoration-none d-block d-flex justify-content-between mt-2">
                         <span><i class="fa-solid fa-bell ml-2"></i> Notificações</span>
-                        <span class="bg-dark rounded-pill text-white py-0 px-2 small">20+</span>
-                    </a>
+                        <span class="bg-dark rounded-pill text-white py-0 px-2 small">20</span>
+                    </router-link>
                 </li>
                 <li>
                     <a href="#" class="text-decoration-none d-block mt-2">

@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-            Pie Chart
+            Pagamentos por categoria
         </div>
         <div class="card-body">
             <Pie :data="data" :options="options" />

@@ -25,7 +25,18 @@ class AuthApiController extends Controller
         $token = $user->createToken($request->device_name)->plainTextToken;
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'user' =>$user
         ]);
+    }
+
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return response()->json(['success'=>true]);
+    }
+
+    public function me(){
+        $user = auth()->user();
+        return response()->json($user);
     }
 }

@@ -49,9 +49,9 @@
                     <div class="card-body">
                         <div class="row mb-0">
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
-                                <p class="card-text text-center"><i class="fa-solid fa-comments-dollar fa-lg"></i></p>
+                                <p class="card-text text-center"><i class="fa-solid fa-bell"></i></p>
                             </div>
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 border-start m-auto">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 border-start border-top m-auto">
                                 <p class="card-text text-center"><strong>2.500</strong></p>
                             </div>
 

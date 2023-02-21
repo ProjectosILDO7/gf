@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-header">
-            Line Chart
+            Pagamentos de mensalidade
         </div>
         <div class="card-body">
             <Line :data="data" :options="options" />

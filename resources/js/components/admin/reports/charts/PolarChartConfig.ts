@@ -10,7 +10,7 @@ export const data = {
   ],
   datasets: [
     {
-      label: 'My First dataset',
+      label: 'Mês corrente',
       backgroundColor: 'rgba(179,181,198,0.2)',
       borderColor: 'rgba(179,181,198,1)',
       pointBackgroundColor: 'rgba(179,181,198,1)',
@@ -20,7 +20,7 @@ export const data = {
       data: [65, 59, 90, 81, 56, 55, 40]
     },
     {
-      label: 'My Second dataset',
+      label: 'Mês anterior',
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
       pointBackgroundColor: 'rgba(255,99,132,1)',

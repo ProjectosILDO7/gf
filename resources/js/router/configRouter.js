@@ -1,6 +1,48 @@
 import Home from "../home/index.vue"
 
 const routes = [
+    
+    // Routas admin precisa estar autenticado
+    {
+        path:'/admin',
+        name:'admin.home',
+        component:()=>import('../components/admin/home.vue'),
+        meta: { auth: true },
+        children:[
+            {
+                path:'',
+                name:'admin.dashboard',
+                component:()=>import('../components/admin/dashboardComponent.vue'),
+            },
+            {
+                path:'perfil',
+                name:'admin.perfil',
+                component:()=>import('../components/admin/perfil/perfil.vue')
+            },
+            {
+                path:'message',
+                name:'admin.message',
+                component:()=>import('../components/admin/message/messages.vue')
+            },
+            {
+                path:'notify',
+                name:'admin.notify',
+                component:()=>import('../components/admin/notify/notify.vue')
+            },
+            {
+                path:'pagamento',
+                name:'admin.pagamento',
+                component:()=>import('../components/admin/pagamento/pagamentos.vue')
+            },
+            {
+                path:'users',
+                name:'admin.users',
+                component:()=>import('../components/admin/users/users.vue')
+            },
+            
+        ]
+    },
+
     {
         path:'/',
         name:"home",
@@ -48,20 +90,6 @@ const routes = [
             }
         ]
     },
-
-    // Routas admin precisa estar autenticado
-    {
-        path:'/admin',
-        name:'admin.home',
-        component:()=>import('../components/admin/home.vue'),
-        children:[
-            {
-                path:'',
-                name:'admin.dashboard',
-                component:()=>import('../components/admin/dashboardComponent.vue')
-            }
-        ]
-    }
 ]
 
 export default routes

@@ -1,9 +1,9 @@
 export const data = {
-    labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
+    labels: ['Emolumentos', 'Mensalidade', 'Uniforme', 'Transporte', 'Multas'],
     datasets: [
       {
-        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-        data: [40, 20, 80, 10]
+        backgroundColor: ['#BFEFFF', '#43CD80', '#4682B4', '#FA8072', '#8B0000'],
+        data: [40, 20, 80, 10, 20]
       }
     ]
   }

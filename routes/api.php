@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/auth', [AuthApiController::class, 'auth']);
+Route::get('/me', [AuthApiController::class, 'me'])->middleware('auth:sanctum');
+Route::get('/logout', [AuthApiController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/forget-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
 Route::post('/registerUser', [RegisterControllerUser::class, 'crear']);

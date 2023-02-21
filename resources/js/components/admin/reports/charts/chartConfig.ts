@@ -15,7 +15,7 @@ export const data = {
     ],
     datasets: [
       {
-        label: 'Data One',
+        label: 'Pagamentos',
         // backgroundColor: '#f87979',
         backgroundColor: '#87CEFA',
         data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
