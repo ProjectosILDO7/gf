@@ -8,10 +8,19 @@ const router = createRouter({
     routes,
   });
 
-router.beforeEach(async (to, from, next)=>{
+router.beforeEach(async (to, _, next)=>{
   const authorization = store.state.authorization
-  if(to.name){
-        return router.push({name:'home'})
+  if(to.name !='home.reset' && to.name !='home.register' && to.name !='home.service' && to.name!='home.contacto' && to.name !='home.sobre' && !authorization){
+    const token = await localStorage.getItem(TOKEN_NAME)
+    if(!token && to.name !='home.login' && to.name !='forget-password'){
+        return router.push({name:'home.login'})
+    }
+
+    await store.dispatch('getMe')
+                .catch(()=>{
+                  if(to.name !='home.login') return router.push({name:'home.login'})
+                })
+        
   }
   next()
 

@@ -26,7 +26,7 @@ export default {
         getMe({ commit }) {
             commit("CHANGE_LOADING", true);
 
-            AuthService.getMe()
+           return AuthService.getMe()
                 .then((user) => commit("SET_USER", user))
                 .finally(() => commit("CHANGE_LOADING", false));
         },

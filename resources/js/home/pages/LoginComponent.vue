@@ -15,7 +15,7 @@
                         <i class="fa-solid fa-at"></i>
                     </span>
                     <input type="text" class="form-control" placeholder="Utilizador" aria-label="Utilizador"
-                        aria-describedby="addon-wrapping" v-model="user.email">
+                        aria-describedby="addon-wrapping" v-model="email">
                 </div>
 
                 <div class="input-group flex-nowrap mb-3">
@@ -23,16 +23,16 @@
                         <i class="fa-solid fa-user-lock"></i>
                     </span>
                     <input type="password" class="form-control" placeholder="Senha" aria-label="Senha"
-                        aria-describedby="addon-wrapping" v-model="user.password">
+                        aria-describedby="addon-wrapping" v-model="password">
                 </div>
 
                 <div class="d-grid gap-2">
                     <button :class="[
                         'btn', 'btn-info', 'text-light',
-                        loading ? 'loading' : ''
+                        loadingStore ? 'disabled' : ''
                     ]" type="submit">
-                        <span v-if="loading">
-                            <i class="fa-solid fa-spinner"></i> Carregar...
+                        <span v-if="loadingStore">
+                            <i class="fa-solid fa-spinner"></i> Validando acesso...
                         </span>
                         <span v-else>
                             <i class="fa-solid fa-right-to-bracket"></i> Entrar
@@ -60,26 +60,49 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import router from '../../router/'
 import { notify } from "@kyvg/vue3-notification";
 
 export default {
     name: "auth",
-    data(){
-        return{
-            user:{ email:'', password:'',device_name:'propy'},
-            loading:false
-        }
-    },
+    setup() {
+        const store = useStore()
+        const email = ref("")
+        const password = ref("")
+        const device_name = ref("")
+        const loading = ref(false)
 
-    methods: {
-        auth(){
-            this.loading=true
-            this.$store.dispatch('auth', this.user)
-                        .then(()=>{this.$router.push({name:'admin.home'})})
-                        
+        const loadingStore = computed(() => store.state.loading)
+
+        watch(
+            () => store.state.users.authorization,
+                (authorization) => {
+                    if(authorization){
+                        router.push({name:'admin.home'})
+                    }
+                }
+        )
+
+        const auth = () => {
+            loading.value = true
+            store.dispatch('auth', {
+                email: email.value,
+                password: password.value,
+                device_name: 'propy-x'
+            })
+                .then(() => { store.push({ name: 'admin.home' }) })
+
+        }
+
+        return {
+            auth,
+            email,
+            password,
+            device_name,
+            loading,
+            loadingStore
         }
     },
 

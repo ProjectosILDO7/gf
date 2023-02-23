@@ -67,7 +67,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-user-tie"></i> Name user
+                                <i class="fa-solid fa-user-tie"></i> Ola <b>{{ me.name }}</b>!
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><router-link class="dropdown-item" :to="{name:'admin.perfil'}"><i class="fa-solid fa-user"></i> Perfil</router-link></li>
@@ -75,57 +75,68 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i> Sair</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="#" @click.prevent="logout">
+                                        <span v-if="loading"><i class="fa-solid fa-right-from-bracket"></i> Saindo...</span>
+                                        <span v-else><i class="fa-solid fa-right-from-bracket"></i> Sair</span>
+                                    </a>
+                                </li>
                             </ul>  
                         </li>
                         <li class="nav-link">
-                            <button class="btn btn-sm btn-success">
-                                <i class="fa-solid fa-right-from-bracket"></i> Terminar
-                            </button>
+                            <a href="#" class="btn btn-sm btn-success" @click.prevent="logout">                                 
+                                <span  v-if="loading">
+                                    <i class="fa-solid fa-right-from-bracket"></i>Terminando...
+                                </span>
+                                <span  v-else>
+                                    <i class="fa-solid fa-right-from-bracket"></i>Terminar
+                                </span>
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <!-- <ul class="nav justify-content-center bg-info shadow">
-            <li class="nav-item">
-                <a class="nav-link active text-light" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-            aria-controls="offcanvasExample">
-                    <i class="fa-solid fa-bars"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="#">
-                    <i class="fa-solid fa-house"></i> Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-light" href="#" tabindex="-1" aria-disabled="true">
-                    <i class="fa-solid fa-gears"></i> Serviços</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown" href="#" role="button"
-                    aria-expanded="false"><i class="fa-solid fa-user"></i> Utilizador</a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">
-                        <i class="fa-solid fa-user"></i> Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">
-                        <i class="fa-solid fa-circle-dollar-to-slot"></i> Pagamentos<span class=""> <sup class="text-danger small">10+</sup></span></a></li>
-                    <li><a class="dropdown-item" href="#">
-                        <i class="fa-regular fa-envelope"></i> Notificações<span class=""> <sup class="text-danger small">30+</sup></span></a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Saír</a></li>
-                </ul>
-            </li>
-        </ul> -->
+        
         <router-view/>
     </div>
 </template>
 <script>
+import {useStore} from 'vuex'
+import { computed, ref} from "vue"
+import router from '@/router'
 
 export default {
+    name:"NavbarTopo",
+    setup(){
+        const loading= ref(false)
+        const store = useStore()
+
+        const logout = () => {
+            loading.value=true
+            store.dispatch('logout')
+                 .then(()=>router.push({name:'home.login'}))
+                 .catch((error)=>console.log(error))
+                 .finally(()=>loading.value=false)
+        }
+
+        const me = computed(()=>{
+            return store.state.users.user
+        })
+
+        return{
+            me,
+            store,
+            logout,
+            loading,
+        }
+    },
 
 }
 </script>
+
+<style scope>
+    .text-capitalize{
+        text-transform: capitalize !important;
+    }
+</style>
