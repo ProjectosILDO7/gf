@@ -40,7 +40,13 @@ export default {
         },
 
         forgetPassword(_, params) {
-            return ResetPasswordService.forgetPassword(params);
+            return AuthService.forgetPassword(params);
         },
+
+        userSave(_, params){
+            AuthService.userSave(params)
+                                .then(()=>commit('SET_USER', user))
+                                .finally(()=>commit("CHANGE_LOADING", false))
+        }
     },
 };
