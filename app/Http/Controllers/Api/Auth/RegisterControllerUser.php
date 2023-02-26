@@ -17,5 +17,10 @@ class RegisterControllerUser extends Controller
     public function crear(RegisterUserRequest $request)
     {
        return $this->repository->save($request);
+    } 
+    
+    public function updateUser(RegisterUserRequest $request){
+        return $this->repository->updateUser($request);
     }
+
 }

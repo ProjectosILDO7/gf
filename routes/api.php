@@ -5,6 +5,7 @@
 use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +18,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/auth', [AuthApiController::class, 'auth']);
-Route::get('/me', [AuthApiController::class, 'me'])->middleware('auth:sanctum');
-Route::get('/logout', [AuthApiController::class, 'logout'])->middleware('auth:sanctum');
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::get('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('me', [AuthController::class, 'me']);
+});
+// Route::post('/auth', [AuthApiController::class, 'auth']);
+// Route::get('/me', [AuthApiController::class, 'me'])->middleware('auth:sanctum');
+// Route::get('/logout', [AuthApiController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/forget-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
 Route::post('/registerUser', [RegisterControllerUser::class, 'crear']);
+Route::put('/updateuser', [RegisterControllerUser::class, 'updateUser'])->middleware('jwt.auth');
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

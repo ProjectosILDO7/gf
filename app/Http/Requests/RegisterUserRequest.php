@@ -23,10 +23,18 @@ class RegisterUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => "required|string|email|max:255|unique:users",
+            'password' =>'required|string|min:6|max:15|confirmed',
         ];
+
+        if($this->method('PUT')){
+            $rules['password'] = ['nullable', 'min:6', 'max:15'];
+            $rules['email'] = ['required', 'string', 'email', 'max:255'];
+        }
+
+        return $rules;
     }
 }

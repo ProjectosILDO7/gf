@@ -1,5 +1,5 @@
 import AuthService from "@/service/auth.service";
-import ResetPasswordService from "@/service/reset.password.service";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
     state: {
@@ -43,10 +43,30 @@ export default {
             return AuthService.forgetPassword(params);
         },
 
-        userSave(_, params){
+        userSave({commit}, params){
             AuthService.userSave(params)
-                                .then(()=>commit('SET_USER', user))
-                                .finally(()=>commit("CHANGE_LOADING", false))
+                                .then((user)=>commit('SET_USER', user))
+                                .catch(()=>alert('Erro'))
+        },
+
+        upPerfil(_, params){
+            AuthService.updatePefil(params)
+                        .then((resp)=>{
+                            const sms = resp.data.message
+                            notify({
+                                title:'Sucesso',
+                                text:sms,
+                                type:'success'
+                            })
+                        })
+                        .catch((error)=>{
+                            const sms = resp.data.message
+                            notify({
+                                title:'Erro',
+                                text:sms,
+                                type:'warn'
+                            })
+                        })                     
         }
     },
 };

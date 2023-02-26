@@ -33,4 +33,34 @@ class UserRepository
             'User' => $register
         ], 200);
     }
+
+    public function updateUser($request){
+
+        if(!$user=auth()->user()){
+            return response()->json([
+                'status' => 401,
+                'message'=>'Usuário não encotrado'
+            ]);
+        }else{
+            $data = $request->only('name', 'email');
+            if($request->password)
+                $user['password'] = bcrypt($request->password);
+                
+            $user->update($data);
+
+            if(asset($user)){
+                return response()->json([
+                    'status'    => 200,
+                    'message'   => 'Dados actualizados com sucesso!'
+                ], 200);
+            }else{
+                return response()->json([
+                    'status'    => 500,
+                    'message'   => 'Erro ao actualizar os dados!'
+                ], 500);
+            }
+            
+        }
+       
+    }
 }
