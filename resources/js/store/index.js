@@ -1,5 +1,7 @@
 import { createStore } from "vuex";
 import users from "./modules/users";
+import perfil from "./modules/perfil";
+import curso from "./modules/curso"
 
 export default createStore({
     state:{
@@ -17,6 +19,8 @@ export default createStore({
 
     },
     modules:{
-        users
+        users,
+        perfil,
+        curso
     }
 })

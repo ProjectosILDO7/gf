@@ -1,0 +1,91 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\curso;
+use App\Http\Requests\StorecursoRequest;
+use App\Http\Requests\UpdatecursoRequest;
+use App\Repositories\Cursos\CursosRepository;
+
+class CursoController extends Controller
+{
+    
+    private $entety;
+
+    public function __construct(CursosRepository $cursos)
+    {
+        $this->entety=$cursos;
+    }
+
+    public function index()
+    {
+     //
+        return $this->entety->getCourses();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StorecursoRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StorecursoRequest $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\curso  $curso
+     * @return \Illuminate\Http\Response
+     */
+    public function show(curso $curso)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\curso  $curso
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(curso $curso)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdatecursoRequest  $request
+     * @param  \App\Models\curso  $curso
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdatecursoRequest $request, curso $curso)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\curso  $curso
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(curso $curso)
+    {
+        //
+    }
+}

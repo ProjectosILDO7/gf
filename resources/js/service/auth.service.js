@@ -4,14 +4,13 @@ export default class AuthService extends BaseService {
 
     static async auth (params) {
         return new Promise((resolve, reject) => {
-
             this.request()
                 .post('/auth/login', params)
                 .then(response => {
                     localStorage.setItem(TOKEN_NAME, response.data.token)
                     resolve(response)
                 })
-                .catch(error => reject(error.response))
+                .catch(error => reject(error.response.data.error))
         })
     }
 
@@ -59,11 +58,11 @@ export default class AuthService extends BaseService {
     }
     
     static async userSave (params) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject)=>{
             this.request()
                 .post('/registerUser', params)
-                .then(response => resolve(response.data))
-                .catch(error => reject(error.response))
+                .then(response => resolve(response))
+                .catch(error=>reject(error.response.data))
         })
     }
 

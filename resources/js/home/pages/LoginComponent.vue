@@ -92,7 +92,14 @@ export default {
                 password: password.value,
                 device_name: 'propy-x'
             })
-                .then(() => { store.push({ name: 'admin.home' }) })
+                .then(() => { router.push({ name: 'admin.home' }) })
+                .catch((erro)=>{
+                    notify({
+                        title:'Erro',
+                        text:erro,
+                        type:'warn'
+                    })
+                })
 
         }
 

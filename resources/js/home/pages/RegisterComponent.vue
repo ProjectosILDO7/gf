@@ -8,37 +8,42 @@
         </div>
         <br>
         <div class="card-body">
-            <form method="">
+            <form @submit.prevent="salvarUsuario">
 
+                <span class="small text-danger" v-if="erros.name">{{ erros.name[0] }}</span>
+                <div class="input-group flex-nowrap mb-3 has-validation">
+                    
+                    <span class="input-group-text" id="addon-wrapping">
+                        <i class="fa-solid fa-at"></i>
+                    </span>
+                    <input type="text" name="name" :class="['form-control', {'is-invalid':erros.name}]" placeholder="Nome" v-model="name" aria-label="Nome"
+                        aria-describedby="addon-wrapping">
+                </div>
+
+                <span class="small text-danger" v-if="erros.email">{{ erros.email[0] }}</span>
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-at"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Nome" v-model="name" aria-label="Nome"
+                    <input type="email" name="email" :class="['form-control', {'is-invalid':erros.email}]" v-model="email" placeholder="E-mail" aria-label="E-mail"
                         aria-describedby="addon-wrapping">
                 </div>
 
-                <div class="input-group flex-nowrap mb-3">
-                    <span class="input-group-text" id="addon-wrapping">
-                        <i class="fa-solid fa-at"></i>
-                    </span>
-                    <input type="email" class="form-control" v-model="email" placeholder="E-mail" aria-label="E-mail"
-                        aria-describedby="addon-wrapping">
-                </div>
-
+                <span class="small text-danger" v-if="erros.password">{{ erros.password[0] }}</span>
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-user-lock"></i>
                     </span>
-                    <input type="password" class="form-control" v-model="password" placeholder="Senha" aria-label="Senha"
+                    <input type="password" name="password" :class="['form-control', {'is-invalid':erros.password}]" v-model="password" placeholder="Senha" aria-label="Senha"
                         aria-describedby="addon-wrapping">
                 </div>
 
+                <span class="small text-danger" v-if="erros.password_confirmation">{{ erros.password_confirmation[0] }}</span>
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-user-lock"></i>
                     </span>
-                    <input type="password" name="password_confirmation" v-model="password_confirmation" class="form-control" placeholder="Repetir senha"
+                    <input type="password" name="password_confirmation" v-model="password_confirmation" :class="['form-control', {'is-invalid':erros.password_confirmation}]" placeholder="Repetir senha"
                         aria-label="Repetir senha" aria-describedby="addon-wrapping">
                 </div>
 
@@ -46,7 +51,7 @@
                     <button :class="[
                         'btn', 'btn-info', 'text-light',
                         loading ? 'loading' : ''
-                    ]" type="button" @click.prevent="salvarUsuario">
+                    ]" type="submit">
                         <span v-if="loading">
                             <i class="fa-solid fa-spinner"></i> Carregar...
                         </span>
@@ -80,6 +85,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex'
 import router from '../../router/'
 import { notify } from "@kyvg/vue3-notification";
+import regiteruser from "../../service/register.user.service.js"
 
 
 export default {
@@ -91,35 +97,28 @@ export default {
         const password = ref("")
         const password_confirmation = ref("")
         const loading = ref(false)
+        const erros = ref('')
 
         const salvarUsuario = () => {
-            loading.value = true
-            store.dispatch('userSave', {
+            loading.value=true
+            regiteruser.register({
                 name:name.value,
                 email: email.value,
                 password: password.value,
-                password_confirmation: password_confirmation.value,
-            })
-                .then(() => {
-                    notify({
-                        title:'Sucesso',
-                        text:'Conta criada com sucesso',
-                        type:'success'
-                    }),
-                    router.push({name:'home.login'})
+                password_confirmation:password_confirmation.value
+            }).then(() => {
+                notify({
+                    title:'Sucesso', 
+                    text:'Conta criada com sucesso', 
+                    type:'success'
                 })
-                .catch((error) => {
-                    let msmErro = 'Falha au tentar criar a conta'
-                    if (error.status === 422) msmErro = 'Dados inválidos'
-                    notify({
-                        title: "Pedido negado",
-                        text: msmErro,
-                        type:"warn"
-                    });
-                })
-                .finally(() => loading.value = false)
+                router.push({name:'admin.home'})
+            }).catch((error) => {
+                erros.value=error.data.errors
+            }).finally(()=>loading.value=false)
         }
         return {
+            erros,
             salvarUsuario,
             name,
             email,

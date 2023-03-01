@@ -47,9 +47,9 @@ class ResetPasswordNotification extends Notification
 
         return (new MailMessage)
                     ->subject('Nova senha')
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', $url)
-                    ->line('Thank you for using our application!');
+                    ->line('Este é um link para recuperação de sua palavra passe. click no link a baixo para alterar sua senha')
+                    ->action('Click aqui para redifinição da sua senha', $url)
+                    ->line('Obrigado por usar a nossa aplicação para recuperação  de sua palavra passe!');
     }
 
     /**

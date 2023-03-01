@@ -29,7 +29,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-graduation-cap"></i> Cursos</a></li>
+                                <li><router-link class="dropdown-item" :to="{name:'admin.curso'}"><i class="fa-solid fa-graduation-cap"></i> Cursos</router-link></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-graduate"></i> Graduação</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users-line"></i> Estudantes</a></li>
                                 <li>

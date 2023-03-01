@@ -1,5 +1,4 @@
 import AuthService from "@/service/auth.service";
-import { notify } from "@kyvg/vue3-notification";
 
 export default {
     state: {
@@ -44,29 +43,11 @@ export default {
         },
 
         userSave({commit}, params){
-            AuthService.userSave(params)
-                                .then((user)=>commit('SET_USER', user))
-                                .catch(()=>alert('Erro'))
+            commit('CHANGE_LOADING', true)
+            return AuthService.userSave(params)
+                                .then((res)=>console.log(res))
+                                .catch((error)=>console.log(error))
+                                .finally(()=>commit('CHANGE_LOADING', false))
         },
-
-        upPerfil(_, params){
-            AuthService.updatePefil(params)
-                        .then((resp)=>{
-                            const sms = resp.data.message
-                            notify({
-                                title:'Sucesso',
-                                text:sms,
-                                type:'success'
-                            })
-                        })
-                        .catch((error)=>{
-                            const sms = resp.data.message
-                            notify({
-                                title:'Erro',
-                                text:sms,
-                                type:'warn'
-                            })
-                        })                     
-        }
     },
 };

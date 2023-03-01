@@ -27,11 +27,20 @@ class UserRepository
             'remember_token' => Str::random(1),
         ]);
 
-        return response()->json([
-            'status' => true,
-            'message'=>'Usuario cadastrado com sucesso',
-            'User' => $register
-        ], 200);
+        if(asset($register)){
+            return response()->json([
+                'status' => 200,
+                'message'=>'Usuario cadastrado com sucesso',
+                'User' => $register
+            ], 200);
+        }else{
+            return response()->json([
+                'status' => 500,
+                'message'=>'Erro ao criar conta',
+            ], 500);
+        }
+
+        
     }
 
     public function updateUser($request){

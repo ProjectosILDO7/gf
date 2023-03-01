@@ -17,11 +17,12 @@
 
             <form action="" method="post">
 
-                <div class="input-group flex-nowrap mb-3">
+                <span class="small text-danger" v-if="erro.email">{{ erro.email[0] }}</span>
+                <div class="input-group flex-nowrap mb-3 has-validation">
                     <span class="input-group-text" id="addon-wrapping">
                         <i class="fa-solid fa-at"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="E-mail" v-model="email" aria-label="E-mail"
+                    <input type="text" :class="['form-control', {'is-invalid':erro.email}]" placeholder="E-mail" v-model="email" aria-label="E-mail"
                         aria-describedby="addon-wrapping">
                 </div>
 
@@ -71,6 +72,7 @@ export default {
     const email = ref("")
     const store = useStore()
     const loading = ref(false)
+    const erro = ref('')
 
     const resetPassword = () => {
         loading.value = true
@@ -80,21 +82,12 @@ export default {
                 text:'Enviamos um link de redefinição da sua senha no seu e-mail',
                 type:'success'
              }))
-             .catch((error) => {
-                    let msmErro = 'Falha na requisição'
-                    if (error.status === 422) msmErro = 'Dados inválidos'
-                    if (error.status === 404) msmErro = 'Usuário não encontrado'
-
-                    notify({
-                        title: "Falha na solicitação",
-                        text: msmErro,
-                        type:"warn"
-                    });
-                })
+             .catch((error) => erro.value=error.data.errors)
              .finally(() => loading.value=false)   
     }
 
     return {
+        erro,
         email,
         resetPassword,
         loading

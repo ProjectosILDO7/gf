@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CursoController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,8 +35,10 @@ Route::group([
 Route::post('/forget-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->middleware('guest');
 Route::post('/registerUser', [RegisterControllerUser::class, 'crear']);
-Route::put('/updateuser', [RegisterControllerUser::class, 'updateUser'])->middleware('jwt.auth');
+Route::put('/updateuser', [RegisterControllerUser::class, 'updateUser'])->middleware('api');
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::get('/courses', [CursoController::class, 'index'])->middleware('api');
+
+Route::middleware('api')->get('/user', function (Request $request) {
+    return $request->user();
+});
