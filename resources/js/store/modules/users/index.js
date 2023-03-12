@@ -23,19 +23,13 @@ export default {
         },
 
         getMe({ commit }) {
-            commit("CHANGE_LOADING", true);
-
            return AuthService.getMe()
                 .then((user) => commit("SET_USER", user))
-                .finally(() => commit("CHANGE_LOADING", false));
         },
 
         logout({ commit }) {
-            commit("CHANGE_LOADING", true);
-
             return AuthService.logout()
                 .then(() => commit("LOGOUT"))
-                .finally(() => commit("CHANGE_LOADING", false));
         },
 
         forgetPassword(_, params) {
@@ -43,11 +37,9 @@ export default {
         },
 
         userSave({commit}, params){
-            commit('CHANGE_LOADING', true)
             return AuthService.userSave(params)
                                 .then((res)=>console.log(res))
                                 .catch((error)=>console.log(error))
-                                .finally(()=>commit('CHANGE_LOADING', false))
         },
     },
 };

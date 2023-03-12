@@ -14,17 +14,34 @@ class CursosRepository {
     }
 
     public function getCourses(){
-        $cursos = $this->ententy::paginate(10);
+        $cursos = $this->ententy::orderBy('cursos', 'asc')->get();
         if(asset($cursos)){
-            return response()->json([
-                'status'=>'Sucesso',
-                'cursos'=>$cursos
-            ],200);
+            return response()->json(compact('cursos'));
         }else{
             return response()->json([
                 'status'=>'Erro',
                 'message'=>'Não foi possível carregar os cursos'
             ],401);
+        }
+    }
+
+    public function create($data){
+
+        $saveCurso = $this->ententy::create([
+            'cursos'=>$data['cursos'],
+            'cobranca'=>$data['cobranca']
+        ]);
+        
+        if(asset($saveCurso)){
+            return response()->json([
+                'status'=>'Sucesso',
+                'Curso'=>$saveCurso,
+            ], 200);
+        }else{
+            return response()->json([
+                'status'=>'Erro',
+                'message'=>'Nao foi possível cadastrar este curso. deve-se a um problema interno.!'
+            ], 401);
         }
     }
 }

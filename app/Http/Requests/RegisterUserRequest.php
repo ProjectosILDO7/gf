@@ -31,11 +31,19 @@ class RegisterUserRequest extends FormRequest
             'password_confirmation' =>'required|string|min:6|max:15',
         ];
 
-        // if($this->method('PUT')){
-        //     $rules['password'] = ['nullable', 'min:6', 'max:15'];
-        //     $rules['email'] = ['required', 'string', 'email', 'max:255'];
-        // }
+    }
 
-        //return $rules;
+    public function messages()
+    {
+       return [
+        'name.required' => 'O campo nome é de preenchimento obrigatório!',
+        'password.required' => 'O campo da senha é de preenchimento obrigatório!',
+        'password.min' => 'O campo da senha deve ter no mínimo 6 caracter!',
+        'password.max' => 'O campo da senha deve ter no máximo 15 caracter!',
+        'email.required' => 'O campo de E-mail é de preenchimento obrigatório!!',
+        'email.email' => 'O campo de E-mail deve ser do tipo de e-mail ( @ )!',
+        'password.confirmed' => 'O campo da senha deve ser idêntico!',
+        'password_confirmation.required'=>'O campo de confirmação da senha é de preenchimento obrigatório!'
+       ];
     }
 }

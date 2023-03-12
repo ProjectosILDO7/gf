@@ -23,6 +23,7 @@
             <div class="card-body">
 
                 <div class="row">
+
                     <div class="form-group col-12">
                         <div class="table-responsive">
                             <table class="table table-sm table-striped">
@@ -36,7 +37,7 @@
                                 </thead>
 
                                 <tbody>
-                                    <tr v-for="curso in cursos.data" :key="curso.id">
+                                    <tr v-for="curso in courses" :key="curso.id">
                                         <td>{{ curso.id }}</td>
                                         <td>{{ curso.cursos }}</td>
                                         <td>{{ curso.cobranca }}</td>
@@ -52,14 +53,14 @@
                                 </tbody>
                             </table>
 
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal 925661082 -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -72,24 +73,38 @@
                     <div class="modal-body">
                         <div class="row">
                             <form action="">
+                                
                                 <div class="form-group col-12 mb-2">
-                                    <label for="" class="text-secodary">Nome do curso</label>
-                                    <input type="text" class="form-control form-control-sm"
-                                        placeholder="Informe novo curso">
+                                    <span class="text-danger small col-12" v-if="erros.cursos">{{ erros.cursos[0] }}</span>
+                                    <label for="" class="text-secodary col-12">Nome do curso</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Informe novo curso"
+                                        v-model="items.cursos">
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
-                                    <label for="" class="text-secodary">(Opcional) valor da cobrança</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Cobrança">
+                                    <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
+                                    }}</span>
+                                    <label for="" class="text-secodary col-12">(Opcional) valor da cobrança</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Cobrança"
+                                        v-model="items.cobranca">
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><i
-                                class="fa-solid fa-circle-xmark"></i> Fechar</button>
-                        <button type="button" class="btn btn-sm btn-success"><i class="fa-regular fa-floppy-disk"></i>
-                            Cadastrar</button>
+                        <button type="submit" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                            <span>
+                                <i class="fa-solid fa-circle-xmark"></i> Fechar
+                            </span>
+                        </button>
+                        <button @click.prevent="registerCurso" type="button" class="btn btn-sm btn-success">
+                            <span v-if="loading">
+                                <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
+                            </span>
+                            <span v-else>
+                                <i class="fa-regular fa-floppy-disk"></i> Cadastrar
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -99,22 +114,58 @@
 </template>
 
 <script>
-
-import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
 import { notify } from '@kyvg/vue3-notification'
+
+// import { computed, onMounted, ref } from 'vue'
+// import { useStore } from 'vuex'
+// import { notify } from '@kyvg/vue3-notification'
 
 export default {
     name: "Curso-component",
-    setup() {
-        const store = useStore()
-        const cursos = computed(() => store.state.curso.cursos.cursos)
-
-        onMounted(() => store.dispatch('getCourses'))
-
+    data(){
         return {
-            cursos,
-            store
+            items:{cursos:'', cobranca:''},
+            erros:[],
+        }
+    },
+    created(){
+        this.loadingCourse()
+    },
+
+    computed:{
+        courses(){
+            return this.$store.state.curso.items.cursos
+        }
+    },
+
+    methods:{
+        loadingCourse(){
+            //var store = useStore()
+            this.$store.dispatch('loadingCourse')              
+        },
+
+        registerCurso(){
+
+            this.$store.dispatch('createCourse', this.items)
+                        .then(()=>{
+                            notify({
+                                title:'Sucesso',
+                                text:"O Curso foi registado com sucesso",
+                                type:'success'
+                            })
+                            this.loadingCourse()
+                            this.items = {cursos:'', cobranca:''}
+                            this.erros=[]
+                        })
+                        .catch((error)=>{
+                            this.erros = error
+                            notify({
+                                title:'Erro',
+                                text:"Ocorreu um erro durante o processo de cadastro!",
+                                type:'warn'
+                            })
+                            
+                        })
         }
     }
 }

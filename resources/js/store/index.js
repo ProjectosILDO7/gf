@@ -2,25 +2,15 @@ import { createStore } from "vuex";
 import users from "./modules/users";
 import perfil from "./modules/perfil";
 import curso from "./modules/curso"
+import carregar from "./modules/preloading/preloading-carregando.js"
+import preloading_simples from "./modules/preloading/preloading-simples.js"
 
 export default createStore({
-    state:{
-        loading:false,
-        loadingMessage:'Carregando... aguarde!'
-    },
-    mutations:{
-        CHANGE_LOADING(state, status, sms='Carregando... aguarde!'){
-            state.loading=status,
-            state.loadingMessage=sms
-        }
-
-    },
-    actions:{
-
-    },
     modules:{
         users,
         perfil,
-        curso
+        curso,
+        carregar,
+        preloading_simples
     }
 })

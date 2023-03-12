@@ -38,6 +38,7 @@ Route::post('/registerUser', [RegisterControllerUser::class, 'crear']);
 Route::put('/updateuser', [RegisterControllerUser::class, 'updateUser'])->middleware('api');
 
 Route::get('/courses', [CursoController::class, 'index'])->middleware('api');
+Route::post('/registerCurso', [CursoController::class, 'store'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

@@ -41,7 +41,7 @@ class CursoController extends Controller
      */
     public function store(StorecursoRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
     /**

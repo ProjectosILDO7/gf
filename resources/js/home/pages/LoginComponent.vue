@@ -12,7 +12,7 @@
 
                 <div class="input-group flex-nowrap mb-3">
                     <span class="input-group-text" id="addon-wrapping">
-                        <i class="fa-solid fa-at"></i>
+                        <i class="fa-solid fa-user"></i>
                     </span>
                     <input type="text" class="form-control" placeholder="Utilizador" aria-label="Utilizador"
                         aria-describedby="addon-wrapping" v-model="email">
@@ -29,9 +29,9 @@
                 <div class="d-grid gap-2">
                     <button :class="[
                         'btn', 'btn-info', 'text-light',
-                        loadingStore ? 'disabled' : ''
+                        loading ? 'disabled' : ''
                     ]" type="submit">
-                        <span v-if="loadingStore">
+                        <span v-if="loading">
                             <i class="fa-solid fa-spinner"></i> Validando acesso...
                         </span>
                         <span v-else>
@@ -74,7 +74,7 @@ export default {
         const device_name = ref("")
         const loading = ref(false)
 
-        const loadingStore = computed(() => store.state.loading)
+        //const loadingStore = computed(() => store.state.loading)
 
         watch(
             () => store.state.users.authorization,
@@ -109,7 +109,6 @@ export default {
             password,
             device_name,
             loading,
-            loadingStore
         }
     },
 
