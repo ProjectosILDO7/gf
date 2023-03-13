@@ -40,7 +40,7 @@
                                     <tr v-for="curso in courses" :key="curso.id">
                                         <td>{{ curso.id }}</td>
                                         <td>{{ curso.cursos }}</td>
-                                        <td>{{ curso.cobranca }}</td>
+                                        <td>{{ vueNumberFormat(curso.cobranca, {isInteger: true}) }}</td>
                                         <td>
                                             <button class="btn btn-sm btn-outline-success mr-2">
                                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <!-- Modal 925661082 -->
+        <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -73,7 +73,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <form action="">
-                                
+
                                 <div class="form-group col-12 mb-2">
                                     <span class="text-danger small col-12" v-if="erros.cursos">{{ erros.cursos[0] }}</span>
                                     <label for="" class="text-secodary col-12">Nome do curso</label>
@@ -85,8 +85,13 @@
                                     <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
                                     }}</span>
                                     <label for="" class="text-secodary col-12">(Opcional) valor da cobrança</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Cobrança"
-                                        v-model="items.cobranca">
+                                    <!-- <input type="text" class="form-control form-control-sm" placeholder="Cobrança"
+                                        v-model="items.cobranca"> -->
+                                    <VueNumberFormat 
+                                        class="form-control form-control-sm"
+                                        v-model:value="items.cobranca"
+                                        :options="{ precision: 2, prefix: '', suffix: ' ', isInteger: true, acceptNegative: false, masked:false }">
+                                    </VueNumberFormat>
                                 </div>
                             </form>
                         </div>
@@ -122,50 +127,50 @@ import { notify } from '@kyvg/vue3-notification'
 
 export default {
     name: "Curso-component",
-    data(){
+    data() {
         return {
-            items:{cursos:'', cobranca:''},
-            erros:[],
+            items: { cursos: '', cobranca: '' },
+            erros: [],
         }
     },
-    created(){
+    created() {
         this.loadingCourse()
     },
 
-    computed:{
-        courses(){
+    computed: {
+        courses() {
             return this.$store.state.curso.items.cursos
         }
     },
 
-    methods:{
-        loadingCourse(){
+    methods: {
+        loadingCourse() {
             //var store = useStore()
-            this.$store.dispatch('loadingCourse')              
+            this.$store.dispatch('loadingCourse')
         },
 
-        registerCurso(){
+        registerCurso() {
 
             this.$store.dispatch('createCourse', this.items)
-                        .then(()=>{
-                            notify({
-                                title:'Sucesso',
-                                text:"O Curso foi registado com sucesso",
-                                type:'success'
-                            })
-                            this.loadingCourse()
-                            this.items = {cursos:'', cobranca:''}
-                            this.erros=[]
-                        })
-                        .catch((error)=>{
-                            this.erros = error
-                            notify({
-                                title:'Erro',
-                                text:"Ocorreu um erro durante o processo de cadastro!",
-                                type:'warn'
-                            })
-                            
-                        })
+                .then(() => {
+                    notify({
+                        title: 'Sucesso',
+                        text: "O Curso foi registado com sucesso",
+                        type: 'success'
+                    })
+                    this.loadingCourse()
+                    this.items = { cursos: '', cobranca: '' }
+                    this.erros = []
+                })
+                .catch((error) => {
+                    this.erros = error
+                    notify({
+                        title: 'Erro',
+                        text: "Ocorreu um erro durante o processo de cadastro!",
+                        type: 'warn'
+                    })
+
+                })
         }
     }
 }

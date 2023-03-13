@@ -8,6 +8,8 @@ import Notifications from '@kyvg/vue3-notification'
 import carregar from '../js/components/preloading/preloading-carregando.vue' 
 import preloading from '../js/components/preloading/preloading-simples.vue' 
 
+import VueNumberFormat from 'vue-number-format'
+
 import 'animate.css';
 
 const app = createApp(App)
@@ -16,6 +18,7 @@ const app = createApp(App)
       app.use(preloading)
       app.use(router)
       app.use(Notifications)
+      app.use(VueNumberFormat, {prefix:'', isInteger: true})
       app.mount('#app');
       
 
