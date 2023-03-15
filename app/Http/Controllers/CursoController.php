@@ -53,6 +53,7 @@ class CursoController extends Controller
     public function show(curso $curso)
     {
         //
+        
     }
 
     /**
@@ -61,9 +62,10 @@ class CursoController extends Controller
      * @param  \App\Models\curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function edit(curso $curso)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->getCourse($id);
     }
 
     /**
@@ -73,9 +75,10 @@ class CursoController extends Controller
      * @param  \App\Models\curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecursoRequest $request, curso $curso)
+    public function update(UpdatecursoRequest $request, $id)
     {
         //
+       return $this->entety->updateCurso($request, $id);
     }
 
     /**
@@ -84,8 +87,9 @@ class CursoController extends Controller
      * @param  \App\Models\curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function destroy(curso $curso)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
 }

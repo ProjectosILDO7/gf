@@ -10,6 +10,33 @@ export default class cursosService extends BaseService{
         })
     }
 
+    static async updateFormCourse(id){
+        return new Promise((resolve, reject)=>{
+            this.request({auth:true})
+                .get(`/getCourse/${id}`)
+                .then((resp)=>resolve(resp))
+                .catch((erro)=>reject(erro))
+        })
+    }
+
+    static async updateCurso(params){
+        return new Promise((resolve, reject)=>{
+            this.request({auth:true})
+                .put(`/updateCurso/${params.id}`, params)
+                .then((resp)=>resolve(resp))
+                .catch((erro)=>reject(erro))
+        })
+    }
+
+    static async apagarCurso(params){
+        return new Promise((resolve, reject)=>{
+            this.request({auth:true})
+                .get(`/apagarCurso/${params}`)
+                .then((resp)=>resolve(resp))
+                .catch((erro)=>reject(erro))
+        })
+    }
+
     static async addCourse(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
