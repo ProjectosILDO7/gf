@@ -4,6 +4,7 @@ import perfil from "./modules/perfil";
 import curso from "./modules/curso"
 import carregar from "./modules/preloading/preloading-carregando.js"
 import preloading_simples from "./modules/preloading/preloading-simples.js"
+import btn_loading from "./modules/preloading/btn-preloading-black.js"
 
 export default createStore({
     modules:{
@@ -11,6 +12,7 @@ export default createStore({
         perfil,
         curso,
         carregar,
+        btn_loading,
         preloading_simples
     }
 })

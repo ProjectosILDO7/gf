@@ -32,7 +32,7 @@
                         loading ? 'disabled' : ''
                     ]" type="submit">
                         <span v-if="loading">
-                            <i class="fa-solid fa-spinner"></i> Validando acesso...
+                              Validando acesso...
                         </span>
                         <span v-else>
                             <i class="fa-solid fa-right-to-bracket"></i> Entrar
@@ -64,6 +64,8 @@ import { computed, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import router from '../../router/'
 import { notify } from "@kyvg/vue3-notification";
+import btn_preloading from '../../components/preloading/btn-preloading-black.vue'
+
 
 export default {
     name: "auth",
@@ -100,6 +102,7 @@ export default {
                         type:'warn'
                     })
                 })
+                .finally(()=>loading.value=false)
 
         }
 

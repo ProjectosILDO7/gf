@@ -1,7 +1,5 @@
 const state = {
-    items:{
-        data:[]
-    }
+    items:[]
 }
 
 export default state

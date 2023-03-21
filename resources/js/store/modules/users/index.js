@@ -23,8 +23,10 @@ export default {
         },
 
         getMe({ commit }) {
+           commit('PRELOADING', true)
            return AuthService.getMe()
                 .then((user) => commit("SET_USER", user))
+                .finally(()=>commit('PRELOADING', false))
         },
 
         logout({ commit }) {

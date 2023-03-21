@@ -9,7 +9,7 @@ const actions = {
                         .catch(error=>console.log(error))
                         .finally(()=>commit('PRELOADING', false))
     },
-    
+
     createCourse(_, params){
         return coursesService.addCourse(params)
     },
@@ -29,6 +29,12 @@ const actions = {
     apagarCurso({commit}, params){
         commit('PRELOADING', true)
         return coursesService.apagarCurso(params)
+                             .finally(()=>commit('PRELOADING', false))
+    },
+
+    detalhes({commit}, params){
+        commit('PRELOADING', true)
+        return coursesService.detalhes(params)
                              .finally(()=>commit('PRELOADING', false))
     }
 }

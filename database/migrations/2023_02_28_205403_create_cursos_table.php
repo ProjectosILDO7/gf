@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('cursos');
-            $table->string('cobranca');
+            $table->string('cobranca')->nullable();
             $table->timestamps();
         });
     }

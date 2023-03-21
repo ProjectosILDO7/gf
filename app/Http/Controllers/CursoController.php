@@ -6,6 +6,7 @@ use App\Models\curso;
 use App\Http\Requests\StorecursoRequest;
 use App\Http\Requests\UpdatecursoRequest;
 use App\Repositories\Cursos\CursosRepository;
+use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
@@ -28,9 +29,10 @@ class CursoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function filter(Request $request)
     {
         //
+        return $this->entety->filtro($request['params']);
     }
 
     /**
@@ -50,10 +52,10 @@ class CursoController extends Controller
      * @param  \App\Models\curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function show(curso $curso)
+    public function show($id)
     {
         //
-        
+        return $this->entety->detalhes($id);
     }
 
     /**

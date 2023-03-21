@@ -2,13 +2,7 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-info shadow">
             <div class="container">
-                <div class="d-flex justify-content-between d-md-none d-block">
-                    <a class="navbar-brand fs-4" href="#">Propy-x</a>
-                    <button class="btn btn-sm px-1 py-0 open-btn">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                </div>
-
+                
                 <button class="navbar-toggler btn-sm" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">

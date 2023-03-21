@@ -38,10 +38,12 @@ Route::post('/registerUser', [RegisterControllerUser::class, 'crear']);
 Route::put('/updateuser', [RegisterControllerUser::class, 'updateUser'])->middleware('api');
 
 Route::get('/courses', [CursoController::class, 'index'])->middleware('api');
+Route::post('/filter', [CursoController::class, 'filter'])->middleware('api');
 Route::post('/registerCurso', [CursoController::class, 'store'])->middleware('api');
 Route::get('/getCourse/{id}', [CursoController::class, 'edit'])->middleware('api');
 Route::put('/updateCurso/{id}', [CursoController::class, 'update'])->middleware('api');
 Route::get('/apagarCurso/{id}', [CursoController::class, 'destroy'])->middleware('api');
+Route::get('/detalhes/{id}', [CursoController::class, 'show'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

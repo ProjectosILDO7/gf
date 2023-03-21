@@ -16,15 +16,20 @@ class CursosRepository
 
     public function getCourses()
     {
+        
         $cursos = $this->ententy::orderBy('cursos', 'asc')->get();
-        if (asset($cursos)) {
-            return response()->json(compact('cursos'));
-        } else {
-            return response()->json([
-                'status' => 'Erro',
-                'message' => 'Não foi possível carregar os cursos'
-            ], 401);
-        }
+            if (asset($cursos)) {
+                return response()->json($cursos);
+            } else {
+                return response()->json([
+                    'status' => 'Erro',
+                    'message' => 'Não foi possível carregar os cursos'
+                ], 401);
+            }
+    }
+
+    public function filtro($nome){
+        
     }
 
     public function create($data)
@@ -66,8 +71,8 @@ class CursosRepository
     public function updateCurso($data, $id)
     {
         $updateCourse = $this->ententy::find($id);
-        $updateCourse->cursos=$data['cursos'];
-        $updateCourse->cobranca=$data['cobranca'];
+        $updateCourse->cursos = $data['cursos'];
+        $updateCourse->cobranca = $data['cobranca'];
         $updateCourse->save();
 
         if (asset($updateCourse)) {
@@ -77,14 +82,24 @@ class CursosRepository
         }
     }
 
-    public function apagar($id){
+    public function apagar($id)
+    {
         $deleteCourse = $this->ententy::find($id);
         $deleteCourse->delete();
 
-        if(asset($deleteCourse)){
-            return response()->json(['message'=>'Este curso foi apagadno com sucesso'],200);
+        if (asset($deleteCourse)) {
+            return response()->json(['message' => 'Este curso foi apagadno com sucesso'], 200);
+        } else {
+            return response()->json(['erro' => 'Não foi possível apagar este curso'], 401);
+        }
+    }
+
+    public function detalhes($id){
+        $detalhes = $this->ententy::find($id);
+        if(asset($detalhes)){
+            return response()->json($detalhes);
         }else{
-            return response()->json(['erro'=>'Não foi possível apagar este curso'],401);
+            return response()->json(['erro'=>'Não foi possível carregar os detalhes']);
         }
     }
 }
