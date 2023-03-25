@@ -44,6 +44,21 @@ const routes = [
                 name:'admin.curso',
                 component:()=>import('../components/admin/services/cursos/cursosComponentes.vue')
             },
+            {
+                path:'graduacao',
+                name:'admin.graduacao',
+                component:()=>import('../components/admin/services/graduacao/graduacaoComponent.vue')
+            },
+            {
+                path:'assinatura',
+                name:'admin.assinatura',
+                component:()=>import('../components/admin/services/assinatura/assinaturaComponent.vue')
+            },
+            {
+                path:'estudantes',
+                name:'admin.estudantes',
+                component:()=>import('../components/admin/services/estudantes/estudantesComponent.vue')
+            },
             
         ]
     },

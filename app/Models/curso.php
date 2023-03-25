@@ -11,6 +11,11 @@ class curso extends Model
     
     protected $fillable = [
         'cursos',
-        'cobranca'
+        'cobranca',
+        'user_id'
     ];
+
+    public function graduacoes(){
+        return $this->belongsToMany(graduacao::class, 'curso_grades');
+    }
 }

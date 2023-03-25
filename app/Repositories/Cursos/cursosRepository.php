@@ -3,21 +3,23 @@
 namespace App\Repositories\Cursos;
 
 use App\Models\curso;
+use Illuminate\Support\Facades\Auth;
 
 class CursosRepository
 {
 
     protected $ententy;
+    protected $userID;
 
     public function __construct(curso $cursos)
     {
         $this->ententy = $cursos;
+        $this->userID=Auth()->user()->id;
     }
 
     public function getCourses()
     {
-        
-        $cursos = $this->ententy::orderBy('cursos', 'asc')->get();
+        $cursos = $this->ententy::orderBy('cursos', 'asc')->where('user_id', $this->userID)->get();
             if (asset($cursos)) {
                 return response()->json($cursos);
             } else {
@@ -37,7 +39,8 @@ class CursosRepository
 
         $saveCurso = $this->ententy::create([
             'cursos' => $data['cursos'],
-            'cobranca' => $data['cobranca']
+            'cobranca' => $data['cobranca'],
+            'user_id' => $this->userID
         ]);
 
         if (asset($saveCurso)) {

@@ -11,17 +11,16 @@
                 <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active text-white" aria-current="page" href="#">
+                            <router-link class="nav-link active text-white" aria-current="page" :to="{name:'admin.dashboard'}">
                                 <i class="fa-solid fa-house"></i>
                                 Home
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-database"></i> Cadastros
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <router-link class="nav-link btn btn-sm btn-primary text-white" :to="{name:'admin.assinatura'}">
+                                <i class="fa-solid fa-bag-shopping text-warning"></i> Assinatura
+                            </router-link>
+                            <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
                                 <li><router-link class="dropdown-item" :to="{name:'admin.curso'}"><i class="fa-solid fa-graduation-cap"></i> Cursos</router-link></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user-graduate"></i> Graduação</a></li>
@@ -41,7 +40,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-network-wired"></i> Outros</a></li>
-                            </ul>  
+                            </ul>   -->
                         </li>
                     </ul>
                 </div>
@@ -66,6 +65,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><router-link class="dropdown-item" :to="{name:'admin.perfil'}"><i class="fa-solid fa-user"></i> Perfil</router-link></li>
                                 <li><router-link class="dropdown-item" :to="{name:'admin.users'}"><i class="fa-solid fa-users-gear"></i> Usuários</router-link></li>
+                                <li><router-link class="dropdown-item" to="#"><i class="fa-solid fa-bag-shopping"></i> Minha assinatura</router-link></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

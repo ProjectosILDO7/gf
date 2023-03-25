@@ -1,7 +1,8 @@
 <template>
     <div class="container mt-4">
 
-        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon" />
+        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon"
+            @buscar-curso-id="buscaCursosID" />
 
         <br>
 
@@ -13,7 +14,7 @@
             </div>
         </form>
 
-        <div class="card mt-2 shadow" v-for="curso in courses" :key="curso.id">
+        <div class="card mt-2 shadow" v-for="graduacao in graduacoes" :key="graduacao.id">
             <div class="card-body">
                 <div class="row">
 
@@ -25,14 +26,14 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEdit"
-                                            @click="updateCursoForm(curso.id)"><i
+                                            @click="updategraduacaoForm(graduacao.id)"><i
                                                 class="fa-regular fa-pen-to-square text-success"></i> Alterar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#modalDeleteConfirm" @click="deleteCourse(curso.id)"><i
+                                            data-bs-target="#modalDeleteConfirm" @click="deleteGraduaction(graduacao.id)"><i
                                                 class="fa-solid fa-trash text-danger"></i> Apagar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
-                                            @click="detalhes(curso.id)">
+                                            @click="detalhes(graduacao.id)">
                                             <i class="fa-solid fa-eye"></i> Vêr Detalhes
                                         </a></li>
                                 </ul>
@@ -41,19 +42,12 @@
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <label class="text-success">Curso</label>
-                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{ curso.cursos
+                        <label class="text-success">graduação</label>
+                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{
+                            graduacao.grade
                         }}
                         </p>
                     </div>
-
-                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <label class="text-success">Cobrança</label>
-                        <p class="text-secondary h6"><i class="fa-solid fa-circle-dollar-to-slot"></i> {{
-                            vueNumberFormat(curso.cobranca, { isInteger: true }) }}
-                        </p>
-                    </div>
-
                 </div>
             </div>
 
@@ -69,25 +63,25 @@
                                 <thead>
                                     <tr>
                                         <th>Cod.</th>
-                                        <th>Cursos</th>
+                                        <th>graduacaos</th>
                                         <th>Cobrança</th>
                                         <th>Opções</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr v-for="curso in courses.data" :key="curso.id">
-                                        <td>{{ curso.id }}</td>
-                                        <td>{{ curso.cursos }}</td>
-                                        <td>{{ vueNumberFormat(curso.cobranca, { isInteger: true }) }}</td>
+                                    <tr v-for="graduacao in graduacoes.data" :key="graduacao.id">
+                                        <td>{{ graduacao.id }}</td>
+                                        <td>{{ graduacao.graduacaos }}</td>
+                                        <td>{{ vueNumberFormat(graduacao.cobranca, { isInteger: true }) }}</td>
                                         <td>
-                                            <button @click="updateCursoForm(curso.id)"
+                                            <button @click="updategraduacaoForm(graduacao.id)"
                                                 class="btn btn-sm btn-outline-success mr-2" type="button"
                                                 data-bs-toggle="modal" data-bs-target="#modalEdit" to="#">
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </button>
                                             <button class="btn btn-sm btn-outline-danger mr-2" data-bs-toggle="modal"
-                                                data-bs-target="#modalDeleteConfirm" @click="deleteCourse(curso.id)">
+                                                data-bs-target="#modalDeleteConfirm" @click="deleteGraduac(graduacao.id)">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </td>
@@ -98,20 +92,20 @@
                            
 
                             <nav aria-label="paginate">
-                                <ul class="pagination pagination-sm" v-if="courses.last_page > 1">
-                                    <li class="page-item" v-if="courses.current_page != 1">
+                                <ul class="pagination pagination-sm" v-if="graduacoes.last_page > 1">
+                                    <li class="page-item" v-if="graduacoes.current_page != 1">
                                         <a class="page-link" href="#"
-                                            @click.prevent="loadingCourse(courses.current_page - 1)">{{ '<<' }}</a>
+                                            @click.prevent="loadingGraduac(graduacoes.current_page - 1)">{{ '<<' }}</a>
                                     </li>
 
-                                    <li :class="['page-item', { 'active': courses.current_page == page }]" aria-current="page"
-                                        v-for="page in courses.last_page" :key="page.id">
-                                        <a class="page-link" href="#" @click.prevent="loadingCourse(page)">{{ page }}</a>
+                                    <li :class="['page-item', { 'active': graduacoes.current_page == page }]" aria-current="page"
+                                        v-for="page in graduacoes.last_page" :key="page.id">
+                                        <a class="page-link" href="#" @click.prevent="loadingGraduac(page)">{{ page }}</a>
                                     </li>
 
-                                    <li class="page-item" v-if="courses.current_page < courses.last_page">
+                                    <li class="page-item" v-if="graduacoes.current_page < graduacoes.last_page">
                                         <a class="page-link" href="#"
-                                            @click.prevent="loadingCourse(courses.current_page + 1)">{{ '>>' }}</a>
+                                            @click.prevent="loadingGraduac(graduacoes.current_page + 1)">{{ '>>' }}</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -125,18 +119,19 @@
         <br>
         <!-- paginate -->
         <nav aria-label="paginate mt-4">
-            <ul class="pagination pagination-sm" v-if="courses.last_page > 1">
-                <li class="page-item" v-if="courses.current_page != 1">
-                    <a class="page-link" href="#" @click.prevent="loadingCourse(courses.current_page - 1)">{{ '<<' }}</a>
+            <ul class="pagination pagination-sm" v-if="graduacoes.last_page > 1">
+                <li class="page-item" v-if="graduacoes.current_page != 1">
+                    <a class="page-link" href="#" @click.prevent="loadingGraduac(graduacoes.current_page - 1)">{{ '<<'
+                    }}</a>
                 </li>
 
-                <li :class="['page-item', { 'active': courses.current_page == page }]" aria-current="page"
-                    v-for="page in courses.last_page" :key="page.id">
-                    <a class="page-link" href="#" @click.prevent="loadingCourse(page)">{{ page }}</a>
+                <li :class="['page-item', { 'active': graduacoes.current_page == page }]" aria-current="page"
+                    v-for="page in graduacoes.last_page" :key="page.id">
+                    <a class="page-link" href="#" @click.prevent="loadingGraduac(page)">{{ page }}</a>
                 </li>
 
-                <li class="page-item" v-if="courses.current_page < courses.last_page">
-                    <a class="page-link" href="#" @click.prevent="loadingCourse(courses.current_page + 1)">{{ '>>'
+                <li class="page-item" v-if="graduacoes.current_page < graduacoes.last_page">
+                    <a class="page-link" href="#" @click.prevent="loadingGraduac(graduacoes.current_page + 1)">{{ '>>'
                     }}</a>
                 </li>
             </ul>
@@ -149,7 +144,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-graduation-cap"></i> Cadastre
-                            novo curso</h5>
+                            nova graduação</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -157,21 +152,22 @@
                             <form action="">
 
                                 <div class="form-group col-12 mb-2">
-                                    <span class="text-danger small col-12" v-if="erros.cursos">{{ erros.cursos[0] }}</span>
-                                    <label for="" class="text-secodary col-12">Nome do curso</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Informe novo curso"
-                                        v-model="items.cursos">
+                                    <span class="text-danger small col-12" v-if="erros.grade">{{ erros.grade[0] }}</span>
+                                    <label for="" class="text-secodary col-12">Nome da graduação</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        placeholder="Informe nova graduação" v-model="items.grade">
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
-                                    <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
+
+                                    <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0]
                                     }}</span>
-                                    <label for="" class="text-secodary col-12">(Opcional) valor da cobrança</label>
-                                    <!-- <input type="text" class="form-control form-control-sm" placeholder="Cobrança"
-                                        v-model="items.cobranca"> -->
-                                    <VueNumberFormat class="form-control form-control-sm" v-model:value="items.cobranca"
-                                        :options="{ precision: 2, prefix: '', suffix: ' ', isInteger: true, acceptNegative: false, masked: false }">
-                                    </VueNumberFormat>
+                                    <label for="" class="text-secodary col-12">Adissionar ao curso de:</label>
+                                    <select class="form-control form-control-sm" v-model="items.curso_id" multiple>
+                                        <option disabled class="selected" value=""> Selessione um curso</option>
+                                        <option :value="curso.id" v-for="curso in getCoursesID" :key="curso.id">{{ curso.cursos }}
+                                        </option>
+                                    </select>
                                 </div>
                             </form>
                         </div>
@@ -182,7 +178,7 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="registerCurso" type="button" class="btn btn-sm btn-success">
+                        <button @click.prevent="registerGraduacao" type="button" class="btn btn-sm btn-success">
                             <span v-if="loading">
                                 <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
                             </span>
@@ -203,7 +199,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-pen-to-square"></i> Alterar
-                            curso</h5>
+                            graduação</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -211,21 +207,20 @@
                             <form action="">
 
                                 <div class="form-group col-12 mb-2">
-                                    <span class="text-danger small col-12" v-if="erros.cursos">{{ erros.cursos[0] }}</span>
-                                    <label for="" class="text-secodary col-12">Nome do curso</label>
-                                    <input type="text" class="form-control form-control-sm" placeholder="Informe novo curso"
-                                        v-model="items.cursos">
+                                    <span class="text-danger small col-12" v-if="erros.grade">{{ erros.grade[0] }}</span>
+                                    <label for="" class="text-secodary col-12">Nome do graduacao</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        placeholder="Informe novo graduacao" v-model="items.grade">
                                 </div>
-
                                 <div class="form-group col-12 mb-2">
-                                    <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
+                                    <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0]
                                     }}</span>
-                                    <label for="" class="text-secodary col-12">(Opcional) valor da cobrança</label>
-                                    <!-- <input type="text" class="form-control form-control-sm" placeholder="Cobrança"
-                                        v-model="items.cobranca"> -->
-                                    <VueNumberFormat class="form-control form-control-sm" v-model:value="items.cobranca"
-                                        :options="{ precision: 2, prefix: '', suffix: ' ', isInteger: true, acceptNegative: false, masked: false }">
-                                    </VueNumberFormat>
+                                    <label for="" class="text-secodary col-12">Adissionar ao curso de:</label>
+                                    <select class="form-control form-control-sm" v-model="items.curso_id" multiple>
+                                        <option disabled class="selected" value=""> Selessione um curso</option>
+                                        <option :value="curso.id" v-for="curso in getCoursesID" :key="curso.id">{{ curso.cursos }}
+                                        </option>
+                                    </select>
                                 </div>
                             </form>
                         </div>
@@ -236,7 +231,7 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="updateCurso(items.id)" type="button" class="btn btn-sm btn-success">
+                        <button @click.prevent="updateGraduaction(items.id)" type="button" class="btn btn-sm btn-success">
                             <span v-if="loading">
                                 <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
                             </span>
@@ -257,15 +252,15 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-trash text-danger"></i>
-                            Apagar o
-                            curso</h5>
+                            Apagar a
+                            graduação</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-12 text-center">
                                 <span class="text-primary">
-                                    <h6>Tens a certeza que desejas apagar este curso...?</h6>
+                                    <h6>Tens a certeza que desejas apagar esta graduação...?</h6>
                                 </span>
                             </div>
                         </div>
@@ -276,9 +271,10 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="apagarCurso(deleteCourseId)" type="button" class="btn btn-sm btn-danger">
+                        <button @click.prevent="apagarGraduaction(deleteGraduacId)" type="button"
+                            class="btn btn-sm btn-danger">
                             <span v-if="loading">
-                                <i class="fa-regular fa-floppy-disk"></i> Apagando o curso...
+                                <i class="fa-regular fa-floppy-disk"></i> Apagando o graduacao...
                             </span>
                             <span v-else>
                                 <i class="fa-regular fa-floppy-disk"></i> Apagar
@@ -295,7 +291,7 @@
             <div class="offcanvas-header">
 
                 <div class="form-group col-9 text-end text-info">
-                    <h5 id="offcanvasRightLabel text-center">DETALHES DO CURSO</h5>
+                    <h5 id="offcanvasRightLabel text-center">DETALHES DA GRADUAÇÃO</h5>
                 </div>
                 <div class="form-group col-3 text-end">
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
@@ -315,15 +311,18 @@
                 <div class="row">
                     <div class="form-group col-12 text-center">
                         <div class="card shadow">
-                            <h4><span class="text-danger">{{ info.cursos }}</span></h4>
+                            <h4><span class="text-danger">{{ info.grade }}</span></h4>
                         </div>
                     </div>
 
                     <div class="form-group col-12 mt-4">
-                        <div class="card">
+                        <div class="card mt-2" v-for="curso in info.cursos" :key="curso.id">
+                            
                             <div class="card-body">
-                                <h5>Cobrança: <span class="text-secondary text-success">{{ vueNumberFormat(info.cobranca,
-                                    { isInteger: true }) }}</span></h5>
+                                <p class="text-success">Curso associado</p>
+                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ curso.cursos }}</p>
+                                <p class="mt-0 fw-bold topoMargin">Valor do curso: <span class="text-success">{{ vueNumberFormat(curso.cobranca, {isInteger:true}) }} </span></p>
+
                             </div>
                         </div>
                     </div>
@@ -351,33 +350,42 @@ import dateFormat from '@vue-formily/date-format';
 import topoPageComponent from '../partials/topoPageComponent.vue'
 
 export default {
-    name: "Curso-component",
-
+    name: "graduacao-component",
+    emits: ['cleanForm', 'buscaCursosID'],
     data() {
         return {
-            items: { cursos: '', cobranca: '' },
+            items: {
+                grade: '',
+                curso_id: ''
+            },
             erros: [],
-            deleteCourseId: '',
+            deleteGraduacId: '',
             filter: '',
             info: [],
             fomatoData: '',
-            namePage:'Curso',
-            nameButto:'Novo curso',
-            pageTopoIcon:'fa-solid fa-graduation-cap'
+            namePage: 'Graduação / Classe',
+            nameButto: 'Nova graduação',
+            pageTopoIcon: 'fa-solid fa-graduation-cap',
+            loading: false
         }
     },
     created() {
-        this.loadingCourse(1)
+        this.loadingGraduaction()
+        this.loadingCourses()
     },
 
     computed: {
 
-        courses() {
-            return this.$store.state.curso.items.filter(curso => curso.cursos.includes(this.filter))
+        graduacoes() {
+            return this.$store.state.graduacao.items.filter(graduacao => graduacao.grade.includes(this.filter))
+        },
+
+        getCoursesID() {
+            return this.$store.state.curso.items
         },
         params() {
             return {
-                page: this.courses.current_page
+                page: this.graduacoes.current_page
             }
         },
 
@@ -393,10 +401,12 @@ export default {
     },
 
     methods: {
-
+        buscaCursosID() {
+            console.log('testou positivo')
+        },
         detalhes(id) {
             this.info = []
-            this.$store.dispatch('detalhes', id)
+            this.$store.dispatch('detalhesGraduaction', id)
                 .then((response) => {
                     this.info = response.data
                     console.log(this.info)
@@ -411,25 +421,31 @@ export default {
         },
 
         cleanForm() {
-            this.items = { cursos: '', cobranca: '' }
+            this.items = { graduacaos: '', cobranca: '' }
         },
 
-        loadingCourse() {
+        loadingGraduaction() {
+            //var store = useStore()
+            this.$store.dispatch('loadingGraduaction')
+        },
+
+        loadingCourses() {
             //var store = useStore()
             this.$store.dispatch('loadingCourse')
         },
 
-        registerCurso() {
-
-            this.$store.dispatch('createCourse', this.items)
+        registerGraduacao() {
+            console.log(this.items)
+            this.$store.dispatch('createGraduaction', this.items)
                 .then(() => {
                     notify({
                         title: 'Sucesso',
-                        text: "O Curso foi registado com sucesso",
+                        text: "O graduacao foi registado com sucesso",
                         type: 'success'
                     })
-                    this.loadingCourse()
-                    this.items = { cursos: '', cobranca: '' }
+                    this.loadingGraduaction()
+                    this.loadingCourses()
+                    this.items = { grade: '', curso_id: '' }
                     this.erros = []
                 })
                 .catch((error) => {
@@ -442,52 +458,53 @@ export default {
 
                 })
         },
-        updateCursoForm(id) {
-            this.$store.dispatch('updateFormCourse', id)
-                .then((response) => this.items = response.data.getCourse)
+        updategraduacaoForm(id) {
+            this.$store.dispatch('updateFormGraduaction', id)
+                .then((response) => this.items = response.data.getGraduaction)
                 .catch((error) => {
                     notify({
                         title: 'Não encotrado',
-                        text: 'O curso que pretendes localizar não existe',
+                        text: 'A graduação que pretendes localizar não existe',
                         type: 'warn'
                     })
                 })
         },
 
-        updateCurso() {
-            this.$store.dispatch('updateCurso', this.items)
-                .then(() => {
-                    notify({
-                        title: 'Sucesso',
-                        text: 'O curso foi actualizado com sucesso..!',
-                        type: 'success'
-                    })
-                    this.loadingCourse()
-                    this.items = { cursos: '', cobranca: '' }
-                    this.erros = []
-                })
-                .catch((error) => {
-                    notify({
-                        title: 'Erro',
-                        text: 'Não foi possível actualizar este curso',
-                        type: 'warn'
-                    })
-                })
-        },
-
-        deleteCourse(id) {
-            this.deleteCourseId = id;
-        },
-
-        apagarCurso(id) {
-            this.$store.dispatch('apagarCurso', id)
+        updateGraduaction() {
+            this.$store.dispatch('updateGraduaction', this.items)
                 .then((response) => {
                     notify({
                         title: 'Sucesso',
                         text: response.data.message,
                         type: 'success'
                     })
-                    this.loadingCourse()
+                    this.loadingGraduaction()
+                    this.items = { grade: '', curso_id: '' }
+                    this.erros = []
+                })
+                .catch((error) => {
+                    this.erros = error.response.data.errors
+                    notify({
+                        title:'Erro',
+                        text: 'Erro durante a actualização',
+                        type: 'warn'
+                    })
+                })
+        },
+
+        deleteGraduaction(id) {
+            this.deleteGraduacId = id;
+        },
+
+        apagarGraduaction(id) {
+            this.$store.dispatch('apagarGraduaction', id)
+                .then((response) => {
+                    notify({
+                        title: 'Sucesso',
+                        text: response.data.message,
+                        type: 'success'
+                    })
+                    this.loadingGraduaction()
                 })
                 .catch((error) => {
                     notify({
@@ -504,3 +521,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .topoMargin{
+        margin-top: -5% !important;
+    }
+</style>

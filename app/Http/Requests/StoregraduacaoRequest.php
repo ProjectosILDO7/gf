@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatecursoRequest extends FormRequest
+class StoregraduacaoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,15 @@ class UpdatecursoRequest extends FormRequest
     public function rules()
     {
         return [
-            'cursos'=>'required|string|max:255',
-            'cobranca'=>'nullable|numeric',
+            'grade'=>'required|unique:graduacaos',
         ];
     }
 
     public function messages()
     {
         return [
-            'cursos.required' => 'O campo nome do curso precisa ser preenchido.',
-            'cursos.string' => 'O campo nome do curso precisa ser do tipo texto.',
-            'cobranca.numeric' => 'O campo nome da cobrança precisa ser do tipo numérico.',
+            'grade.required'=>'O campo da graduação tem de ser preenchido',
+            'grade.unique'=>'Já existe esta graduação em nossos registos...!',
         ];
     }
 }

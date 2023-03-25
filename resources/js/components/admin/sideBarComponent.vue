@@ -110,7 +110,7 @@ export default {
   // Keep only one child opened at a time (first level only)
   showOneChild: {
     type: Boolean,
-    default: false
+    default: true
   },
 
   // Keep all child open
@@ -201,7 +201,7 @@ export default {
                             icon:'fa fa-graduation-cap' 
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.graduacao'},
                             title:'Graduação',
                             icon:'fa-solid fa-user-graduate'
                         },

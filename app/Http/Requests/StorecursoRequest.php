@@ -25,7 +25,7 @@ class StorecursoRequest extends FormRequest
     {
         return [
             'cursos'=>'required|string|max:255|unique:cursos',
-            'cobranca'=>'nullable|numeric'
+            'cobranca'=>'nullable|numeric',
         ];
     }
 
