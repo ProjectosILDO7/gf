@@ -206,8 +206,8 @@ export default {
                             icon:'fa-solid fa-user-graduate'
                         },
                         {
-                            href:'#',
-                            title:'Estudante',
+                            href:{name:'admin.estudantes'},
+                            title:'Estudantes',
                             icon:'fa-solid fa-users-line'
                         },
                         {
