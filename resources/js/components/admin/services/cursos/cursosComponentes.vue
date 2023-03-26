@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-4">
 
-        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon" />
+        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon" @buscar-curso-id="cleanForm"/>
 
         <br>
 
@@ -331,8 +331,9 @@
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5>Data de registo: <span class="text-secondary text-success"> {{ formatoDeData }} </span>
-                                </h5>
+                                <p class="text-success">Data de registo:</p>
+                                <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -363,7 +364,8 @@ export default {
             fomatoData: '',
             namePage:'Curso',
             nameButto:'Novo curso',
-            pageTopoIcon:'fa-solid fa-graduation-cap'
+            pageTopoIcon:'fa-solid fa-graduation-cap',
+            loading:false
         }
     },
     created() {
@@ -411,7 +413,8 @@ export default {
         },
 
         cleanForm() {
-            this.items = { cursos: '', cobranca: '' }
+            this.items = { cursos: '', cobranca: '' },
+            this.erros=[]
         },
 
         loadingCourse() {
@@ -429,8 +432,7 @@ export default {
                         type: 'success'
                     })
                     this.loadingCourse()
-                    this.items = { cursos: '', cobranca: '' }
-                    this.erros = []
+                    this.cleanForm()
                 })
                 .catch((error) => {
                     this.erros = error
@@ -443,6 +445,7 @@ export default {
                 })
         },
         updateCursoForm(id) {
+            this.cleanForm()
             this.$store.dispatch('updateFormCourse', id)
                 .then((response) => this.items = response.data.getCourse)
                 .catch((error) => {
@@ -463,8 +466,7 @@ export default {
                         type: 'success'
                     })
                     this.loadingCourse()
-                    this.items = { cursos: '', cobranca: '' }
-                    this.erros = []
+                    this.cleanForm()
                 })
                 .catch((error) => {
                     notify({
@@ -472,6 +474,7 @@ export default {
                         text: 'Não foi possível actualizar este curso',
                         type: 'warn'
                     })
+                    this.erros=error.response.data.errors
                 })
         },
 
@@ -504,3 +507,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .topoMargin{
+        margin-top: -5% !important;
+    }
+</style>

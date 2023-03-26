@@ -70,14 +70,19 @@ class GraduacaoRepository
         }
     }
 
-    public function updateGraduaction($data, $id)
+    public function updateGraduaction($request, $id)
     {
         $updateGraduaction = $this->ententy::find($id);
-        $updateGraduaction->grade = $data['grade'];
-        $updateGraduaction->save();
+        $data = $request->only('grade');
+        if($request->curso_id){
+            $updateGraduaction->cursos()->sync($request['curso_id']);
+        }
+        // $updateGraduaction->grade = $data['grade'];
+        // $updateGraduaction->save();
+        $updateGraduaction->update($data);
 
 
-        $updateGraduaction->cursos()->sync($data['curso_id']);
+        
 
         if (asset($updateGraduaction)) {
             return response()->json(['message' => 'A Graduação foi actualizada com sucesso'], 200);

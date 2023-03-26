@@ -330,8 +330,9 @@
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5>Data de registo: <span class="text-secondary text-success"> {{ formatoDeData }} </span>
-                                </h5>
+                                <p class="text-success">Data de registo:</p>
+                                <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
+                                </p>
                             </div>
                         </div>
                     </div>

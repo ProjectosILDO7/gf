@@ -13,7 +13,7 @@ class StoreEstudanteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,21 @@ class StoreEstudanteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'curso_id'=>'required',
+            'grade_id'=>'required',
+            'image'=>'image|nullable',
+            'nome'=>'required|string|max:45|min:4',
+            'numBI'=>'required|unique:estudantes',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'curso_id.required'=>'Precisas selessionar um curso...!',
+            'grade_id.required'=>'Precisas selessionar uma graduação',
+            'nome.required'=>'O campo nome precisa ser preenchido',
+            'numBI.required'=>'O campo do BI precisa ser preenchido',
+            'numBI.unique'=>'O nº do Bilhete tem que ser único',
         ];
     }
 }

@@ -2,7 +2,7 @@
     <div class="container mt-4">
 
         <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon"
-            @buscar-curso-id="buscaCursosID" />
+            @buscar-curso-id="buscaEstudanteID" />
 
         <br>
 
@@ -25,8 +25,8 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEdit"
-                                            @click="updateEstudanteForm(estudante.id)"><i
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" @click="updateEstudanteForm(estudante.id)"><i
                                                 class="fa-regular fa-pen-to-square text-success"></i> Alterar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteConfirm" @click="deleteEstudante(estudante.id)"><i
@@ -35,6 +35,11 @@
                                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
                                             @click="detalhes(estudante.id)">
                                             <i class="fa-solid fa-eye"></i> Vêr Detalhes
+                                        </a></li>
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="offcanvas"
+                                            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"
+                                            @click="efectuarPagamento(estudante.id)">
+                                            <i class="fa-solid fa-credit-card"></i> Criar pagamento
                                         </a></li>
                                 </ul>
                             </div>
@@ -51,13 +56,17 @@
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <label class="text-success">Curso inscrito</label>
-                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> nome do curso
+                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{
+                            estudante.cursos.cursos
+                        }}
                         </p>
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <label class="text-success">Graduação inscrito</label>
-                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i>nome da graduação
+                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{
+                            estudante.graduacoes.grade
+                        }}
                         </p>
                     </div>
 
@@ -156,8 +165,10 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-graduation-cap"></i> Cadastre
-                            nova estudante</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-graduation-cap"></i>
+                            <span v-if="btnSaveVariavel">Cadastre novos estudantes</span>
+                            <span v-else>Alterar dados do estudante</span>
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -168,16 +179,24 @@
                                     <span class="text-danger small col-12" v-if="erros.nome">{{ erros.nome[0] }}</span>
                                     <label for="" class="text-secodary col-12">Nome completo</label>
                                     <input type="text" class="form-control form-control-sm"
-                                        placeholder="Informe nova graduação" v-model="items.nome">
+                                        placeholder="Informe nome completo" v-model="items.nome">
+                                </div>
+
+                                <div class="form-group col-12 mb-2">
+                                    <span class="text-danger small col-12" v-if="erros.numBI">{{ erros.numBI[0] }}</span>
+                                    <label for="" class="text-secodary col-12">Nº do Bilhete</label>
+                                    <input type="text" class="form-control form-control-sm"
+                                        placeholder="Informe nº do Bilhete" v-model="items.numBI">
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
                                     <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0]
                                     }}</span>
                                     <label for="" class="text-secodary col-12">Inscrever no curso de:</label>
-                                    <select class="form-control form-control-sm" v-model="items.curso_id" multiple>
+                                    <select class="form-control form-control-sm" v-model="items.curso_id">
                                         <option disabled class="selected" value=""> Selessione um curso</option>
-                                        <option :value="curso.id" v-for="curso in getCoursesID" :key="curso.id">{{ curso.cursos }}
+                                        <option :value="curso.id" v-for="curso in getCoursesID" :key="curso.id">{{
+                                            curso.cursos }}
                                         </option>
                                     </select>
                                 </div>
@@ -185,19 +204,28 @@
                                 <div class="form-group col-12 mb-2">
                                     <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0]
                                     }}</span>
-                                    <label for="" class="text-secodary col-12">Inscrever na graduação de(a):</label>
-                                    <select class="form-control form-control-sm" v-model="items.grade_id" multiple>
+                                    <label for="" class="text-secodary col-12">Inscrever na graduação do(a):</label>
+                                    <select class="form-control form-control-sm" v-model="items.grade_id">
                                         <option disabled class="selected" value=""> Selessione a graduação</option>
-                                        <option :value="grade.id" v-for="grade in getGraduationID" :key="grade.id">{{ grade.grade }}
+                                        <option :value="grade.id" v-for="grade in getGraduacaoID" :key="grade.id">{{
+                                            grade.grade }}
                                         </option>
                                     </select>
+                                </div>
+
+                                <div class="form-group col-12 mb-2" v-if="btnSaveVariavel">
+                                    <span class="text-danger small col-12" v-if="erros.email">{{ erros.email[0] }}</span>
+                                    <label for="" class="text-secodary col-12">E-mail</label>
+                                    <input type="email" class="form-control form-control-sm" placeholder="Informe o e-amil"
+                                        v-model="items.email">
                                 </div>
 
 
                             </form>
                         </div>
                     </div>
-                    <div class="modal-footer">
+
+                    <div class="modal-footer" v-if="btnSaveVariavel">
                         <button type="submit" @click="cleanForm" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                             <span>
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
@@ -209,6 +237,22 @@
                             </span>
                             <span v-else>
                                 <i class="fa-regular fa-floppy-disk"></i> Cadastrar
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="modal-footer" v-else>
+                        <button type="submit" @click="cleanForm" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                            <span>
+                                <i class="fa-solid fa-circle-xmark"></i> Fechar
+                            </span>
+                        </button>
+                        <button @click.prevent="updateEstudante" type="button" class="btn btn-sm btn-success">
+                            <span v-if="loading">
+                                <i class="fa-regular fa-floppy-disk"></i> salvando a alteração...
+                            </span>
+                            <span v-else>
+                                <i class="fa-regular fa-floppy-disk"></i> Salvar
                             </span>
                         </button>
                     </div>
@@ -288,25 +332,49 @@
                     </div>
 
                     <div class="form-group col-12 mt-4">
-                        <div class="card mt-2">  
+                        <div class="card mt-2">
                             <div class="card-body">
-                                <p class="text-success">Curso associado</p>
-                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ info.cursos.cursos }}</p>
-                                <p class="mt-0 fw-bold topoMargin">Valor do curso: <span class="text-success">{{ vueNumberFormat(info.cursos.cobranca, {isInteger:true}) }} </span></p>
+                                <p class="text-success">Nº do documento pessoal:</p>
+                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ info.numBI }}</p>
                             </div>
                         </div>
-                    </div>
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <p class="text-success">Inscrito na graduação do(a):</p>
+                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ gradeInfo }}</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <p class="text-success">Inscrito no curso de:</p>
+                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ cursoInfo }}</p>
+                                <p class="mt-0 fw-bold topoMargin">Pago no valor de: <span class="text-success">{{
+                                    vueNumberFormat(cobrancaInfo, { isInteger: true }) }} </span></p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <p class="text-success">E-mail:</p>
+                                <p class="text-secondary mt-0 fw-bold topoMargin">{{ emailInfo }}</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <p class="text-success">Painel de acesso:</p>
+                                <p class="text-primary mt-0 fw-bold topoMargin">{{ adminInfo }}</p>
+                            </div>
+                        </div>
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <p class="text-success">Data de registo:</p>
+                                <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
+                                </p>
+                            </div>
+                        </div>
 
-                    <div class="form-group col-12 mt-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5>Data de registo: <span class="text-secondary text-success"> {{ formatoDeData }} </span>
-                                </h5>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                <hr>
+
 
             </div>
         </div>
@@ -325,27 +393,37 @@ export default {
     data() {
         return {
             items: {
-                user_id:'',
-                curso_id:'',
-                grade_id:'',
-                image:'',
-                nome:'',
-                organization:'',
+                user_id: '',
+                curso_id: '',
+                grade_id: '',
+                numBI: '',
+                email: '',
+                image: '',
+                nome: '',
             },
             erros: [],
-            deleteGraduacId: '',
+            deleteEstudanteId: '',
             filter: '',
             info: [],
+
+            gradeInfo: '',
+            emailInfo: '',
+            cursoInfo: '',
+            cobrancaInfo: '',
+            adminInfo: '',
+
             fomatoData: '',
             namePage: 'Estudantes',
             nameButto: 'Novo estudante',
             pageTopoIcon: 'fa-solid fa-circle-user',
-            loading: false
+            loading: false,
+            btnSaveVariavel: false
         }
     },
     created() {
         this.loadingEstudantes()
         this.loadingCourses()
+        this.loadingGraduaction()
     },
 
     computed: {
@@ -359,7 +437,7 @@ export default {
         },
 
         getGraduacaoID() {
-            return this.$store.state.grade.items
+            return this.$store.state.graduacao.items
         },
         params() {
             return {
@@ -380,14 +458,19 @@ export default {
 
     methods: {
         buscaEstudanteID() {
-            console.log('teste')
+            this.btnSaveVariavel = true
+            this.cleanForm();
         },
         detalhes(id) {
             this.info = []
             this.$store.dispatch('detalhesEstudante', id)
                 .then((response) => {
                     this.info = response.data
-                    console.log(this.info)
+                    this.cursoInfo = this.info.cursos.cursos
+                    this.cobrancaInfo = this.info.cursos.cobranca
+                    this.gradeInfo = this.info.graduacoes.grade
+                    this.emailInfo = this.info.users.email
+                    this.adminInfo = this.info.users.admin
                 })
                 .catch((error) => {
                     notify({
@@ -400,13 +483,14 @@ export default {
 
         cleanForm() {
             this.items = {
-                user_id:'',
-                curso_id:'',
-                grade_id:'',
-                image:'',
-                nome:'',
-                organization:'',
-            }
+                user_id: '',
+                curso_id: '',
+                grade_id: '',
+                image: '',
+                nome: '',
+                organization: '',
+            },
+                this.erros = [];
         },
 
         loadingEstudantes() {
@@ -425,8 +509,8 @@ export default {
         },
 
         registerEstudantes() {
-            
-            this.$store.dispatch('createEstudantes', this.items)
+
+            this.$store.dispatch('createEstudante', this.items)
                 .then(() => {
                     notify({
                         title: 'Sucesso',
@@ -449,6 +533,7 @@ export default {
                 })
         },
         updateEstudanteForm(id) {
+            this.btnSaveVariavel = false
             this.$store.dispatch('updateFormEstudante', id)
                 .then((response) => this.items = response.data.getEstudante)
                 .catch((error) => {
@@ -461,6 +546,7 @@ export default {
         },
 
         updateEstudante() {
+
             this.$store.dispatch('updateEstudante', this.items)
                 .then((response) => {
                     notify({
@@ -475,7 +561,7 @@ export default {
                 .catch((error) => {
                     this.erros = error.response.data.errors
                     notify({
-                        title:'Erro',
+                        title: 'Erro',
                         text: 'Erro durante a actualização',
                         type: 'warn'
                     })
@@ -513,7 +599,7 @@ export default {
 </script>
 
 <style scoped>
-    .topoMargin{
-        margin-top: -5% !important;
-    }
+.topoMargin {
+    margin-top: -5% !important;
+}
 </style>

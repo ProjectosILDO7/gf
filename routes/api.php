@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\GraduacaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,14 @@ Route::get('/getGraduaction/{id}', [GraduacaoController::class, 'edit'])->middle
 Route::put('/updateGraduaction/{id}', [GraduacaoController::class, 'update'])->middleware('api');
 Route::get('/apagarGraduaction/{id}', [GraduacaoController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesGraduaction/{id}', [GraduacaoController::class, 'show'])->middleware('api');
+
+Route::get('/estudantes', [EstudanteController::class, 'index'])->middleware('api');
+Route::post('/filter', [EstudanteController::class, 'filter'])->middleware('api');
+Route::post('/registerEstudante', [EstudanteController::class, 'store'])->middleware('api');
+Route::get('/getEstudante/{id}', [EstudanteController::class, 'edit'])->middleware('api');
+Route::put('/updateEstudante/{id}', [EstudanteController::class, 'update'])->middleware('api');
+Route::get('/apagarEstudante/{id}', [EstudanteController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesEstudante/{id}', [EstudanteController::class, 'show'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

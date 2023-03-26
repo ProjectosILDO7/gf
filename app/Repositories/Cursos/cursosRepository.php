@@ -74,6 +74,7 @@ class CursosRepository
     public function updateCurso($data, $id)
     {
         $updateCourse = $this->ententy::find($id);
+        
         $updateCourse->cursos = $data['cursos'];
         $updateCourse->cobranca = $data['cobranca'];
         $updateCourse->save();

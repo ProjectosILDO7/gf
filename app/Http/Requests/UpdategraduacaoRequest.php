@@ -23,8 +23,9 @@ class UpdategraduacaoRequest extends FormRequest
      */
     public function rules()
     {
+        $id=$this->id ?? '';
         return [
-            'grade'=>'required',
+            'grade'=>"required|unique:graduacaos,grade,{$id},id",
         ];
     }
 
@@ -32,6 +33,7 @@ class UpdategraduacaoRequest extends FormRequest
     {
         return [
             'grade.required'=>'O campo da graduação tem de ser preenchido',
+            'grade.unique'=>'A graduação que pretendes alterar já existe...!',
         ];
     }
 }

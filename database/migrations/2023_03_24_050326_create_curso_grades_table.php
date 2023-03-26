@@ -31,6 +31,12 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::create('curso_grades', function (Blueprint $table) {
+            $table->dropForeign('curso_grades_curso_id_foreign');
+            $table->dropForeign('curso_grades_grade_id_foreign');
+            $table->dropColumn('curso_id');
+            $table->dropColumn('grade_id');
+        });
         Schema::dropIfExists('curso_grades');
     }
 };
