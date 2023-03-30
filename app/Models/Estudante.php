@@ -33,4 +33,8 @@ class Estudante extends Model
     public function users(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function senhas(){
+        return $this->hasOne(reserva_senha_estudante::class, 'estudante_id', 'id');
+    }
 }

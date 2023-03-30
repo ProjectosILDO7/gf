@@ -12,14 +12,18 @@ import preloading from '../js/components/preloading/preloading-simples.vue'
 import VueNumberFormat from 'vue-number-format'
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
+import JsonExcel from "vue-json-excel3";
+import { VImage } from 'v-image';
 
 import 'animate.css';
-
+window.url='/'
 const app = createApp(App)
       app.use(store)
       app.use(VueSidebarMenu)
       app.use(router)
       app.use(Notifications)
+      app.component("downloadExcel", JsonExcel);
+      app.component('VImage', VImage);
       app.use(VueNumberFormat, {prefix:'', isInteger: true})
       app.mount('#app');
       

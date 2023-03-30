@@ -25,6 +25,7 @@ class StoregraduacaoRequest extends FormRequest
     {
         return [
             'grade'=>'required|unique:graduacaos',
+            'curso_id'=>'required'
         ];
     }
 
@@ -33,6 +34,7 @@ class StoregraduacaoRequest extends FormRequest
         return [
             'grade.required'=>'O campo da graduação tem de ser preenchido',
             'grade.unique'=>'Já existe esta graduação em nossos registos...!',
+            'curso_id.required'=>'Precisas de associar esta graduação à um curso'
         ];
     }
 }

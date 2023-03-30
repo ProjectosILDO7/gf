@@ -2,11 +2,14 @@
 
 namespace App\Repositories\Estudantes;
 
-use App\Models\graduacao;
 use App\Models\cursos;
+use Illuminate\Http\File;
 use App\Models\Estudante;
+use App\Models\reserva_senha_estudante;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 class EstudanteRepository
 {
@@ -25,7 +28,7 @@ class EstudanteRepository
     public function getEstudantes()
     {
         
-        $estudantes = $this->ententy::with('cursos', 'graduacoes', 'users')->orderBy('nome', 'asc')->where('organization_id', $this->userID)->get();
+        $estudantes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas')->orderBy('nome', 'asc')->where('organization_id', $this->userID)->get();
             if (asset($estudantes)) {
                 return response()->json($estudantes);
             } else {
@@ -39,7 +42,12 @@ class EstudanteRepository
     public function create($data)
     {
 
-
+        if($data->image){
+            $image=time() . '.' . explode('/', explode(':', substr($data->image, 0, strpos($data->image, ';')))[1])[1];
+            Image::make($data->image)->save(public_path('storage/image/estudantes/'.$image));
+        }else{
+            $image=null;
+        }
         $user=User::create([
             'name'=>$data['nome'],
             'email'=>$data['email'],
@@ -55,10 +63,16 @@ class EstudanteRepository
             'user_id'=>$user_id,
             'curso_id'=>$data['curso_id'],
             'grade_id'=>$data['grade_id'],
-            'image'=>$data['image'],
+            'image'=>$image,
             'nome'=>$data['nome'],
             'numBI'=>$data['numBI'],
             'organization_id'=>$organization_id
+        ]);
+
+        reserva_senha_estudante::create([
+            'estudante_id'=>$saveEstudante->id,
+            'organization_id'=>$organization_id,
+            'senha_reserva'=>$this->senha
         ]);
 
         if (asset($saveEstudante)) {
@@ -94,13 +108,24 @@ class EstudanteRepository
     {
         $updateEstudante = $this->ententy::find($id);
 
-        $data = $request->only('nome', 'image', 'numBI');
+        $data = $request->only('nome','numBI');
         if($request->curso_id){
             $data['curso_id']=$request->curso_id;
         }
 
         if($request->grade_id){
             $data['grade_id']=$request->grade_id;
+        }
+
+        if($request->image){
+            //Se existir uma imagem na pasta de estudante de referencia entao apaga-se esta e cadastra-se outra
+            if(Storage::exists('/image/estudantes/'.$updateEstudante->image)){
+                Storage::delete('/image/estudantes/'.$updateEstudante->image);
+            }
+            $data['image']=time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+            Image::make($request->image)->save(public_path('storage/image/estudantes/'.$data['image']));
+        }else{
+            $data['image']=null;
         }
 
         $updateEstudante->update($data);
@@ -117,9 +142,15 @@ class EstudanteRepository
 
     public function apagar($id)
     {
+        
         $deleteEstudante = $this->ententy::find($id);
-        $deleteEstudante->delete();
+       
+        $deleteImage=Storage::disk('public')->delete('/image/estudantes/'.$deleteEstudante->image);
 
+        if(asset($deleteImage)){
+           $deleteEstudante->delete();
+        }
+        
         if (asset($deleteEstudante)) {
             return response()->json(['message' => 'Estudante apagado com sucesso'], 200);
         } else {
@@ -128,7 +159,7 @@ class EstudanteRepository
     }
 
     public function detalhes($id){
-        $detalhes = $this->ententy::with('cursos', 'graduacoes', 'users')->find($id);
+        $detalhes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas')->find($id);
 
         if(asset($detalhes)){
             return response()->json($detalhes);

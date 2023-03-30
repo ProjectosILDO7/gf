@@ -2,16 +2,23 @@ import EstudantesService from '../../../service/estudantes/estudante.service.js'
 
 const actions = {
     
-    loadingEstudantes({commit}){
+    loadingEstudantes({_, commit}){
         commit('PRELOADING', true)
         return EstudantesService.getEstudantes()
-                        .then(response =>commit('ADD_ALL_ESTUDANTES', response.data))
-                        .catch(error=>console.log(error))
+                        .then((response) =>{
+                            commit('ADD_ALL_ESTUDANTES', response.data)
+                        })
+                        .catch((error)=>console.log(error))
                         .finally(()=>commit('PRELOADING', false))
     },
 
     createEstudante(_, params){
         return EstudantesService.addEstudante(params)
+    },
+
+    all_studante(){
+        return EstudantesService.getEstudantes()
+                                
     },
 
     updateFormEstudante({commit}, id){

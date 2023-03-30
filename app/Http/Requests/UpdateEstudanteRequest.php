@@ -27,7 +27,7 @@ class UpdateEstudanteRequest extends FormRequest
         return [
             'curso_id'=>'required',
             'grade_id'=>'required',
-            'image'=>'image|nullable',
+            'image'=>'string|nullable',
             'nome'=>'required|string|max:45|min:4',
             'numBI'=>"required|unique:estudantes,numBI,{$id},id",
         ];

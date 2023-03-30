@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\GraduacaoController;
+use App\Http\Controllers\reserva_senha_control;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,7 @@ Route::get('/getEstudante/{id}', [EstudanteController::class, 'edit'])->middlewa
 Route::put('/updateEstudante/{id}', [EstudanteController::class, 'update'])->middleware('api');
 Route::get('/apagarEstudante/{id}', [EstudanteController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesEstudante/{id}', [EstudanteController::class, 'show'])->middleware('api');
+Route::get('/reserva_senha_aluno', [reserva_senha_control::class, 'show'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

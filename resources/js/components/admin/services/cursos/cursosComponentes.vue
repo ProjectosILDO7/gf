@@ -5,13 +5,19 @@
 
         <br>
 
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" v-if="courses!=''">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input class="form-control form-control-sm me-2" v-model="filter" type="search" placeholder="Pesquisar"
                     aria-label="Search">
             </div>
         </form>
+
+        <div class="row" v-if="courses==''">
+                <div class="form-group col-12 text-danger text-center fw-bold">
+                    De momento não tens nenhum curso cadastrado...
+                </div>
+        </div>
 
         <div class="card mt-2 shadow" v-for="curso in courses" :key="curso.id">
             <div class="card-body">
