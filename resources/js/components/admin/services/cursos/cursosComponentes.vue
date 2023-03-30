@@ -5,7 +5,11 @@
 
         <br>
 
-        <form class="d-flex" role="search" v-if="courses!=''">
+        <div class="form-group col-12 text-start mb-2">
+            <span class="text-secondary">Total de cursos:</span> <span class="fw-bold">( {{ totalDeCursos }} )</span>
+        </div>
+
+        <form class="d-flex" role="search" v-if="totalDeCursos>=6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input class="form-control form-control-sm me-2" v-model="filter" type="search" placeholder="Pesquisar"
@@ -381,7 +385,11 @@ export default {
     computed: {
 
         courses() {
-            return this.$store.state.curso.items.filter(curso => curso.cursos.includes(this.filter))
+            return this.$store.getters.todosCursos(this.filter)
+        },
+
+        totalDeCursos() {
+            return this.$store.getters.todosCursosCount
         },
         params() {
             return {

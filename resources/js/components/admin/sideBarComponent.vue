@@ -92,7 +92,7 @@ export default {
   // Sidebar Collapse state (v-model:collapsed to enable two-way data binding)
   collapsed: {
     type: Boolean,
-    default: false
+    default: true
   },
 
   // Sidebar width (expanded)
@@ -140,7 +140,7 @@ export default {
   // Sidebar theme (available themes: 'white-theme')
   theme: {
     type: String,
-    default: 'green-theme'
+    default: ''
   },
 
   // Disable hover on collapse mode

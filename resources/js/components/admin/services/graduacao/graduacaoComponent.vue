@@ -6,7 +6,11 @@
 
         <br>
 
-        <form class="d-flex" role="search" v-if="graduacoes!=''">
+        <div class="form-group col-12 text-start mb-2">
+            <span class="text-secondary">Total de classes/Graduações:</span> <span class="fw-bold">( {{ totalGraduacoes }} )</span>
+        </div>
+
+        <form class="d-flex" role="search" v-if="totalGraduacoes>=6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input class="form-control form-control-sm me-2" v-model="filter" type="search" placeholder="Pesquisar"
@@ -384,7 +388,11 @@ export default {
     computed: {
 
         graduacoes() {
-            return this.$store.state.graduacao.items.filter(graduacao => graduacao.grade.includes(this.filter))
+            return this.$store.getters.todasGraduacoes(this.filter)
+        },
+        
+        totalGraduacoes() {
+            return this.$store.getters.todasGraduacoesCount
         },
 
         getCoursesID() {
