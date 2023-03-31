@@ -5,6 +5,8 @@ namespace App\Repositories\User;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class UserRepository
 {
@@ -52,8 +54,18 @@ class UserRepository
             ]);
         }else{
             $data = $request->only('name', 'email');
-            if($request->password)
+            
+            if($request->image){
+                if(Storage::exists('/image/users/'.$user->image)){
+                    Storage::delete('/image/users/'.$user->image);
+                }
+                $data['image']=time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+                Image::make($request->image)->save(public_path('storage/image/users/'.$data['image']));
+            };
+
+            if($request->password){
                 $user['password'] = bcrypt($request->password);
+            }
                 
             $user->update($data);
 

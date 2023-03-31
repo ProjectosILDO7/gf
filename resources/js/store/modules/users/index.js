@@ -2,7 +2,7 @@ import AuthService from "@/service/auth.service";
 
 export default {
     state: {
-        user: {},
+        user: [],
         authorization: false,
     },
 
@@ -29,6 +29,12 @@ export default {
                 .finally(()=>commit('PRELOADING', false))
         },
 
+        meuPerfil({commit}) {
+           commit('PRELOADING', true)
+           return AuthService.getMe((user) => commit("SET_USER", user))
+                             .finally(()=>commit('PRELOADING', false))
+        },
+
         logout({ commit }) {
             return AuthService.logout()
                 .then(() => commit("LOGOUT"))
@@ -43,5 +49,14 @@ export default {
                                 .then((res)=>console.log(res))
                                 .catch((error)=>console.log(error))
         },
+
+        perfilupadate(_, params){
+            AuthService.perfilUpdate(params)
+         }
     },
+    getters:{
+        gettersMe(state){
+            return state.user
+        }
+    }
 };
