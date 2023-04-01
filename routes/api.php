@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\reserva_senha_control;
@@ -47,6 +48,13 @@ Route::get('/getCourse/{id}', [CursoController::class, 'edit'])->middleware('api
 Route::put('/updateCurso/{id}', [CursoController::class, 'update'])->middleware('api');
 Route::get('/apagarCurso/{id}', [CursoController::class, 'destroy'])->middleware('api');
 Route::get('/detalhes/{id}', [CursoController::class, 'show'])->middleware('api');
+
+Route::get('/disciplinas', [DisciplinaController::class, 'index'])->middleware('api');
+Route::post('/filter', [DisciplinaController::class, 'filter'])->middleware('api');
+Route::post('/registerDisciplina', [DisciplinaController::class, 'store'])->middleware('api');
+Route::get('/getDisciplina/{id}', [DisciplinaController::class, 'edit'])->middleware('api');
+Route::put('/updateDisciplina/{id}', [DisciplinaController::class, 'update'])->middleware('api');
+Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

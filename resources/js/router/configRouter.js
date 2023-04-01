@@ -45,6 +45,11 @@ const routes = [
                 component:()=>import('../components/admin/services/cursos/cursosComponentes.vue')
             },
             {
+                path:'disciplinas',
+                name:'admin.disciplinas',
+                component:()=>import('../components/admin/services/disciplinas/disciplinasComponent.vue')
+            },
+            {
                 path:'graduacao',
                 name:'admin.graduacao',
                 component:()=>import('../components/admin/services/graduacao/graduacaoComponent.vue')

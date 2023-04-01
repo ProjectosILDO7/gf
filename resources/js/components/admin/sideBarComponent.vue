@@ -201,6 +201,11 @@ export default {
                             icon:'fa fa-graduation-cap' 
                         },
                         {
+                            href:{name:'admin.disciplinas'},
+                            title:'Disciplinas',
+                            icon:'fa-solid fa-book-open-reader'
+                        },
+                        {
                             href:{name:'admin.graduacao'},
                             title:'Graduação',
                             icon:'fa-solid fa-user-graduate'
@@ -214,11 +219,6 @@ export default {
                             href:'#',
                             title:'Emolumento',
                             icon:'fa-solid fa-id-card-clip'
-                        },
-                        {
-                            href:'#',
-                            title:'Mensalidade',
-                            icon:'fa-solid fa-hand-holding-dollar'
                         },
                         {
                             href:'#',
@@ -237,7 +237,7 @@ export default {
                         },
                         {
                             href:'#',
-                            title:'Confirmação de matriculas',
+                            title:'Confirmação',
                             icon:'fa-solid fa-clipboard-check'
                         },
                         {
