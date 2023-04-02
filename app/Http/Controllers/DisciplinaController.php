@@ -28,8 +28,12 @@ class DisciplinaController extends Controller
 
     public function show($id)
     {
-        //
         return $this->entety->detalhes($id);
+    }
+
+    public function showDisciplinasEmCursos()
+    {
+        return $this->entety->disciplinasEmCursos();
     }
 
     public function edit($id)

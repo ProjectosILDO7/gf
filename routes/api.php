@@ -54,7 +54,9 @@ Route::post('/filter', [DisciplinaController::class, 'filter'])->middleware('api
 Route::post('/registerDisciplina', [DisciplinaController::class, 'store'])->middleware('api');
 Route::get('/getDisciplina/{id}', [DisciplinaController::class, 'edit'])->middleware('api');
 Route::put('/updateDisciplina/{id}', [DisciplinaController::class, 'update'])->middleware('api');
-Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
+Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
+Route::get('/disciplinasEmCursos', [DisciplinaController::class, 'showDisciplinasEmCursos'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

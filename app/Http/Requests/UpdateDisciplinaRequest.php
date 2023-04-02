@@ -26,7 +26,7 @@ class UpdateDisciplinaRequest extends FormRequest
         $id = $this->id ?? '';
         return [
             'cadeira'=>"required|unique:disciplinas,cadeira,{$id},id",
-            'curso_id'=>'required'
+            'curso_id'=>'nullable'
         ];
     }
 
@@ -35,7 +35,6 @@ class UpdateDisciplinaRequest extends FormRequest
         return [
             'cadeira.required'=>'O campo de disciplina precisa estar preenchido',
             'cadeira.unique'=>'Esta disciplina já está cadastrada',
-            'curso_id.required'=>'Precisas associar os cursos com a disciplina digitada'
         ];
     }
 }

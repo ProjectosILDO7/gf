@@ -2,19 +2,35 @@
     <div class="container mt-4">
 
         <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon"
-            @buscar-curso-id="cleanForm" />
+            @buscar-curso-id="novaDisciplina" />
 
         <br>
 
-        <div class="form-group col-12 text-start mb-2">
-            <span class="text-secondary">Total de disciplinas:</span> <span class="fw-bold">( {{ totalDeDisciplinas }}
-                )</span>
+        <div class="row">
+            <div class="form-group col-6 text-start mb-2">
+                <span class="text-secondary">Total de disciplinas:</span> <span class="fw-bold">( {{ totalDeDisciplinas }}
+                    )</span>
+            </div>
+
+            <div class="form-group col-6 text-end mb-2" v-if="totalDeDisciplinas != 0">
+                <!-- Export Excel file -->
+                <download-excel class="btn btn-sm btn-outline-success" :data="disciplinas" :fields="fields"
+                    :json_meta="json_meta" type="xls" worksheet="Disciplinas" name="Lista de disciplinas.xls">
+                    <i class="fa-solid fa-file-excel"></i> Exportar para Excel (Disciplinas)
+                </download-excel>
+
+                <button @click="disciplinas_em_cursos" class="btn btn-sm btn-outline-info ml-2" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
+                    <i class="fa-regular fa-eye"></i> Vêr disciplinas nos cursos
+                </button>
+            </div>
         </div>
+
 
         <form class="d-flex" role="search" v-if="totalDeDisciplinas >= 6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input class="form-control form-control-sm me-2" v-model="filter" type="search" placeholder="Pesquisar"
+                <input class="form-control form-control-sm" v-model="filter" type="search" placeholder="Pesquisar"
                     aria-label="Search">
             </div>
         </form>
@@ -36,8 +52,8 @@
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEdit"
-                                            @click="updateDisciplinaForm(disciplina.id)"><i
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" @click="updateDisciplinaForm(disciplina.id)"><i
                                                 class="fa-regular fa-pen-to-square text-success"></i> Alterar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalDeleteConfirm" @click="deleteDisciplina(disciplina.id)"><i
@@ -55,7 +71,7 @@
                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <label class="text-success">Disciplina</label>
                         <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{
-                            disciplina.cursos
+                            disciplina.cadeira
                         }}
                         </p>
                     </div>
@@ -155,8 +171,15 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-graduation-cap"></i> Cadastre
-                            nova disciplina</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            <span class="" v-if="btnSaveVariavel">
+                                <i class="fa-solid fa-graduation-cap"></i> Cadastre nova disciplina
+                            </span>
+                            <span class="" v-else>
+                                <i class="fa-solid fa-graduation-cap"></i> Alter informações da disciplina
+                            </span>
+
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -184,7 +207,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" v-if="btnSaveVariavel">
                         <button type="submit" @click="cleanForm" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
                             <span>
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
@@ -196,6 +219,21 @@
                             </span>
                             <span v-else>
                                 <i class="fa-regular fa-floppy-disk"></i> Cadastrar
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-footer" v-else>
+                        <button type="submit" @click="cleanForm" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+                            <span>
+                                <i class="fa-solid fa-circle-xmark"></i> Fechar
+                            </span>
+                        </button>
+                        <button @click.prevent="updateDisciplina" type="button" class="btn btn-sm btn-success">
+                            <span v-if="loading">
+                                <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
+                            </span>
+                            <span v-else>
+                                <i class="fa-regular fa-floppy-disk"></i> Salvar alteração
                             </span>
                         </button>
                     </div>
@@ -274,6 +312,94 @@
                         </div>
                     </div>
 
+                    <div class="card mt-2" v-for="(curso, index) in info.cursos" :key="index">
+                        <div class="card-body">
+                            <p class="text-success">Curso associado:</p>
+                            <p class="text-secondary mt-0 fw-bold topoMargin">
+                                {{ curso.cursos }}
+                            </p>
+                            <p class="text-secondary mt-0 topoMargin">
+                                Cobrança: <span class="text-success fw-bold">{{ vueNumberFormat(curso.cobranca,
+                                    { isInteger: true }) }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="text-success">Data de registo:</p>
+                                <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+            </div>
+        </div>
+
+        <!-- Înfo Canvas - informações a esquerda MAIS DETALHES Disciplinas nos cursos -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasLeftLabel">
+            <div class="offcanvas-header">
+
+                <div class="form-group col-9 text-end text-secondary">
+                    <h5 id="offcanvasRightLabel text-center">MAIS DETALHES</h5>
+                </div>
+                <div class="form-group col-3 text-end">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+
+            </div>
+            <div class="offcanvas-body">
+                <div class="row">
+                    <div class="form-group col-12 text-center">
+                        <h1><i class="fa-solid fa-book-open-reader fs-lg text-success"></i></h1>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="form-group col-12 text-center">
+                        <div class="card shadow">
+                            <h4><span class="text-info">DISCIPLINAS NOS CURSOS</span></h4>
+                        </div>
+                    </div>
+
+                    <div class="card mt-2" v-for="(curso, index) in disciplinasEmCursos" :key="index">
+                        <div class="card-body">
+                            <p class="text-success">Curso:</p>
+                            <p class="text-secondary mt-0 fw-bold topoMargin">
+                                {{ curso.cursos }}
+                            </p>
+
+                            <span v-if="curso['graduacoes'] != ''">
+                                <p class="text-info topoMargin" v-for="(classe, index) in curso['graduacoes']" :key="index">
+                                    <i class="fa-regular fa-square-check text-danger"></i> {{ classe.grade }}
+                                </p>
+                            </span>
+
+                            <p class="text-danger small topoMargin" v-else>
+                                Não tens Classes registadas neste curso
+                            </p>
+
+                            <hr class="mt-1 mb-4" />
+
+                            <span v-if="curso['disciplinas'] != ''">
+                                <p class="topoMargin mt-2" v-for="(disciplina, index) in curso['disciplinas']" :key="index">
+                                    <i class="fa-solid fa-circle-check"></i> {{ disciplina.cadeira }}
+                                </p>
+                            </span>
+                            <p class="text-danger small topoMargin" v-else>
+                                Não tens disciplinas registadas neste curso
+                            </p>
+
+                        </div>
+                    </div>
+
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body">
@@ -294,7 +420,6 @@
 
 <script>
 import { notify } from '@kyvg/vue3-notification'
-import dateFormat from '@vue-formily/date-format';
 import topoPageComponent from '../partials/topoPageComponent.vue'
 
 export default {
@@ -311,12 +436,28 @@ export default {
             namePage: 'Disciplinas',
             nameButto: 'Nova disciplina',
             pageTopoIcon: 'fa-solid fa-book-open-reader',
-            loading: false
+            loading: false,
+            btnSaveVariavel: false,
+            disciplinasEmCursos: [],
+
+            json_meta: [
+                [
+                    {
+                        key: "charset",
+                        value: "utf-8",
+                    },
+                ],
+            ],
+
+            fields: {
+                "Disciplinas": "cadeira",
+            },
         }
     },
     created() {
         this.loadingDisciplinas()
         this.loadingCourses()
+        this.disciplinas_em_cursos()
     },
 
     computed: {
@@ -351,9 +492,19 @@ export default {
 
     methods: {
 
+        disciplinas_em_cursos() {
+            this.$store.dispatch('verDisciplinasEmCursosl')
+                .then((response)=>this.disciplinasEmCursos = response.data)
+        },
+
+        novaDisciplina() {
+            this.btnSaveVariavel = true;
+            this.cleanForm();
+        },
+
         detalhes(id) {
             this.info = []
-            this.$store.dispatch('detalhes', id)
+            this.$store.dispatch('detalhesDisciplina', id)
                 .then((response) => {
                     this.info = response.data
                     console.log(this.info)
@@ -406,6 +557,7 @@ export default {
                 })
         },
         updateDisciplinaForm(id) {
+            this.btnSaveVariavel = false
             this.cleanForm()
             this.$store.dispatch('updateFormDisciplina', id)
                 .then((response) => this.items = response.data.getDisciplina)
@@ -427,7 +579,7 @@ export default {
                         type: 'success'
                     })
                     this.cleanForm()
-                    this.loadingDisciplina()
+                    this.loadingDisciplinas()
 
                 })
                 .catch((error) => {
@@ -452,7 +604,7 @@ export default {
                         text: response.data.message,
                         type: 'success'
                     })
-                    this.loadingDisciplina()
+                    this.loadingDisciplinas()
                 })
                 .catch((error) => {
                     notify({
@@ -470,6 +622,8 @@ export default {
 }
 </script>
 
-<style scoped>.topoMargin {
+<style scoped>
+.topoMargin {
     margin-top: -5% !important;
-}</style>
+}
+</style>

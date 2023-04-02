@@ -2,8 +2,10 @@
 
 namespace App\Repositories\Disciplinas;
 
+use App\Models\curso;
 use App\Models\Disciplina;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class disciplinasRepository
 {
@@ -14,35 +16,46 @@ class disciplinasRepository
     public function __construct(Disciplina $disciplina)
     {
         $this->ententy = $disciplina;
-        $this->userID=Auth()->user()->id;
+        $this->userID = Auth()->user()->id;
     }
 
     public function getDisciplinas()
     {
-        $disciplinas = $this->ententy::orderBy('cadeira', 'asc')->where('user_id', $this->userID)->get();
-            if (asset($disciplinas)) {
-                return response()->json($disciplinas);
-            } else {
-                return response()->json([
-                    'status' => 'Erro',
-                    'message' => 'Não foi possível carregar as disciplinas'
-                ], 401);
-            }
+        $disciplinas = $this->ententy::with('cursos')->orderBy('cadeira', 'asc')->where('user_id', $this->userID)->get();
+        if (asset($disciplinas)) {
+            return response()->json($disciplinas);
+        } else {
+            return response()->json([
+                'status' => 'Erro',
+                'message' => 'Não foi possível carregar as disciplinas'
+            ], 401);
+        }
+    }
+
+    public function disciplinasEmCursos()
+    {
+
+        $disciplinas_cursos = curso::with('disciplinas', 'graduacoes')->orderBy('cursos', 'asc')->where('user_id', $this->userID)->get();
+        if (asset($disciplinas_cursos)) {
+            return response()->json($disciplinas_cursos);
+        } else {
+            return response()->json([
+                'status' => 'Erro',
+                'message' => 'Não foi possível carregar as informações...!'
+            ], 401);
+        }
     }
 
     public function create($data)
     {
 
-        $saveDisciplina = $this->ententy::create([            
+        $saveDisciplina = $this->ententy::create([
             'user_id' => $this->userID,
             'cadeira' => $data['cadeira']
         ]);
 
-        $saveDisciplina->cursos()->sync([
-            'user_id'=>$this->userID, 
-            'curso_id'=>$data->curso_id
-        ]);
-        
+        $saveDisciplina->cursos()->sync($data->curso_id);
+
         if (asset($saveDisciplina)) {
             return response()->json([
                 'status' => 'Sucesso',
@@ -71,12 +84,16 @@ class disciplinasRepository
         }
     }
 
-    public function updateDisciplina($data, $id)
+    public function updateDisciplina($request, $id)
     {
         $updateDisciplina = $this->ententy::find($id);
-        
-        $updateDisciplina->cadeira = $data['cadeira'];
-        $updateDisciplina->save();
+        $data = $request->only('cadeira');
+
+        if ($request->curso_id) {
+            $updateDisciplina->cursos()->attach($request->curso_id);
+        }
+        $updateDisciplina->update($data);
+
 
         if (asset($updateDisciplina)) {
             return response()->json(['message' => 'A disciplina foi actualizada com sucesso'], 200);
@@ -87,6 +104,7 @@ class disciplinasRepository
 
     public function apagar($id)
     {
+
         $deleteDisciplina = $this->ententy::find($id);
         $deleteDisciplina->delete();
 
@@ -97,12 +115,13 @@ class disciplinasRepository
         }
     }
 
-    public function detalhes($id){
-        $detalhes = $this->ententy::find($id);
-        if(asset($detalhes)){
+    public function detalhes($id)
+    {
+        $detalhes = $this->ententy::with('cursos')->find($id);
+        if (asset($detalhes)) {
             return response()->json($detalhes);
-        }else{
-            return response()->json(['erro'=>'Não foi possível carregar os detalhes']);
+        } else {
+            return response()->json(['erro' => 'Não foi possível carregar os detalhes']);
         }
     }
 }

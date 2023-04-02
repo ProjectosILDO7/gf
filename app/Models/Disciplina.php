@@ -11,10 +11,11 @@ class Disciplina extends Model
     protected $fillable=[
         'user_id',
         'cadeira',
-        'curso_id'
+        'curso_id',
+        'disciplina_id'
     ];
 
     public function cursos(){
-        return $this->belongsToMany(curso::class, 'curso_disciplinas', 'curso_id');
+        return $this->belongsToMany(curso::class, 'curso_disciplinas')->withPivot('curso_id', 'disciplina_id');
     }
 }

@@ -11,6 +11,15 @@ export default class disciplinasService extends BaseService{
         })
     }
 
+    static async getDisciplinasEmCursos(){
+        return new Promise((resolve, reject)=>{
+            this.request({auth:true})
+                .get('/disciplinasEmCursos')
+                .then((resp)=>resolve(resp))
+                .catch((erro)=>reject(erro))
+        })
+    }
+
     static async filter(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
@@ -59,7 +68,7 @@ export default class disciplinasService extends BaseService{
     static async detalhes(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get(`/detalhes/${params}`)
+                .get(`/detalhesDisciplina/${params}`)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro.response.data.errors))
         })

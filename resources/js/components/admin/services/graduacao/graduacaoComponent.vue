@@ -13,7 +13,7 @@
         <form class="d-flex" role="search" v-if="totalGraduacoes>=6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
-                <input class="form-control form-control-sm me-2" v-model="filter" type="search" placeholder="Pesquisar"
+                <input class="form-control form-control-sm" v-model="filter" type="search" placeholder="Pesquisar"
                     aria-label="Search">
             </div>
         </form>

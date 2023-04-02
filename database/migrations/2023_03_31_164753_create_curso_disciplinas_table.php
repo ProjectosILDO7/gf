@@ -35,7 +35,6 @@ return new class extends Migration
         Schema::create('curso_disciplinas', function (Blueprint $table) {
             $table->dropForeign('curso_disciplinas_curso_id_foreign');
             $table->dropForeign('curso_disciplinas_disciplina_id_foreign');
-            $table->dropColumn('user_id');
             $table->dropColumn('curso_id');
             $table->dropColumn('disciplina_id');
         });

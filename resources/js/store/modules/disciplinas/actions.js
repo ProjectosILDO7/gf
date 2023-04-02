@@ -10,6 +10,20 @@ const actions = {
                         .finally(()=>commit('PRELOADING', false))
     },
 
+    loadingDisciplinasExcel({commit}){
+        commit('PRELOADING', true)
+        return disciplinasService.getDisciplinas()
+                        .catch(error=>console.log(error))
+                        .finally(()=>commit('PRELOADING', false))
+    },
+
+    verDisciplinasEmCursosl({commit}){
+        commit('PRELOADING', true)
+        return disciplinasService.getDisciplinasEmCursos()
+                        .catch(error=>console.log(error))
+                        .finally(()=>commit('PRELOADING', false))
+    },
+
     createDisciplina(_, params){
         return disciplinasService.addDisciplina(params)
     },

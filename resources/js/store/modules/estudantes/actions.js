@@ -11,6 +11,13 @@ const actions = {
                         .catch((error)=>console.log(error))
                         .finally(()=>commit('PRELOADING', false))
     },
+    
+    loadingEstudantesExcel({_, commit}){
+        commit('PRELOADING', true)
+        return EstudantesService.getEstudantes()
+                        .catch((error)=>console.log(error))
+                        .finally(()=>commit('PRELOADING', false))
+    },
 
     createEstudante(_, params){
         return EstudantesService.addEstudante(params)
