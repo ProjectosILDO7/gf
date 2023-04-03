@@ -50,6 +50,11 @@ const actions = {
         commit('PRELOADING', true)
         return disciplinasService.detalhes(params)
                              .finally(()=>commit('PRELOADING', false))
+    },
+    exportDisciplinasCursos({commit}){
+        commit('PRELOADING', true)
+        return disciplinasService.exportDisciplinasCursos()
+                             .finally(()=>commit('PRELOADING', false))
     }
 }
 

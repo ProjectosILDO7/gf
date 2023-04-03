@@ -18,7 +18,7 @@
                                 <p class="card-text"><i class="fa-solid fa-circle-check"></i> Suporte Individual</p>
 
                                 <div class="d-grid gab-2">
-                                    <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-cart-shopping"></i> EFECTUAR A ASSINAR</button>
+                                    <button class="btn btn-secondary btn-sm"><i class="fa-solid fa-cart-shopping"></i> Efectuar  a assinatura</button>
                                 </div>
 
                             </div>
@@ -40,7 +40,7 @@
                                 <p class="card-text"><i class="fa-solid fa-circle-check"></i> Suporte Individual</p>
 
                                 <div class="d-grid gab-2">
-                                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-cart-shopping"></i> EFECTUAR A ASSINAR</button>
+                                    <button class="btn btn-primary btn-sm"><i class="fa-solid fa-cart-shopping"></i> Efectuar  a assinatura</button>
                                 </div>
 
                             </div>
@@ -60,7 +60,7 @@
                                 <p class="card-text"><i class="fa-solid fa-circle-check"></i> Suporte Individual</p>
 
                                 <div class="d-grid gab-2">
-                                    <button class="btn btn-success btn-sm"><i class="fa-solid fa-cart-shopping"></i> EFECTUAR A ASSINAR</button>
+                                    <button class="btn btn-success btn-sm"><i class="fa-solid fa-cart-shopping"></i> Efectuar  a assinatura</button>
                                 </div>
 
                             </div>

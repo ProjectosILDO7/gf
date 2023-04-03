@@ -64,6 +64,10 @@ const routes = [
                 name:'admin.estudantes',
                 component:()=>import('../components/admin/services/estudantes/estudantesComponent.vue')
             },
+            {
+                path:'exportToExcel',
+                name:'admin.exportToExcel'
+            },
             
         ]
     },

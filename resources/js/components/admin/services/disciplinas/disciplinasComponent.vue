@@ -70,7 +70,7 @@
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <label class="text-success">Disciplina</label>
-                        <p class="text-secondary h6"><i class="fa-solid fa-graduation-cap text-success"></i> {{
+                        <p class="text-secondary h6"><i class="fa-solid fa-book-open-reader"></i> {{
                             disciplina.cadeira
                         }}
                         </p>
@@ -402,11 +402,12 @@
 
                     <div class="form-group col-12 mt-4">
                         <div class="card">
-                            <div class="card-body">
-                                <p class="text-success">Data de registo:</p>
-                                <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
-                                </p>
+                            <div class="card-body m-auto">
+                                <a class="btn btn-sm btn-primary" :href="urlExport">
+                                    <i class="fa-solid fa-file-excel fa-lg"></i> Exportar disciplinas e cursos
+                                </a>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -421,12 +422,14 @@
 <script>
 import { notify } from '@kyvg/vue3-notification'
 import topoPageComponent from '../partials/topoPageComponent.vue'
+import { URL_API } from '../../../../configs/index.js'
 
 export default {
     name: "Curso-component",
 
     data() {
         return {
+            urlExport:URL_API+'/ExportToExcel',
             items: { cadeira: '', curso_id: [] },
             erros: [],
             deleteDisciplinaId: '',

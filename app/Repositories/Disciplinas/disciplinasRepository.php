@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Disciplinas;
 
+use App\Exports\Disciplinas_cursosExport;
 use App\Models\curso;
 use App\Models\Disciplina;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class disciplinasRepository
 {
@@ -124,4 +126,5 @@ class disciplinasRepository
             return response()->json(['erro' => 'Não foi possível carregar os detalhes']);
         }
     }
+
 }

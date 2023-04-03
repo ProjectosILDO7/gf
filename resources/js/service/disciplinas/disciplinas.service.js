@@ -74,4 +74,13 @@ export default class disciplinasService extends BaseService{
         })
     }
 
+    static async exportDisciplinasCursos(){
+        return new Promise((resolve, reject)=>{
+            this.request({auth:true})
+                .get('/ExportToExcel')
+                .then((resp)=>resolve(resp))
+                .catch((erro)=>reject(erro.response.data.errors))
+        })
+    }
+
 }

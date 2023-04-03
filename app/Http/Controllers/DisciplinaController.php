@@ -53,4 +53,5 @@ class DisciplinaController extends Controller
         //
         return $this->entety->apagar($id);
     }
+
 }

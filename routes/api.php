@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\EstudanteController;
+use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\reserva_senha_control;
 use Illuminate\Http\Request;
@@ -57,6 +58,7 @@ Route::put('/updateDisciplina/{id}', [DisciplinaController::class, 'update'])->m
 Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
 Route::get('/disciplinasEmCursos', [DisciplinaController::class, 'showDisciplinasEmCursos'])->middleware('api');
+Route::get('/ExportToExcel', [ExportExcelController::class, 'export'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');
