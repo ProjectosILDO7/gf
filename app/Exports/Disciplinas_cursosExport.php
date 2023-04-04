@@ -3,14 +3,20 @@
 namespace App\Exports;
 
 use App\Models\Disciplina;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class Disciplinas_cursosExport implements FromCollection
+class Disciplinas_cursosExport implements ShouldAutoSize, FromView
 {
     
-    public function collection()
+    public function view(): View
     {
-        return Disciplina::with('cursos')->get();
+        return view('exports.Export_disciplinas_cursos', [
+            'disciplinas' => Disciplina::with('cursos')->get()
+        ]);
     }
-
+    
 }

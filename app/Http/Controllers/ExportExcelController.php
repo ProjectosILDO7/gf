@@ -9,7 +9,6 @@ class ExportExcelController extends Controller
 {
     public function export() 
     {
-        //return (new Disciplinas_cursosExport)->download('disciplinas.xlsx');
-        return Excel::download(new Disciplinas_cursosExport, 'disciplinas.xlsx');
+        return Excel::download(new Disciplinas_cursosExport, 'disciplinas e cursos.xlsx');
     }
 }

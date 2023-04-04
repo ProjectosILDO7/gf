@@ -13,16 +13,19 @@
             </div>
 
             <div class="form-group col-6 text-end mb-2" v-if="totalDeDisciplinas != 0">
-                <!-- Export Excel file -->
-                <download-excel class="btn btn-sm btn-outline-success" :data="disciplinas" :fields="fields"
-                    :json_meta="json_meta" type="xls" worksheet="Disciplinas" name="Lista de disciplinas.xls">
-                    <i class="fa-solid fa-file-excel"></i> Exportar para Excel (Disciplinas)
-                </download-excel>
 
-                <button @click="disciplinas_em_cursos" class="btn btn-sm btn-outline-info ml-2" data-bs-toggle="offcanvas"
+                <button @click="disciplinas_em_cursos" class="btn btn-sm btn-outline-info" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasLeft" aria-controls="offcanvasLeft">
                     <i class="fa-regular fa-eye"></i> Vêr disciplinas nos cursos
                 </button>
+                <!-- Export Excel file -->
+                <!-- <download-excel class="" :data="disciplinas" :fields="fields"
+                    :json_meta="json_meta" type="xls" worksheet="Disciplinas" name="Lista de disciplinas.xls">
+                    <i class="fa-solid fa-file-excel"></i> Exportar para Excel (Disciplinas)
+                </download-excel> -->
+                <a class="btn btn-sm btn-outline-success ml-2" :href="urlExport">
+                    <i class="fa-solid fa-file-excel fa-lg"></i> Exportar disciplinas e cursos
+                </a>
             </div>
         </div>
 
@@ -403,9 +406,7 @@
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body m-auto">
-                                <a class="btn btn-sm btn-primary" :href="urlExport">
-                                    <i class="fa-solid fa-file-excel fa-lg"></i> Exportar disciplinas e cursos
-                                </a>
+
                             </div>
 
                         </div>
@@ -429,7 +430,7 @@ export default {
 
     data() {
         return {
-            urlExport:URL_API+'/ExportToExcel',
+            urlExport: URL_API + '/ExportToExcel',
             items: { cadeira: '', curso_id: [] },
             erros: [],
             deleteDisciplinaId: '',
@@ -497,7 +498,7 @@ export default {
 
         disciplinas_em_cursos() {
             this.$store.dispatch('verDisciplinasEmCursosl')
-                .then((response)=>this.disciplinasEmCursos = response.data)
+                .then((response) => this.disciplinasEmCursos = response.data)
         },
 
         novaDisciplina() {
@@ -546,7 +547,7 @@ export default {
                         type: 'success'
                     })
                     this.cleanForm()
-                    this.loadingDisciplina()
+                    this.loadingDisciplinas()
 
                 })
                 .catch((error) => {

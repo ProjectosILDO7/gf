@@ -14,6 +14,10 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import JsonExcel from "vue-json-excel3"
 
+// import ProxyPay from 'proxypay-api'
+// const P = new ProxyPay({
+//       apikey: ""
+// })
 
 import 'animate.css';
 window.url='/'

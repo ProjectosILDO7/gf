@@ -436,7 +436,7 @@ export default {
         },
 
         cleanForm() {
-            this.items = { graduacaos: '', cobranca: '' }
+            items= {grade: '', curso_id: ''}
         },
 
         loadingGraduaction() {
