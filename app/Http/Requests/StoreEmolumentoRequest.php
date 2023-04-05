@@ -13,7 +13,7 @@ class StoreEmolumentoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class StoreEmolumentoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'emolumento'=>'required|unique:emolumentos,emolumento',
+            'cobranca'=>'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'emolumento.rquired'=>'O campo do emolumento precisa estar preenchido',
+            'cobranca.required'=>'Precisas informar o valor da cobrança deste emolumento',
         ];
     }
 }

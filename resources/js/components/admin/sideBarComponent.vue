@@ -216,7 +216,7 @@ export default {
                             icon:'fa-solid fa-users-line'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.emolumentos'},
                             title:'Emolumento',
                             icon:'fa-solid fa-id-card-clip'
                         },

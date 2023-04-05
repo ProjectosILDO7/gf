@@ -13,7 +13,7 @@ class UpdateEmolumentoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,19 @@ class UpdateEmolumentoRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->id ?? '';
         return [
-            //
+            'emolumento'=>"required|unique:emolumentos,emolumento,{$id},id",
+            'cobranca'=>'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'emolumento.rquired'=>'O campo do emolumento precisa estar preenchido',
+            'emolumento.unique'=>'Já existe um emolumento registado com esse nome',
+            'cobranca.required'=>'Precisas informar o valor da cobrança deste emolumento',
         ];
     }
 }

@@ -4,12 +4,12 @@ namespace App\Exports;
 
 use App\Models\Disciplina;
 use Illuminate\Contracts\View\View;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class Disciplinas_cursosExport implements ShouldAutoSize, FromView
+class Disciplinas_cursosExport implements ShouldAutoSize, FromView//, WithColumnFormatting
 {
     
     public function view(): View
@@ -18,5 +18,12 @@ class Disciplinas_cursosExport implements ShouldAutoSize, FromView
             'disciplinas' => Disciplina::with('cursos')->get()
         ]);
     }
+
+    // public function columnFormats(): array
+    // {
+    //     return [
+    //         'C' => NumberFormat::FORMAT_NUMBER_00
+    //     ];
+    // }
     
 }

@@ -2,85 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Emolumento;
 use App\Http\Requests\StoreEmolumentoRequest;
 use App\Http\Requests\UpdateEmolumentoRequest;
+use App\Repositories\Emolumentos\emolumentosRepository;
 
 class EmolumentoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $entety;
+
+    public function __construct(emolumentosRepository $emolumento)
+    {
+        $this->entety=$emolumento;
+    }
+
     public function index()
     {
-        //
+     //
+        return $this->entety->getEmolumentos();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreEmolumentoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreEmolumentoRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Emolumento  $emolumento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Emolumento $emolumento)
+    public function show($id)
     {
-        //
+        return $this->entety->detalhes($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Emolumento  $emolumento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Emolumento $emolumento)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->getEmolumento($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateEmolumentoRequest  $request
-     * @param  \App\Models\Emolumento  $emolumento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateEmolumentoRequest $request, Emolumento $emolumento)
+    public function update(UpdateEmolumentoRequest $request, $id)
     {
         //
+       return $this->entety->updateEmolumento($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Emolumento  $emolumento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Emolumento $emolumento)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
+
+
 }

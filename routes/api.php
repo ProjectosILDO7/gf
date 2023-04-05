@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
+use App\Http\Controllers\EmolumentoController;
 use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
@@ -59,6 +60,15 @@ Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'destroy'])->
 Route::get('/detalhesDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
 Route::get('/disciplinasEmCursos', [DisciplinaController::class, 'showDisciplinasEmCursos'])->middleware('api');
 Route::get('/ExportToExcel', [ExportExcelController::class, 'export'])->middleware('api');
+
+Route::get('/emolumentos', [EmolumentoController::class, 'index'])->middleware('api');
+Route::post('/filter', [EmolumentoController::class, 'filter'])->middleware('api');
+Route::post('/registerEmolumento', [EmolumentoController::class, 'store'])->middleware('api');
+Route::get('/getEmolumento/{id}', [EmolumentoController::class, 'edit'])->middleware('api');
+Route::put('/updateEmolumento/{id}', [EmolumentoController::class, 'update'])->middleware('api');
+Route::get('/apagarEmolumento/{id}', [EmolumentoController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesEmolumento/{id}', [EmolumentoController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelEmolumento/{user}', [ExportExcelController::class, 'exportEmolumento'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

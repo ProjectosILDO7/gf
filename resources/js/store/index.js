@@ -3,6 +3,7 @@ import users from "./modules/users";
 import perfil from "./modules/perfil";
 import curso from "./modules/curso"
 import disciplinas from "./modules/disciplinas"
+import emolumentos from "./modules/emolumento"
 import graduacao from "./modules/graduacao"
 import estudantes from "./modules/estudantes"
 import senha_reserva from "./modules/senha_reserva"
@@ -16,6 +17,7 @@ export default createStore({
         perfil,
         curso,
         disciplinas,
+        emolumentos,
         graduacao,
         senha_reserva,
         estudantes,

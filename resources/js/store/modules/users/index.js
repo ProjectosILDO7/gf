@@ -29,6 +29,10 @@ export default {
                 .finally(()=>commit('PRELOADING', false))
         },
 
+        getMeSemLoading() {
+           return AuthService.getMe()
+        },
+
         meuPerfil({commit}) {
            commit('PRELOADING', true)
            return AuthService.getMe((user) => commit("SET_USER", user))
