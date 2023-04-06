@@ -2,85 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Uniforme;
 use App\Http\Requests\StoreUniformeRequest;
 use App\Http\Requests\UpdateUniformeRequest;
+use App\Repositories\Uniformes\uniformeRepository;
 
 class UniformeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $entety;
+
+    public function __construct(uniformeRepository $uniforme)
+    {
+        $this->entety=$uniforme;
+    }
+
     public function index()
     {
-        //
+     //
+        return $this->entety->getUniformes();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUniformeRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreUniformeRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Uniforme  $uniforme
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Uniforme $uniforme)
+    public function show($id)
     {
-        //
+        return $this->entety->detalhes($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Uniforme  $uniforme
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Uniforme $uniforme)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->geUniforme($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUniformeRequest  $request
-     * @param  \App\Models\Uniforme  $uniforme
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUniformeRequest $request, Uniforme $uniforme)
+    public function update(UpdateUniformeRequest $request, $id)
     {
         //
+       return $this->entety->updateUniforme($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Uniforme  $uniforme
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Uniforme $uniforme)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
+
 }

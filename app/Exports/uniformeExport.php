@@ -2,12 +2,12 @@
 
 namespace App\Exports;
 
-use App\Models\Emolumento;
+use App\Models\Uniforme;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class emolumentoExport implements ShouldAutoSize, FromView
+class uniformeExport implements ShouldAutoSize, FromView
 {
     protected $idUser;
 
@@ -18,8 +18,9 @@ class emolumentoExport implements ShouldAutoSize, FromView
     
     public function view(): View
     { 
-        return view('exports.emolumentoExport', [
-            'emolumentos' => Emolumento::where('user_id', $this->idUser)->orderBy('emolumento', 'asc')->get()
+        return view('exports.uniformeExport', [
+            'uniformes' => Uniforme::where('user_id', $this->idUser)->orderBy('descricao', 'asc')->get()
         ]);
     }
+
 }

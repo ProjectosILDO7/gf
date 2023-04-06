@@ -221,7 +221,7 @@ export default {
                             icon:'fa-solid fa-id-card-clip'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.uniformes'},
                             title:'Uniforme',
                             icon:'fa-solid fa-user-tie'
                         },

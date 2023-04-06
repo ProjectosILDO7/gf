@@ -13,4 +13,8 @@ class Emolumento extends Model
         'emolumento',
         'cobranca'
     ];
+
+    public function users(){
+        return $this->belongosTo(User::class);
+    }
 }

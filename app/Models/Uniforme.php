@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Uniforme extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'user_id',
+        'descricao',
+        'cobranca'
+    ];
+
+    public function users(){
+        return $this->belongosTo(User::class);
+    }
 }

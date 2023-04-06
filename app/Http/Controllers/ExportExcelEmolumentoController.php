@@ -10,7 +10,7 @@ class ExportExcelEmolumentoController extends Controller
 {
     public function exportEmolumento($user) 
     {
-        dd($user);
+
         return Excel::download(new Emolumento, 'Lista de emolumentos.xlsx');
     }
 }

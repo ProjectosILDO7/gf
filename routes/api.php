@@ -13,6 +13,7 @@ use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\reserva_senha_control;
+use App\Http\Controllers\UniformeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +60,7 @@ Route::put('/updateDisciplina/{id}', [DisciplinaController::class, 'update'])->m
 Route::get('/apagarDisciplina/{id}', [DisciplinaController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesDisciplina/{id}', [DisciplinaController::class, 'show'])->middleware('api');
 Route::get('/disciplinasEmCursos', [DisciplinaController::class, 'showDisciplinasEmCursos'])->middleware('api');
-Route::get('/ExportToExcel', [ExportExcelController::class, 'export'])->middleware('api');
+Route::get('/ExportToExcel/{id}', [ExportExcelController::class, 'export'])->middleware('api');
 
 Route::get('/emolumentos', [EmolumentoController::class, 'index'])->middleware('api');
 Route::post('/filter', [EmolumentoController::class, 'filter'])->middleware('api');
@@ -69,6 +70,15 @@ Route::put('/updateEmolumento/{id}', [EmolumentoController::class, 'update'])->m
 Route::get('/apagarEmolumento/{id}', [EmolumentoController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesEmolumento/{id}', [EmolumentoController::class, 'show'])->middleware('api');
 Route::get('/ExportToExcelEmolumento/{user}', [ExportExcelController::class, 'exportEmolumento'])->middleware('api');
+
+Route::get('/uniformes', [UniformeController::class, 'index'])->middleware('api');
+Route::post('/filter', [UniformeController::class, 'filter'])->middleware('api');
+Route::post('/registerUniforme', [UniformeController::class, 'store'])->middleware('api');
+Route::get('/getUniforme/{id}', [UniformeController::class, 'edit'])->middleware('api');
+Route::put('/updateUniforme/{id}', [UniformeController::class, 'update'])->middleware('api');
+Route::get('/apagarUniforme/{id}', [UniformeController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesUniforme/{id}', [UniformeController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelUniforme/{user}', [ExportExcelController::class, 'exportUniforme'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

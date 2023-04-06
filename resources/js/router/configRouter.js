@@ -69,6 +69,11 @@ const routes = [
                 name:'admin.emolumentos',
                 component:()=>import('../components/admin/services/emolumentos/emolumentoComponent.vue')
             },
+            {
+                path:'uniformes',
+                name:'admin.uniformes',
+                component:()=>import('../components/admin/services/uniformes/uniformeComponent.vue')
+            },
             
         ]
     },

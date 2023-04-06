@@ -13,7 +13,7 @@ class UpdateUniformeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,19 @@ class UpdateUniformeRequest extends FormRequest
      */
     public function rules()
     {
+        $id=$this->id ?? "";
         return [
-            //
+            'descricao'=>"required|unique:uniformes,descricao,{$id},id",
+            'cobranca'=>'required'
+        ];
+    }
+    public function messages()
+    {
+
+        return [
+            'descricao.required'=>"Preenchimento obrigatório",
+            'descricao.unique'=>"Este uniforme já foi cadastrado",
+            'cobranca.required'=>'Preenchimento obrigatório'
         ];
     }
 }

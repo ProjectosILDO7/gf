@@ -89,7 +89,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-link">
+                        <!-- <li class="nav-link">
                             <a href="#" class="btn btn-sm btn-success" @click.prevent="logout">
                                 <span v-if="loading">
                                     <i class="fa-solid fa-right-from-bracket"></i>Terminando...
@@ -98,7 +98,7 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>Terminar
                                 </span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

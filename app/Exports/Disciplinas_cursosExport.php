@@ -11,11 +11,17 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Disciplinas_cursosExport implements ShouldAutoSize, FromView//, WithColumnFormatting
 {
+    protected $idUser;
+
+    public function __construct($id)
+    {
+        $this->idUser=$id;
+    }
     
     public function view(): View
     {
         return view('exports.Export_disciplinas_cursos', [
-            'disciplinas' => Disciplina::with('cursos')->get()
+            'disciplinas' => Disciplina::with('cursos')->where('user_id', $this->idUser)->get()
         ]);
     }
 

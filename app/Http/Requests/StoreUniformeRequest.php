@@ -13,7 +13,7 @@ class StoreUniformeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class StoreUniformeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'descricao'=>'required|unique:uniformes,descricao',
+            'cobranca'=>'required'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'descricao.require'=>'Preenchimento obrigatório',
+            'descricao.unique'=>'Este uniforme já foi cadastrado',
+            'cobranca.required'=>'Preenchimento obrigatório'
         ];
     }
 }
