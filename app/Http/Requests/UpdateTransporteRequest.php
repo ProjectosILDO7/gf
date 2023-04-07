@@ -13,18 +13,25 @@ class UpdateTransporteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
+        $id = $this->id ?? "";
         return [
-            //
+            'descricao'=>"required|unique:transportes,descricao,{$id},id",
+            'cobranca'=>'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'descricao.required'=>'Preenchimento obrigatório',
+            'descricao.unique'=>'A descrição do transporte deve ser único',
+            'cobranca.required'=>'Preenchimento obrigatório'
+        ];
+    }       
+
 }

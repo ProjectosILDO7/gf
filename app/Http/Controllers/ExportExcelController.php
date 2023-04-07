@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\Disciplinas_cursosExport;
 use App\Exports\emolumentoExport;
+use App\Exports\transporteExport;
 use App\Exports\uniformeExport;
 use App\Models\Emolumento;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,6 +26,12 @@ class ExportExcelController extends Controller
     {
         
         return Excel::download(new uniformeExport($user), 'Lista de uniformes.xlsx');
+    }
+
+    public function exportTransporte($user) 
+    {
+        
+        return Excel::download(new transporteExport($user), 'Lista de transporte.xlsx');
     }
 
 }

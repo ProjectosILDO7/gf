@@ -13,18 +13,23 @@ class StoreTransporteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'descricao'=>'required|unique:transportes,descricao',
+            'cobranca'=>'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'descricao.required'=>'Preenchimento obrigatório',
+            'descricao.unique'=>'A descrição do transporte deve ser único',
+            'cobranca.required'=>'Preenchimento obrigatório'
         ];
     }
 }

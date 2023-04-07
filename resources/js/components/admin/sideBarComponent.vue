@@ -226,7 +226,7 @@ export default {
                             icon:'fa-solid fa-user-tie'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.transporte'},
                             title:'Transporte',
                             icon:'fa-solid fa-bus'
                         },

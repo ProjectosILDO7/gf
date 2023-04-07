@@ -1,11 +1,11 @@
 import BaseService from "../base.service"
 
-export default class uniformesService extends BaseService{
+export default class transportesService extends BaseService{
 
-    static async getUniformes(){
+    static async getTransportes(){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get('/uniformes')
+                .get('/transportes')
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro))
         })
@@ -20,37 +20,37 @@ export default class uniformesService extends BaseService{
         })
     }
 
-    static async updateFormUniforme(id){
+    static async updateFormTransporte(id){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get(`/getUniforme/${id}`)
+                .get(`/getTransporte/${id}`)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro))
         })
     }
 
-    static async updateUniforme(params){
+    static async updateTransporte(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .put(`/updateUniforme/${params.id}`, params)
+                .put(`/updateTransporte/${params.id}`, params)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro))
         })
     }
 
-    static async apagarUniforme(params){
+    static async apagarTransporte(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get(`/apagarUniforme/${params}`)
+                .get(`/apagarTransporte/${params}`)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro))
         })
     }
 
-    static async addUniforme(params){
+    static async addTransporte(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .post('/registerUniforme', params)
+                .post('/registerTransporte', params)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro.response.data.errors))
         })
@@ -59,7 +59,7 @@ export default class uniformesService extends BaseService{
     static async detalhes(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get(`/detalhesUniforme/${params}`)
+                .get(`/detalhesTransporte/${params}`)
                 .then((resp)=>resolve(resp))
                 .catch((erro)=>reject(erro.response.data.errors))
         })

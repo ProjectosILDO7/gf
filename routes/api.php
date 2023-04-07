@@ -13,6 +13,7 @@ use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\reserva_senha_control;
+use App\Http\Controllers\TransporteController;
 use App\Http\Controllers\UniformeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -79,6 +80,15 @@ Route::put('/updateUniforme/{id}', [UniformeController::class, 'update'])->middl
 Route::get('/apagarUniforme/{id}', [UniformeController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesUniforme/{id}', [UniformeController::class, 'show'])->middleware('api');
 Route::get('/ExportToExcelUniforme/{user}', [ExportExcelController::class, 'exportUniforme'])->middleware('api');
+
+Route::get('/transportes', [TransporteController::class, 'index'])->middleware('api');
+Route::post('/filter', [TransporteController::class, 'filter'])->middleware('api');
+Route::post('/registerTransporte', [TransporteController::class, 'store'])->middleware('api');
+Route::get('/getTransporte/{id}', [TransporteController::class, 'edit'])->middleware('api');
+Route::put('/updateTransporte/{id}', [TransporteController::class, 'update'])->middleware('api');
+Route::get('/apagarTransporte/{id}', [TransporteController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesTransporte/{id}', [TransporteController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelTransporte/{user}', [ExportExcelController::class, 'exportTransporte'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

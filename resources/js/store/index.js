@@ -5,6 +5,7 @@ import curso from "./modules/curso"
 import disciplinas from "./modules/disciplinas"
 import emolumentos from "./modules/emolumento"
 import uniforme from "./modules/uniforme"
+import transporte from "./modules/transporte"
 import graduacao from "./modules/graduacao"
 import estudantes from "./modules/estudantes"
 import senha_reserva from "./modules/senha_reserva"
@@ -20,6 +21,7 @@ export default createStore({
         disciplinas,
         emolumentos,
         uniforme,
+        transporte,
         graduacao,
         senha_reserva,
         estudantes,
