@@ -13,6 +13,7 @@ import VueNumberFormat from 'vue-number-format'
 import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import JsonExcel from "vue-json-excel3"
+//import Select2 from "vue3-select2-component"
 
 // import ProxyPay from 'proxypay-api'
 // const P = new ProxyPay({
@@ -26,7 +27,8 @@ const app = createApp(App)
       app.use(VueSidebarMenu)
       app.use(router)
       app.use(Notifications)
-      app.component("downloadExcel", JsonExcel);
+      app.component("downloadExcel", JsonExcel)
+      //app.component('Select2', Select2)
       app.use(VueNumberFormat, {prefix:'', isInteger: true})
       app.mount('#app');
       

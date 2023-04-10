@@ -18,7 +18,8 @@ router.beforeEach(async (to, _, next)=>{
 
     await store.dispatch('getMe')
                 .catch(()=>{
-                  if(to.name !='home.login') return router.push({name:'home.login'})
+                  if(to.name !='home.login') 
+                      return router.push({name:'admin.dashboard'})
                 })
         
   }

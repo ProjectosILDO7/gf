@@ -13,7 +13,7 @@ class StoreMultaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StoreMultaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+           'cobranca'=>'required|unique:multas,cobranca'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+           'cobranca.required'=>'Preenchimento obrigatório',
+           'cobranca.unique'=>'Já existe uma multa cadastrada com este valor',
         ];
     }
 }

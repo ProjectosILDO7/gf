@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('multas', function (Blueprint $table) {
+        Schema::create('curso_multas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('cobranca');
+            $table->unsignedBigInteger('curso_id');
+            $table->unsignedBigInteger('multa_id');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-        
         });
     }
 
@@ -31,10 +28,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('multas', function (Blueprint $table) {
-            $table->dropForeign('multas_user_id_foreign');;
-            $table->dropColumn('user_id');
+        Schema::create('curso_multas', function (Blueprint $table) {
+            $table->dropForeign('curso_id');
+            $table->dropForeign('multa_id');
+            $table->dropColumn('multa_id');
+            $table->dropColumn('multa_id');
         });
-        Schema::dropIfExists('multas');
+        Schema::dropIfExists('curso_multas');
     }
 };

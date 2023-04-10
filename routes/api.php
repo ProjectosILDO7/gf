@@ -6,12 +6,14 @@ use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConfirmacaoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\EmolumentoController;
 use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
+use App\Http\Controllers\MultaController;
 use App\Http\Controllers\reserva_senha_control;
 use App\Http\Controllers\TransporteController;
 use App\Http\Controllers\UniformeController;
@@ -89,6 +91,24 @@ Route::put('/updateTransporte/{id}', [TransporteController::class, 'update'])->m
 Route::get('/apagarTransporte/{id}', [TransporteController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesTransporte/{id}', [TransporteController::class, 'show'])->middleware('api');
 Route::get('/ExportToExcelTransporte/{user}', [ExportExcelController::class, 'exportTransporte'])->middleware('api');
+
+Route::get('/multas', [MultaController::class, 'index'])->middleware('api');
+Route::post('/filter', [MultaController::class, 'filter'])->middleware('api');
+Route::post('/registerMulta', [MultaController::class, 'store'])->middleware('api');
+Route::get('/getMulta/{id}', [MultaController::class, 'edit'])->middleware('api');
+Route::put('/updateMulta/{id}', [MultaController::class, 'update'])->middleware('api');
+Route::get('/apagarMulta/{id}', [MultaController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesMulta/{id}', [MultaController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelMultas/{user}', [ExportExcelController::class, 'exportMultas'])->middleware('api');
+
+Route::get('/confirmacoes', [ConfirmacaoController::class, 'index'])->middleware('api');
+Route::post('/filter', [ConfirmacaoController::class, 'filter'])->middleware('api');
+Route::post('/registerConfirmacao', [ConfirmacaoController::class, 'store'])->middleware('api');
+Route::get('/getConfirmacao/{id}', [ConfirmacaoController::class, 'edit'])->middleware('api');
+Route::put('/updateConfirmacao/{id}', [ConfirmacaoController::class, 'update'])->middleware('api');
+Route::get('/apagarConfirmacao/{id}', [ConfirmacaoController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesConfirmacao/{id}', [ConfirmacaoController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelConfirmacao/{user}', [ExportExcelController::class, 'exportConfirmacao'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

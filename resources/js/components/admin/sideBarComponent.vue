@@ -231,12 +231,12 @@ export default {
                             icon:'fa-solid fa-bus'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.multas'},
                             title:'Multas',
                             icon:'fa-solid fa-hand-holding-medical'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.confirmacao'},
                             title:'Confirmação',
                             icon:'fa-solid fa-clipboard-check'
                         },

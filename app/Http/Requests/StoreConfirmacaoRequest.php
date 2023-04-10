@@ -13,7 +13,7 @@ class StoreConfirmacaoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreConfirmacaoRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cobranca'=>'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cobranca.required'=>'Preencha o campo da cobrança'
         ];
     }
 }

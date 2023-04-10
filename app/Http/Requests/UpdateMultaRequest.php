@@ -13,7 +13,7 @@ class UpdateMultaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,17 @@ class UpdateMultaRequest extends FormRequest
      */
     public function rules()
     {
+        $id=$this->id ?? "";
         return [
-            //
+           'cobranca'=>"required|unique:multas,cobranca,{$id},id"
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+           'cobranca.required'=>'Preenchimento obrigatório',
+           'cobranca.unique'=>'Já existe uma multa cadastrada com este valor',
         ];
     }
 }

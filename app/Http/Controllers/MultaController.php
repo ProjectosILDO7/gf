@@ -2,85 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Multa;
 use App\Http\Requests\StoreMultaRequest;
 use App\Http\Requests\UpdateMultaRequest;
+use App\Repositories\Multas\multasRepository;
 
 class MultaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $entety;
+
+    public function __construct(multasRepository $multa)
+    {
+        $this->entety=$multa;
+    }
+
     public function index()
     {
-        //
+     //
+        return $this->entety->getMultas();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreMultaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreMultaRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Multa  $multa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Multa $multa)
+    public function show($id)
     {
-        //
+        return $this->entety->detalhes($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Multa  $multa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Multa $multa)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->getMulta($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateMultaRequest  $request
-     * @param  \App\Models\Multa  $multa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateMultaRequest $request, Multa $multa)
+    public function update(UpdateMultaRequest $request, $id)
     {
         //
+       return $this->entety->updateMulta($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Multa  $multa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Multa $multa)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
 }

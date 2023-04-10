@@ -6,6 +6,8 @@ import disciplinas from "./modules/disciplinas"
 import emolumentos from "./modules/emolumento"
 import uniforme from "./modules/uniforme"
 import transporte from "./modules/transporte"
+import multas from "./modules/multa"
+import confirmacao from "./modules/confirmacao"
 import graduacao from "./modules/graduacao"
 import estudantes from "./modules/estudantes"
 import senha_reserva from "./modules/senha_reserva"
@@ -22,6 +24,8 @@ export default createStore({
         emolumentos,
         uniforme,
         transporte,
+        multas,
+        confirmacao,
         graduacao,
         senha_reserva,
         estudantes,

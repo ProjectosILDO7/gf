@@ -13,7 +13,7 @@ class UpdateConfirmacaoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,16 @@ class UpdateConfirmacaoRequest extends FormRequest
      */
     public function rules()
     {
+        $id=$this->id ?? "";
         return [
-            //
+            'cobranca'=>"required|unique:confirmacaos,cobranca,{$id},id"
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cobranca.required'=>'Preencha o campo da cobrança'
         ];
     }
 }

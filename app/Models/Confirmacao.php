@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Confirmacao extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'user_id',
+        'cobranca'
+    ];
+
+    public function graduacoes(){
+        return $this->belongsToMany(graduacao::class, 'confirmacao_graduacaos');
+    }
+
 }

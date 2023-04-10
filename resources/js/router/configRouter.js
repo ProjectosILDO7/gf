@@ -79,6 +79,16 @@ const routes = [
                 name:'admin.transporte',
                 component:()=>import('../components/admin/services/transporte/transporteComponent.vue')
             },
+            {
+                path:'multas',
+                name:'admin.multas',
+                component:()=>import('../components/admin/services/multas/multaComponent.vue')
+            },
+            {
+                path:'confirmacao',
+                name:'admin.confirmacao',
+                component:()=>import('../components/admin/services/confirmcao/confirmacaoComponent.vue')
+            },
             
         ]
     },
