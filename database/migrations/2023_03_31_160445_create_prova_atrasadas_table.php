@@ -16,14 +16,9 @@ return new class extends Migration
         Schema::create('prova_atrasadas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('estudante_id');
-            $table->unsignedBigInteger('cadeira_id');
+            $table->unsignedBigInteger('cobranca');
             $table->timestamps();
-
-            $table->foreign('estudante_id')->references('id')->on('estudantes')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('cadeira_id')->references('id')->on('disciplinas')->onDelete('cascade');
-            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
         });
     }
 
@@ -37,10 +32,7 @@ return new class extends Migration
         Schema::create('prova_atrasadas', function (Blueprint $table) {
             $table->dropForeign('prova_atrasadas_estudante_id_foreign');
             $table->dropForeign('prova_atrasadas_user_id_foreign');
-            $table->dropForeign('prova_atrasadas_cadeira_id_foreign');
-            $table->dropColumn('estudante_id');
             $table->dropColumn('user_id');
-            $table->dropColumn('cadeira_id');
         });
         Schema::dropIfExists('prova_atrasadas');
     }

@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Repositories\Confirmacao;
+namespace App\Repositories\Prova_atrasada;
 
-use App\Models\Confirmacao;
+use App\Models\Prova_atrasada;
 use Illuminate\Support\Facades\Auth;
 
-class confirmacaoRepository
+class provaAtrasadaRepository
 {
 
     protected $ententy;
     protected $userID;
 
-    public function __construct(Confirmacao $confirmacao)
+    public function __construct(Prova_atrasada $prova_atrasada)
     {
-        $this->ententy = $confirmacao;
+        $this->ententy = $prova_atrasada;
         $this->userID = Auth()->user()->id;
     }
 
-    public function getConfirmacaos()
+    public function getProva_atrasadas()
     {
-        $confirmacao = $this->ententy::with('graduacoes')->orderBy('cobranca', 'asc')->where('user_id', $this->userID)->get();
-        if (asset($confirmacao)) {
-            return response()->json($confirmacao);
+        $prova_atrasada = $this->ententy::with('disciplinas')->orderBy('cobranca', 'asc')->where('user_id', $this->userID)->get();
+        if (asset($prova_atrasada)) {
+            return response()->json($prova_atrasada);
         } else {
             return response()->json([
                 'status' => 'Erro',
@@ -33,18 +33,19 @@ class confirmacaoRepository
     public function create($data)
     {
 
-        $saveConfirmacao = $this->ententy::create([
+        //dd($data->all());
+        $saveProva_atrasada = $this->ententy::create([
             'user_id' => $this->userID,
             'cobranca' => $data->cobranca
         ]);
 
 
-        $saveConfirmacao->graduacoes()->attach($data->graduacao_id);
+        $saveProva_atrasada->disciplinas()->attach($data->cadeira);
 
-        if (asset($saveConfirmacao)) {
+        if (asset($saveProva_atrasada)) {
             return response()->json([
                 'status' => 'Sucesso',
-                'Multas' => $saveConfirmacao,
+                'provas' => $saveProva_atrasada,
             ], 200);
         } else {
             return response()->json([
@@ -54,36 +55,36 @@ class confirmacaoRepository
         }
     }
 
-    public function getConfirmacao($id)
+    public function getProva_atrasada($id)
     {
         //dd($id);
-        $getConfirmacao = $this->ententy::find($id);
+        $getProva_atrasada = $this->ententy::find($id);
 
-        if (asset($getConfirmacao)) {
+        if (asset($getProva_atrasada)) {
             return response()->json([
-                'getConfirmacao' => $getConfirmacao
+                'getProva_atrasada' => $getProva_atrasada
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Confirmação não encontrada..!'
+                'message' => 'Não encontrada..!'
             ], 401);
         }
     }
 
-    public function updateConfirmacao($request, $id)
+    public function updateProva_atrasada($request, $id)
     {
-        $updateConfirmacao = $this->ententy::find($id);
+        $updateProva_atrasada = $this->ententy::find($id);
         
         $data = $request->only('cobranca');
 
-        if($request->graduacao_id){
-            $updateConfirmacao->graduacoes()->attach($request->graduacao_id);
+        if($request->disciplina_id){
+            $updateProva_atrasada->disciplinas()->attach($request->cadeira);
         }
 
-        $updateConfirmacao->update($data);
+        $updateProva_atrasada->update($data);
 
 
-        if (asset($updateConfirmacao)) {
+        if (asset($updateProva_atrasada)) {
             return response()->json(['message' => 'Confirmação actualizada com sucesso'], 200);
         } else {
             return response()->json(['Erro' => 'Não foi possível actualizar...!'], 401);
@@ -93,11 +94,11 @@ class confirmacaoRepository
     public function apagar($id)
     {
 
-        $deleteConfirmacao = $this->ententy::find($id);
-        $deleteConfirmacao->delete();
+        $deleteProva_atrasada= $this->ententy::find($id);
+        $deleteProva_atrasada->delete();
 
-        if (asset($deleteConfirmacao)) {
-            return response()->json(['message' => 'Confirmação apagada com sucesso'], 200);
+        if (asset($deleteProva_atrasada)) {
+            return response()->json(['message' => 'Apagada com sucesso'], 200);
         } else {
             return response()->json(['erro' => 'Não foi possível apagar...!'], 401);
         }

@@ -302,7 +302,7 @@ export default {
             fomatoData: '',
             namePage: 'Multas',
             nameButto: 'Nova multa',
-            pageTopoIcon: 'fa-solid fa-user-tie',
+            pageTopoIcon: 'fa-solid fa-hand-holding-medical',
             loading: false,
             btnSaveVariavel: false,
         }

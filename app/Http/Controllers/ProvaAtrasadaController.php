@@ -2,85 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prova_atrasada;
 use App\Http\Requests\StoreProva_atrasadaRequest;
 use App\Http\Requests\UpdateProva_atrasadaRequest;
+use App\Repositories\Prova_atrasada\provaAtrasadaRepository;
 
 class ProvaAtrasadaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $entety;
+
+    public function __construct(provaAtrasadaRepository $prova_atrasada)
+    {
+        $this->entety=$prova_atrasada;
+    }
+
     public function index()
     {
-        //
+     //
+        return $this->entety->getProva_atrasadas();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreProva_atrasadaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreProva_atrasadaRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Prova_atrasada  $prova_atrasada
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Prova_atrasada $prova_atrasada)
+    public function show($id)
     {
-        //
+        return $this->entety->detalhes($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Prova_atrasada  $prova_atrasada
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Prova_atrasada $prova_atrasada)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->getProva_atrasada($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProva_atrasadaRequest  $request
-     * @param  \App\Models\Prova_atrasada  $prova_atrasada
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateProva_atrasadaRequest $request, Prova_atrasada $prova_atrasada)
+    public function update(UpdateProva_atrasadaRequest $request, $id)
     {
         //
+       return $this->entety->updateProva_atrasada($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Prova_atrasada  $prova_atrasada
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Prova_atrasada $prova_atrasada)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
 }

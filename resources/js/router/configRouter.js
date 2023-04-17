@@ -89,6 +89,16 @@ const routes = [
                 name:'admin.confirmacao',
                 component:()=>import('../components/admin/services/confirmcao/confirmacaoComponent.vue')
             },
+            {
+                path:'provas_atrasos',
+                name:'admin.provas_atrasadas',
+                component:()=>import('../components/admin/services/provas_atrasadas/provas_atrasadasComponent.vue')
+            },
+            {
+                path:'tcc',
+                name:'admin.tcc',
+                component:()=>import('../components/admin/services/tcc/tccComponent.vue')
+            },
             
         ]
     },

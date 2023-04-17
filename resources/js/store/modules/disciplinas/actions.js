@@ -10,6 +10,10 @@ const actions = {
                         .finally(()=>commit('PRELOADING', false))
     },
 
+    loadingDisciplinasParaComponentProvaAtrasada({commit}){
+        return disciplinasService.getDisciplinas()
+    },
+
     loadingDisciplinasExcel({commit}){
         commit('PRELOADING', true)
         return disciplinasService.getDisciplinas()

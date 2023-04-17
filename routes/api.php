@@ -14,7 +14,9 @@ use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\MultaController;
+use App\Http\Controllers\ProvaAtrasadaController;
 use App\Http\Controllers\reserva_senha_control;
+use App\Http\Controllers\TCCController;
 use App\Http\Controllers\TransporteController;
 use App\Http\Controllers\UniformeController;
 use Illuminate\Http\Request;
@@ -100,6 +102,24 @@ Route::put('/updateMulta/{id}', [MultaController::class, 'update'])->middleware(
 Route::get('/apagarMulta/{id}', [MultaController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesMulta/{id}', [MultaController::class, 'show'])->middleware('api');
 Route::get('/ExportToExcelMultas/{user}', [ExportExcelController::class, 'exportMultas'])->middleware('api');
+
+Route::get('/provas_atrasadas', [ProvaAtrasadaController::class, 'index'])->middleware('api');
+Route::post('/filter', [ProvaAtrasadaController::class, 'filter'])->middleware('api');
+Route::post('/registerProva_atrasada', [ProvaAtrasadaController::class, 'store'])->middleware('api');
+Route::get('/getProva_atrasada/{id}', [ProvaAtrasadaController::class, 'edit'])->middleware('api');
+Route::put('/updateProva_atrasada/{id}', [ProvaAtrasadaController::class, 'update'])->middleware('api');
+Route::get('/apagarProva_atrasada/{id}', [ProvaAtrasadaController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesProva_atrasada/{id}', [ProvaAtrasadaController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelProva_atrasada/{user}', [ExportExcelController::class, 'exportProva_atrasada'])->middleware('api');
+
+Route::get('/tccs', [TCCController::class, 'index'])->middleware('api');
+Route::post('/filter', [TCCController::class, 'filter'])->middleware('api');
+Route::post('/registerTcc', [TCCController::class, 'store'])->middleware('api');
+Route::get('/getTcc/{id}', [TCCController::class, 'edit'])->middleware('api');
+Route::put('/updateTcc/{id}', [TCCController::class, 'update'])->middleware('api');
+Route::get('/apagarTcc/{id}', [TCCController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesTcc/{id}', [TCCController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelTcc/{user}', [ExportExcelController::class, 'exportTcc'])->middleware('api');
 
 Route::get('/confirmacoes', [ConfirmacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [ConfirmacaoController::class, 'filter'])->middleware('api');

@@ -241,12 +241,12 @@ export default {
                             icon:'fa-solid fa-clipboard-check'
                         },
                         {
-                            href:'#',
-                            title:'Provas atrasadas',
+                            href:{name:'admin.provas_atrasadas'},
+                            title:'Provas em atraso',
                             icon:'fa-solid fa-spell-check'
                         },
                         {
-                            href:'#',
+                            href:{name:'admin.tcc'},
                             title:'T.C.C',
                             icon:'fa-solid fa-user-graduate'
                         },

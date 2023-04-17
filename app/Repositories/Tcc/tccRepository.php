@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Repositories\Confirmacao;
+namespace App\Repositories\Tcc;
 
-use App\Models\Confirmacao;
+use App\Models\Tcc;
 use Illuminate\Support\Facades\Auth;
 
-class confirmacaoRepository
+class tccRepository
 {
 
     protected $ententy;
     protected $userID;
 
-    public function __construct(Confirmacao $confirmacao)
+    public function __construct(Tcc $tcc)
     {
-        $this->ententy = $confirmacao;
+        $this->ententy = $tcc;
         $this->userID = Auth()->user()->id;
     }
 
-    public function getConfirmacaos()
+    public function getTccs()
     {
-        $confirmacao = $this->ententy::with('graduacoes')->orderBy('cobranca', 'asc')->where('user_id', $this->userID)->get();
-        if (asset($confirmacao)) {
-            return response()->json($confirmacao);
+        $Tcc = $this->ententy::with('cursos')->orderBy('cobranca', 'asc')->where('user_id', $this->userID)->get();
+        if (asset($Tcc)) {
+            return response()->json($Tcc);
         } else {
             return response()->json([
                 'status' => 'Erro',
@@ -33,18 +33,18 @@ class confirmacaoRepository
     public function create($data)
     {
 
-        $saveConfirmacao = $this->ententy::create([
+        $saveTcc = $this->ententy::create([
             'user_id' => $this->userID,
             'cobranca' => $data->cobranca
         ]);
 
 
-        $saveConfirmacao->graduacoes()->attach($data->graduacao_id);
+        $saveTcc->cursos()->attach($data->curso_id);
 
-        if (asset($saveConfirmacao)) {
+        if (asset($saveTcc)) {
             return response()->json([
                 'status' => 'Sucesso',
-                'Multas' => $saveConfirmacao,
+                'tccs' => $saveTcc,
             ], 200);
         } else {
             return response()->json([
@@ -54,37 +54,37 @@ class confirmacaoRepository
         }
     }
 
-    public function getConfirmacao($id)
+    public function getTcc($id)
     {
         //dd($id);
-        $getConfirmacao = $this->ententy::find($id);
+        $getTcc = $this->ententy::find($id);
 
-        if (asset($getConfirmacao)) {
+        if (asset($getTcc)) {
             return response()->json([
-                'getConfirmacao' => $getConfirmacao
+                'getTcc' => $getTcc
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Confirmação não encontrada..!'
+                'message' => 'Não encontrado..!'
             ], 401);
         }
     }
 
-    public function updateConfirmacao($request, $id)
+    public function updateTcc($request, $id)
     {
-        $updateConfirmacao = $this->ententy::find($id);
+        $updateTcc = $this->ententy::find($id);
         
         $data = $request->only('cobranca');
 
-        if($request->graduacao_id){
-            $updateConfirmacao->graduacoes()->attach($request->graduacao_id);
+        if($request->curso_id){
+            $updateTcc->cursos()->attach($request->curso_id);
         }
 
-        $updateConfirmacao->update($data);
+        $updateTcc->update($data);
 
 
-        if (asset($updateConfirmacao)) {
-            return response()->json(['message' => 'Confirmação actualizada com sucesso'], 200);
+        if (asset($updateTcc)) {
+            return response()->json(['message' => 'Actualizado com sucesso'], 200);
         } else {
             return response()->json(['Erro' => 'Não foi possível actualizar...!'], 401);
         }
@@ -93,11 +93,11 @@ class confirmacaoRepository
     public function apagar($id)
     {
 
-        $deleteConfirmacao = $this->ententy::find($id);
-        $deleteConfirmacao->delete();
+        $deleteTcc= $this->ententy::find($id);
+        $deleteTcc->delete();
 
-        if (asset($deleteConfirmacao)) {
-            return response()->json(['message' => 'Confirmação apagada com sucesso'], 200);
+        if (asset($deleteTcc)) {
+            return response()->json(['message' => 'Apagado com sucesso'], 200);
         } else {
             return response()->json(['erro' => 'Não foi possível apagar...!'], 401);
         }

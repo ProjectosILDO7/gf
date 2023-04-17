@@ -2,85 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\T_C_C;
 use App\Http\Requests\StoreT_C_CRequest;
 use App\Http\Requests\UpdateT_C_CRequest;
+use App\Repositories\Tcc\tccRepository;
 
 class TCCController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $entety;
+
+    public function __construct(tccRepository $tcc)
+    {
+        $this->entety=$tcc;
+    }
+
     public function index()
     {
-        //
+     //
+        return $this->entety->getTccs();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreT_C_CRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreT_C_CRequest $request)
     {
-        //
+        return $this->entety->create($request);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\T_C_C  $t_C_C
-     * @return \Illuminate\Http\Response
-     */
-    public function show(T_C_C $t_C_C)
+    public function show($id)
     {
-        //
+        return $this->entety->detalhes($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\T_C_C  $t_C_C
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(T_C_C $t_C_C)
+    public function edit($id)
     {
-        //
+
+        return $this->entety->getTcc($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateT_C_CRequest  $request
-     * @param  \App\Models\T_C_C  $t_C_C
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateT_C_CRequest $request, T_C_C $t_C_C)
+    public function update(UpdateT_C_CRequest $request, $id)
     {
         //
+       return $this->entety->updateTcc($request, $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\T_C_C  $t_C_C
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(T_C_C $t_C_C)
+    public function destroy($id)
     {
         //
+        return $this->entety->apagar($id);
     }
 }

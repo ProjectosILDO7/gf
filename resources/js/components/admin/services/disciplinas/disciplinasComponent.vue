@@ -469,7 +469,7 @@ export default {
     computed: {
 
         disciplinas() {
-            return this.$store.getters.todasDisciplinas(this.filter)
+            return this.$store.getters.todosNomesDisciplina
         },
 
         cursos() {

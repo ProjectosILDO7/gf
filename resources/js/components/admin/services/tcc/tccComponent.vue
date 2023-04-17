@@ -2,25 +2,25 @@
     <div class="container mt-4">
 
         <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon"
-            @buscar-curso-id="novaConfirmacao"/>
+            @buscar-curso-id="novoTcc"/>
 
         <br>
 
         <div class="row">
             <div class="form-group col-6 text-start mb-2">
-                <span class="text-secondary">Confirmação:</span> <span class="fw-bold">( {{ totalDeConfirmacoes }}
+                <span class="text-secondary">Total de registo:</span> <span class="fw-bold">( {{ totalDeTccs }}
                     )</span>
             </div>
 
-            <div class="form-group col-6 text-end mb-2" v-if="totalDeConfirmacoes != 0">
+            <div class="form-group col-6 text-end mb-2" v-if="totalDeTccs != 0">
                 <a class="btn btn-sm btn-outline-success ml-2" :href="`${urlExport}${meID}`">
-                    <i class="fa-solid fa-file-excel fa-lg"></i> Exportar lista do valor de confirmação
+                    <i class="fa-solid fa-file-excel fa-lg"></i> Exportar lista do valor de TCC registada
                 </a>
             </div>
         </div>
 
 
-        <form class="d-flex" role="search" v-if="totalDeConfirmacoes >= 6">
+        <form class="d-flex" role="search" v-if="totalDeTccs >= 6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input class="form-control form-control-sm" v-model="filter" type="search" placeholder="Pesquisar"
@@ -28,13 +28,13 @@
             </div>
         </form>
 
-        <div class="row" v-if="confirmacaos == ''">
+        <div class="row" v-if="Tccs == ''">
             <div class="form-group col-12 text-danger text-center fw-bold">
-                De momento não tens nenhum valor de confirmação cadastrada...
+                De momento não tens nenhum valor de TCC registado...
             </div>
         </div>
 
-        <div class="card mt-2 shadow" v-for="confirmacao in confirmacaos" :key="confirmacao.id">
+        <div class="card mt-2 shadow" v-for="t in Tccs" :key="t.id">
             <div class="card-body">
                 <div class="row">
 
@@ -46,10 +46,10 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" @click="updateConfirmacaoForm(confirmacao.id)"><i
+                                            data-bs-target="#staticBackdrop" @click="updateTccForm(t.id)"><i
                                                 class="fa-regular fa-pen-to-square text-success"></i> Alterar</a></li>
                                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                            data-bs-target="#modalDeleteConfirm" @click="deleteConfirmacao(confirmacao.id)"><i
+                                            data-bs-target="#modalDeleteConfirm" @click="deleteTcc(t.id)"><i
                                                 class="fa-solid fa-trash text-danger"></i> Apagar</a></li>
                                 </ul>
                             </div>
@@ -57,106 +57,22 @@
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                        <label class="text-success">Graduação</label>
-                        <p class="text-secondary h6" v-for="grade in confirmacao['graduacoes']" :key="grade.id"><i class="fa-solid fa-graduation-cap"></i> {{ grade.grade }} </p>
+                        <label class="text-success">Cursos</label>
+                        <p class="text-secondary h6" v-for="curso in t['cursos']" :key="curso.id"><i class="fa-solid fa-graduation-cap"></i> {{ curso.cursos }} </p>
                     </div>
 
                     <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <label class="text-success">Cobrança</label>
                         <p class="text-secondary h6"><i class="fa-solid fa-cart-shopping"></i>
-                             {{ vueNumberFormat(confirmacao.cobranca, {isInteger:true}) }}
+                             {{ vueNumberFormat(t.cobranca, {isInteger:true}) }}
                         </p>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Listagem em tabela
-                 <div class="card-body">
-
-                <div class="row">
-
-                    <div class="form-group col-12">
-                        <div class="table-responsive">
-
-                            <table class="table table-sm table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Cod.</th>
-                                        <th>Cursos</th>
-                                        <th>Cobrança</th>
-                                        <th>Opções</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr v-for="curso in courses.data" :key="curso.id">
-                                        <td>{{ curso.id }}</td>
-                                        <td>{{ curso.cursos }}</td>
-                                        <td>{{ vueNumberFormat(curso.cobranca, { isInteger: true }) }}</td>
-                                        <td>
-                                            <button @click="updateCursoForm(curso.id)"
-                                                class="btn btn-sm btn-outline-success mr-2" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#modalEdit" to="#">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger mr-2" data-bs-toggle="modal"
-                                                data-bs-target="#modalDeleteConfirm" @click="deleteCourse(curso.id)">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table> 
-
-                           
-
-                            <nav aria-label="paginate">
-                                <ul class="pagination pagination-sm" v-if="courses.last_page > 1">
-                                    <li class="page-item" v-if="courses.current_page != 1">
-                                        <a class="page-link" href="#"
-                                            @click.prevent="loadingCourse(courses.current_page - 1)">{{ '<<' }}</a>
-                                    </li>
-
-                                    <li :class="['page-item', { 'active': courses.current_page == page }]" aria-current="page"
-                                        v-for="page in courses.last_page" :key="page.id">
-                                        <a class="page-link" href="#" @click.prevent="loadingCourse(page)">{{ page }}</a>
-                                    </li>
-
-                                    <li class="page-item" v-if="courses.current_page < courses.last_page">
-                                        <a class="page-link" href="#"
-                                            @click.prevent="loadingCourse(courses.current_page + 1)">{{ '>>' }}</a>
-                                    </li>
-                                </ul>
-                            </nav>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <br>
-        <!-- paginate -->
-        <nav aria-label="paginate mt-4">
-            <ul class="pagination pagination-sm" v-if="confirmacaos.last_page > 1">
-                <li class="page-item" v-if="confirmacaos.current_page != 1">
-                    <a class="page-link" href="#" @click.prevent="loadingConfirmacao(confirmacao.current_page - 1)">{{ '<<'
-                    }}</a>
-                </li>
-
-                <li :class="['page-item', { 'active': confirmacaos.current_page == page }]" aria-current="page"
-                    v-for="page in confirmacaos.last_page" :key="page.id">
-                    <a class="page-link" href="#" @click.prevent="loadingConfirmacao(page)">{{ page }}</a>
-                </li>
-
-                <li class="page-item" v-if="confirmacao.current_page < confirmacao.last_page">
-                    <a class="page-link" href="#" @click.prevent="loadingConfirmacao(confirmacaos.current_page + 1)">{{ '>>'
-                    }}</a>
-                </li>
-            </ul>
-        </nav>
-
+       </div>
+        
         <!-- Modal cadastrar -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -165,10 +81,10 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel">
                             <span class="" v-if="btnSaveVariavel">
-                                <i class="fa-solid fa-graduation-cap"></i> Cadastre novo valor de confirmação
+                                <i class="fa-solid fa-graduation-cap"></i> Cadastre novo valor de TCC
                             </span>
                             <span class="" v-else>
-                                <i class="fa-solid fa-graduation-cap"></i> Alter informações de confirmação
+                                <i class="fa-solid fa-graduation-cap"></i> Alter informações de TCC
                             </span>
 
                         </h5>
@@ -181,7 +97,7 @@
                                 <div class="form-group col-12 mb-2">
                                     <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
                                     }}</span>
-                                    <label for="" class="text-secodary col-12">Valor de confirmação</label>
+                                    <label for="" class="text-secodary col-12">Valor de TCC</label>
 
                                     <VueNumberFormat class="form-control form-control-sm" v-model:value="items.cobranca"
                                         :options="{ precision: 2, prefix: '', suffix: ' ', isInteger: true, acceptNegative: false, masked: false }">
@@ -189,13 +105,13 @@
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
-                                    <span class="text-danger small col-12" v-if="erros.graduacao_id">{{ erros.graduacao_id[0]
+                                    <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0]
                                     }}</span>
                                     <label for="" class="text-secodary col-12">Associar nos cursos</label>
-                                    <select class="form-control form-control-sm" multiple v-model="items.graduacao_id">
-                                        <option class="text-secondary" value="">Graduação</option>
-                                        <option class="text-secondary fw-bold" :value="grade.id" v-for="grade in graduacoes"
-                                            :key="grade.id">{{ grade.grade }}</option>
+                                    <select class="form-control form-control-sm" multiple v-model="items.curso_id">
+                                        <option class="text-secondary" value="">Cursos</option>
+                                        <option class="text-secondary fw-bold" :value="curso.id" v-for="curso in cursos"
+                                            :key="curso.id">{{ curso.cursos }}</option>
                                     </select>
                                 </div>
 
@@ -208,7 +124,7 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="registerConfirmacao" type="button" class="btn btn-sm btn-success">
+                        <button @click.prevent="registerTcc" type="button" class="btn btn-sm btn-success">
                             <span v-if="loading">
                                 <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
                             </span>
@@ -223,7 +139,7 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="updateConfirmacao" type="button" class="btn btn-sm btn-success">
+                        <button @click.prevent="updateTcc" type="button" class="btn btn-sm btn-success">
                             <span v-if="loading">
                                 <i class="fa-regular fa-floppy-disk"></i> Tentando salvar...
                             </span>
@@ -245,14 +161,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-trash text-danger"></i>
-                            Apagar valor da confirmação</h5>
+                            Apagar valor de TCC</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="form-group col-12 text-center">
                                 <span class="text-primary">
-                                    <h6>Tens a certeza que desejas apagar o valor desta confirmação...?</h6>
+                                    <h6>Tens a certeza que desejas apagar o valor desta TCC...?</h6>
                                 </span>
                             </div>
                         </div>
@@ -263,10 +179,10 @@
                                 <i class="fa-solid fa-circle-xmark"></i> Fechar
                             </span>
                         </button>
-                        <button @click.prevent="apagarConfirmacao(deleteConfirmacaoId)" type="button"
+                        <button @click.prevent="apagarTcc(deleteTccId)" type="button"
                             class="btn btn-sm btn-danger">
                             <span v-if="loading">
-                                <i class="fa-regular fa-floppy-disk"></i> Apagando a confirmação...
+                                <i class="fa-regular fa-floppy-disk"></i> Apagando...
                             </span>
                             <span v-else>
                                 <i class="fa-regular fa-floppy-disk"></i> Apagar
@@ -288,48 +204,42 @@ import topoPageComponent from '../partials/topoPageComponent.vue'
 import { URL_API } from '../../../../configs/index.js'
 
 export default {
-    name: "Confirmacao-component",
+    name: "Tcc-component",
 
     data() {
         return {
-            urlExport: URL_API + '/ExportToExcelConfirmacao/',
+            urlExport: URL_API + '/ExportToExcelTcc/',
             meID:'',
-            items: { graduacao_id:[], cobranca:'' },
+            items: { curso_id:[], cobranca:'' },
             erros: [],
-            deleteConfirmacaoId: '',
+            deleteTccId: '',
             filter: '',
             info: [],
             fomatoData: '',
-            namePage: 'Confirmação',
-            nameButto: 'Nova confirmação',
+            namePage: 'Cobrança de TCC',
+            nameButto: 'Nova cobrança',
             pageTopoIcon: 'fa-solid fa-clipboard-check',
             loading: false,
             btnSaveVariavel: false,
         }
     },
     created() {
-        this.loadingConfirmacoes()
-        this.loadingGraduaction()
+        this.loadingTccs()
+        this.loadingCursos()
         this.me()
     },
 
     computed: {
-        confirmacaos() {
-            return this.$store.getters.todasConfirmacoes(this.filter)
+        Tccs() {
+            return this.$store.getters.todosTccs(this.filter)
         },
 
-        totalDeConfirmacoes(){
-            return this.$store.getters.todasConfirmacoesCount
+        totalDeTccs(){
+            return this.$store.getters.todosTccsCount
         },
 
-        graduacoes() {
-            return this.$store.getters.todasGraduacoes(this.filter)
-        },
-
-        params() {
-            return {
-                page: this.confirmacoes.current_page
-            }
+        cursos() {
+            return this.$store.getters.todosCursos(this.filter)
         },
 
 
@@ -350,14 +260,14 @@ export default {
                                 .then((resp)=>this.meID=resp.id)
         },
 
-        novaConfirmacao() {
+        novoTcc() {
             this.btnSaveVariavel = true;
             this.cleanForm();
         },
 
         detalhes(id) {
             this.info = []
-            this.$store.dispatch('detalhesDados', id)
+            this.$store.dispatch('detalhesTcc', id)
                 .then((response) => {
                     this.info = response.data
                     console.log(this.info)
@@ -372,30 +282,30 @@ export default {
         },
 
         cleanForm() {
-            this.items={ graduacao_id:[], cobranca:'' },
+            this.items={ curso_id:[], cobranca:'' },
             this.erros = []
         },
 
-        loadingConfirmacoes() {
+        loadingTccs() {
             //var store = useStore()
-            this.$store.dispatch('loadingDados')
+            this.$store.dispatch('loadingTccs')
         },
 
-        loadingGraduaction() {
+        loadingCursos() {
             //var store = useStore()
-            this.$store.dispatch('loadingGraduaction')
+            this.$store.dispatch('loadingCourse')
         },
 
-        registerConfirmacao() {
-            this.$store.dispatch('createDados', this.items)
+        registerTcc() {
+            this.$store.dispatch('createTcc', this.items)
                 .then(() => {
                     notify({
                         title: 'Sucesso',
-                        text: "Confirmação registada com sucesso",
+                        text: "Registado com sucesso",
                         type: 'success'
                     })
                     this.cleanForm()
-                    this.loadingConfirmacoes()
+                    this.loadingTccs()
                 })
                 .catch((error) => {
                     this.erros = error
@@ -407,31 +317,31 @@ export default {
 
                 })
         },
-        updateConfirmacaoForm(id) {
+        updateTccForm(id) {
             this.btnSaveVariavel = false
             this.cleanForm()
-            this.$store.dispatch('updateFormDados', id)
-                .then((response) => this.items = response.data.getConfirmacao)
+            this.$store.dispatch('updateFormTcc', id)
+                .then((response) => this.items = response.data.getTcc)
                 .catch((error) => {
                     notify({
                         title:'Não encotrado',
-                        text: 'A confirmação que pretendes localizar não existe',
+                        text: 'Não foi localizado...',
                         type: 'warn'
                     })
                 })
         },
 
-        updateConfirmacao() {
+        updateTcc() {
             console.log(this.items)
-            this.$store.dispatch('updateDados', this.items)
+            this.$store.dispatch('updateTcc', this.items)
                 .then(() => {
                     notify({
                         title: 'Sucesso',
-                        text: 'O valor da confirmacção foi actualizada com sucesso..!',
+                        text: 'Actualizado com sucesso..!',
                         type: 'success'
                     })
                     this.cleanForm()
-                    this.loadingConfirmacoes()
+                    this.loadingTccs()
                 })
                 .catch((error) => {
                     notify({
@@ -443,19 +353,19 @@ export default {
                 })
         },
 
-        deleteConfirmacao(id) {
-            this.deleteConfirmacaoId = id;
+        deleteTcc(id) {
+            this.deleteTccId = id;
         },
 
-        apagarConfirmacao(id) {
-            this.$store.dispatch('apagarDados', id)
+        apagarTcc(id) {
+            this.$store.dispatch('apagarTcc', id)
                 .then((response) => {
                     notify({
                         title: 'Sucesso',
                         text: response.data.message,
                         type: 'success'
                     })
-                    this.loadingConfirmacoes()
+                    this.loadingTccs()
                 })
                 .catch((error) => {
                     notify({
