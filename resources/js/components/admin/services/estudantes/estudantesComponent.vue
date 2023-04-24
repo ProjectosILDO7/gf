@@ -13,6 +13,11 @@
           <i class="fa-solid fa-file-excel"></i> Exportar Excel
         </download-excel>
 
+        <a href="#" class="btn btn-sm btn-primary ml-2">
+          <i class="fa-solid fa-bag-shopping text-warning"></i>
+          Ver Pagamentos
+        </a>
+
         <!-- Exportar no plugin xlsx -->
         <!-- <button class="btn btn-sm btn-outline-success" @click="exportExcel">
           <i class="fa-solid fa-file-excel"></i> Exportar para Excel
@@ -72,11 +77,10 @@
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                      aria-controls="offcanvasRight" @click="efectuarPagamento(estudante.id)">
+                    <router-link class="dropdown-item" :to="{ name:'admin.pagamentos', params:{id:estudante.id} }">
                       <i class="fa-solid fa-credit-card"></i>
                       Efectuar pagamentos
-                    </a>
+                    </router-link>
                   </li>
                 </ul>
               </div>
@@ -815,6 +819,7 @@ export default {
         })
         .catch((error) => {
           this.erros = error.response.data.errors;
+          console.log(this.erros)
           notify({
             title: "Erro",
             text: "Erro durante a actualização",
@@ -850,6 +855,7 @@ export default {
     printDoc() {
       alert("teste impressao de doc");
     },
+
   },
 
   components: {

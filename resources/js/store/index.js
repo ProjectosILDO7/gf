@@ -10,6 +10,7 @@ import multas from "./modules/multa"
 import confirmacao from "./modules/confirmacao"
 import provas_atrasadas from "./modules/provas_atrasadas"
 import tcc from "./modules/tcc"
+import estudantePagamento from "./modules/pagamentos"
 import graduacao from "./modules/graduacao"
 import estudantes from "./modules/estudantes"
 import senha_reserva from "./modules/senha_reserva"
@@ -28,6 +29,7 @@ export default createStore({
         transporte,
         provas_atrasadas,
         tcc,
+        estudantePagamento,
         multas,
         confirmacao,
         graduacao,

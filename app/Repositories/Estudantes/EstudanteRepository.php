@@ -117,7 +117,7 @@ class EstudanteRepository
             $data['grade_id']=$request->grade_id;
         }
 
-        if($request->image){
+        if($request->image){  
             //Se existir uma imagem na pasta de estudante de referencia entao apaga-se esta e cadastra-se outra
             if(Storage::exists('/image/estudantes/'.$updateEstudante->image)){
                 Storage::delete('/image/estudantes/'.$updateEstudante->image);

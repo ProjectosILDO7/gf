@@ -99,6 +99,18 @@ const routes = [
                 name:'admin.tcc',
                 component:()=>import('../components/admin/services/tcc/tccComponent.vue')
             },
+            {
+                path:'pagamentos/:id',
+                name:'admin.pagamentos',
+                props:true,
+                component:()=>import('../components/admin/services/pagamentos/pagamentosComponent.vue')
+            },
+            {
+                path:'pag_mensalidade',
+                name:'admin.pag_mensalidade',
+                props:true,
+                component:()=>import('../components/admin/services/pagamentos/pag_mensalidadeComponent.vue')
+            },
             
         ]
     },

@@ -146,6 +146,7 @@ Route::put('/updateEstudante/{id}', [EstudanteController::class, 'update'])->mid
 Route::get('/apagarEstudante/{id}', [EstudanteController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesEstudante/{id}', [EstudanteController::class, 'show'])->middleware('api');
 Route::get('/reserva_senha_aluno', [reserva_senha_control::class, 'show'])->middleware('api');
+Route::get('/getEstudantePagamento/{id}', [EstudanteController::class, 'show'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();
