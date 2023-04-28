@@ -54,25 +54,25 @@
           <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
             role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-graduation-cap"></i>
             Mensalidade</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+          <button class="nav-link" id="nav-comparticipacao-tab" data-bs-toggle="tab" data-bs-target="#nav-comparticipacao" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa-solid fa-circle-dollar-to-slot"></i>
             Comparticipação</button>
-          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+          <button class="nav-link" id="nav-emolumento-tab" data-bs-toggle="tab" data-bs-target="#nav-emolumento" type="button"
             role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa-solid fa-id-card-clip"></i>
             Emolumento</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          <button class="nav-link" id="nav-uniforme-tab" data-bs-toggle="tab" data-bs-target="#nav-uniforme" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-user-tie"></i>
             Uniforme</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          <button class="nav-link" id="nav-trasporte-tab" data-bs-toggle="tab" data-bs-target="#nav-trasporte" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-bus"></i>
             Transporte</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          <button class="nav-link" id="nav-multa-tab" data-bs-toggle="tab" data-bs-target="#nav-multa" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-hand-holding-medical"></i>
             Multas</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          <button class="nav-link" id="nav-provaEmAtraso-tab" data-bs-toggle="tab" data-bs-target="#nav-provaEmAtraso" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-spell-check"></i> Provas em
             atraso</button>
-          <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button"
+          <button class="nav-link" id="nav-tcc-tab" data-bs-toggle="tab" data-bs-target="#nav-tcc" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-user-graduate"></i>
             T.C.C</button>
         </div>
@@ -112,23 +112,26 @@
           </div>
 
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-          <p><strong>This is some placeholder content the Profile tab's associated content.</strong>
-            Clicking another tab will toggle the visibility of this one for the next.
-            The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
-            tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+        <div class="tab-pane fade" id="nav-comparticipacao" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <p><strong>comparticipacao.</strong></p>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-          <p><strong>This is some placeholder content the Profile tab's associated content.</strong>
-            Clicking another tab will toggle the visibility of this one for the next.
-            The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
-            tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+        <div class="tab-pane fade" id="nav-emolumento" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <p><strong>Emolumento.</strong></p>
         </div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-          <p><strong>This is some placeholder content the Contact tab's associated content.</strong>
-            Clicking another tab will toggle the visibility of this one for the next.
-            The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
-            tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+        <div class="tab-pane fade" id="nav-uniforme" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p><strong>Uniforme.</strong></p>
+        </div>
+        <div class="tab-pane fade" id="nav-trasporte" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p><strong>Transporte.</strong></p>
+        </div>
+        <div class="tab-pane fade" id="nav-multa" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p><strong>Multa.</strong></p>
+        </div>
+        <div class="tab-pane fade" id="nav-provaEmAtraso" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p><strong>Provas em atraso.</strong></p>
+        </div>
+        <div class="tab-pane fade" id="nav-tcc" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <p><strong>TCC.</strong></p>
         </div>
       </div>
     </div>
