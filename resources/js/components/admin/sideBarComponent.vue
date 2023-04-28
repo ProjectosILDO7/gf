@@ -221,6 +221,11 @@ export default {
                             icon:'fa-solid fa-id-card-clip'
                         },
                         {
+                            href:{name:'admin.compart'},
+                            title:'Comparticipação',
+                            icon:'fa-solid fa-circle-dollar-to-slot'
+                        },
+                        {
                             href:{name:'admin.uniformes'},
                             title:'Uniforme',
                             icon:'fa-solid fa-user-tie'

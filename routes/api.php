@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComparticipacaoController;
 use App\Http\Controllers\ConfirmacaoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
@@ -129,6 +130,15 @@ Route::put('/updateConfirmacao/{id}', [ConfirmacaoController::class, 'update'])-
 Route::get('/apagarConfirmacao/{id}', [ConfirmacaoController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesConfirmacao/{id}', [ConfirmacaoController::class, 'show'])->middleware('api');
 Route::get('/ExportToExcelConfirmacao/{user}', [ExportExcelController::class, 'exportConfirmacao'])->middleware('api');
+
+Route::get('/comparticipacaos', [ComparticipacaoController::class, 'index'])->middleware('api');
+Route::post('/filter', [ComparticipacaoController::class, 'filter'])->middleware('api');
+Route::post('/registerComparticipacao', [ComparticipacaoController::class, 'store'])->middleware('api');
+Route::get('/getComparticipacao/{id}', [ComparticipacaoController::class, 'edit'])->middleware('api');
+Route::put('/updateComparticipacao/{id}', [ComparticipacaoController::class, 'update'])->middleware('api');
+Route::get('/apagarComparticipacao/{id}', [ComparticipacaoController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesComparticipacao/{id}', [ComparticipacaoController::class, 'show'])->middleware('api');
+//Route::get('/ExportToExcelConfirmacao/{user}', [ExportExcelController::class, 'exportConfirmacao'])->middleware('api');
 
 Route::get('/graduactions', [GraduacaoController::class, 'index'])->middleware('api');
 Route::post('/filter', [GraduacaoController::class, 'filter'])->middleware('api');

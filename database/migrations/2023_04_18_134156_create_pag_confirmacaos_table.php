@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estudante_id');
-            $table->unsignedBigInteger('confirmacao_id');
+            $table->string('valor_confirmacao');
             $table->string('data_pagamento');
             $table->string('hora');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('estudante_id')->references('id')->on('estudantes')->onDelete('cascade');
-            $table->foreign('confirmacao_id')->references('id')->on('confirmacaos')->onDelete('cascade');
+            
         });
     }
 
@@ -37,11 +37,10 @@ return new class extends Migration
         Schema::create('pag_confirmacaos', function (Blueprint $table) {
             $table->dropForeign('user_id');
             $table->dropForeign('estudante_id');
-            $table->dropForeign('confirmacao_id');
-            
+                    
             $table->dropColumn('user_id');
             $table->dropColumn('estudante_id');
-            $table->dropColumn('confirmacao_id');
+
         });
         Schema::dropIfExists('pag_confirmacaos');
     }

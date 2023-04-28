@@ -75,6 +75,11 @@ const routes = [
                 component:()=>import('../components/admin/services/uniformes/uniformeComponent.vue')
             },
             {
+                path:'comparticipacao',
+                name:'admin.compart',
+                component:()=>import('../components/admin/services/comparticipacao/comparticipacaoComponent.vue')
+            },
+            {
                 path:'transporte',
                 name:'admin.transporte',
                 component:()=>import('../components/admin/services/transporte/transporteComponent.vue')

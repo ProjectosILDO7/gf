@@ -8,6 +8,7 @@ import uniforme from "./modules/uniforme"
 import transporte from "./modules/transporte"
 import multas from "./modules/multa"
 import confirmacao from "./modules/confirmacao"
+import comparticipacao from "./modules/comparticipacao"
 import provas_atrasadas from "./modules/provas_atrasadas"
 import tcc from "./modules/tcc"
 import estudantePagamento from "./modules/pagamentos"
@@ -25,6 +26,7 @@ export default createStore({
         curso,
         disciplinas,
         emolumentos,
+        comparticipacao,
         uniforme,
         transporte,
         provas_atrasadas,

@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pag_prova_atrasadas', function (Blueprint $table) {
+        Schema::create('pag_mensalidades', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estudante_id');
-            $table->string('valor_prova_atrasada');
+            $table->string('valor_mensalidade');
             $table->string('data_pagamento');
             $table->string('hora');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('estudante_id')->references('id')->on('estudantes')->onDelete('cascade');
-            
         });
     }
 
@@ -34,13 +33,14 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('pag_prova_atrasadas', function (Blueprint $table) {
+        Schema::create('pag_tccs', function (Blueprint $table) {
             $table->dropForeign('user_id');
             $table->dropForeign('estudante_id');
             
             $table->dropColumn('user_id');
             $table->dropColumn('estudante_id');
+
         });
-        Schema::dropIfExists('pag_prova_atrasadas');
+        Schema::dropIfExists('pag_mensalidades');
     }
 };
