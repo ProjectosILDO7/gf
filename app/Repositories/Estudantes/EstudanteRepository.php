@@ -28,7 +28,7 @@ class EstudanteRepository
     public function getEstudantes()
     {
         
-        $estudantes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas')->orderBy('nome', 'asc')->where('organization_id', $this->userID)->get();
+        $estudantes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas', 'mensalidades')->orderBy('nome', 'asc')->where('organization_id', $this->userID)->get();
             if (asset($estudantes)) {
                 return response()->json($estudantes);
             } else {
@@ -159,7 +159,7 @@ class EstudanteRepository
     }
 
     public function detalhes($id){
-        $detalhes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas')->find($id);
+        $detalhes = $this->ententy::with('cursos', 'graduacoes', 'users', 'senhas', 'mensalidades')->find($id);
 
         if(asset($detalhes)){
             return response()->json($detalhes);

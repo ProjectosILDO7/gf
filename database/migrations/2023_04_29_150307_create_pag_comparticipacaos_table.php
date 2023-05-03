@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pag_emolumentos', function (Blueprint $table) {
+        Schema::create('pag_comparticipacaos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estudante_id');
-            $table->unsignedBigInteger('emolumento_id');
+            $table->string('valor_comparticipacao');
             $table->string('data_pagamento');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('estudante_id')->references('id')->on('estudantes')->onDelete('cascade');
-            $table->foreign('emolumento_id')->references('id')->on('emolumentos')->onDelete('cascade');
+        
         });
     }
 
@@ -33,15 +33,12 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('pag_emolumentos', function (Blueprint $table) {
+        Schema::create('pag_comparticipacaos', function (Blueprint $table) {
             $table->dropForeign('user_id');
             $table->dropForeign('estudante_id');
-            $table->dropForeign('emolumento_id');
-            
             $table->dropColumn('user_id');
             $table->dropColumn('estudante_id');
-            $table->dropColumn('emolumento_id');
-        });   
-        Schema::dropIfExists('pag_emolumentos');
+        });
+        Schema::dropIfExists('pag_comparticipacaos');
     }
 };

@@ -14,6 +14,8 @@ import VueSidebarMenu from 'vue-sidebar-menu'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import JsonExcel from "vue-json-excel3"
 import {Tabs, Tab} from 'vue3-tabs-component';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 //import Select2 from "vue3-select2-component"
 
 // import ProxyPay from 'proxypay-api'
@@ -33,6 +35,7 @@ const app = createApp(App)
       app.component('tab', Tab)
       //app.component('Select2', Select2)
       app.use(VueNumberFormat, {prefix:'', isInteger: true})
+      app.use(VueSweetalert2)
       app.mount('#app');
       
 

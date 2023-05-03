@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4">
-    <topo-page-component :namePage="namePage" :pageTopoIcon="pageTopoIcon" @buscar-curso-id="buscaEstudanteID" />
+    <topo-page-component :namePage="namePage" :pageTopoIcon="pageTopoIcon" />
 
     <br />
     <!-- Exibicao do estudante para o pagamento -->
@@ -54,23 +54,26 @@
           <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
             role="tab" aria-controls="nav-home" aria-selected="true"><i class="fa fa-graduation-cap"></i>
             Mensalidade</button>
-          <button class="nav-link" id="nav-comparticipacao-tab" data-bs-toggle="tab" data-bs-target="#nav-comparticipacao" type="button"
-            role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa-solid fa-circle-dollar-to-slot"></i>
+          <button class="nav-link" id="nav-comparticipacao-tab" data-bs-toggle="tab" data-bs-target="#nav-comparticipacao"
+            type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i
+              class="fa-solid fa-circle-dollar-to-slot"></i>
             Comparticipação</button>
-          <button class="nav-link" id="nav-emolumento-tab" data-bs-toggle="tab" data-bs-target="#nav-emolumento" type="button"
-            role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fa-solid fa-id-card-clip"></i>
+          <button class="nav-link" id="nav-emolumento-tab" data-bs-toggle="tab" data-bs-target="#nav-emolumento"
+            type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i
+              class="fa-solid fa-id-card-clip"></i>
             Emolumento</button>
           <button class="nav-link" id="nav-uniforme-tab" data-bs-toggle="tab" data-bs-target="#nav-uniforme" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-user-tie"></i>
             Uniforme</button>
-          <button class="nav-link" id="nav-trasporte-tab" data-bs-toggle="tab" data-bs-target="#nav-trasporte" type="button"
-            role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-bus"></i>
+          <button class="nav-link" id="nav-trasporte-tab" data-bs-toggle="tab" data-bs-target="#nav-trasporte"
+            type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-bus"></i>
             Transporte</button>
           <button class="nav-link" id="nav-multa-tab" data-bs-toggle="tab" data-bs-target="#nav-multa" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-hand-holding-medical"></i>
             Multas</button>
-          <button class="nav-link" id="nav-provaEmAtraso-tab" data-bs-toggle="tab" data-bs-target="#nav-provaEmAtraso" type="button"
-            role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-spell-check"></i> Provas em
+          <button class="nav-link" id="nav-provaEmAtraso-tab" data-bs-toggle="tab" data-bs-target="#nav-provaEmAtraso"
+            type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><i
+              class="fa-solid fa-spell-check"></i> Provas em
             atraso</button>
           <button class="nav-link" id="nav-tcc-tab" data-bs-toggle="tab" data-bs-target="#nav-tcc" type="button"
             role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fa-solid fa-user-graduate"></i>
@@ -80,10 +83,17 @@
       <div class="tab-content p-3 border" id="nav-tabContent">
         <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
           <div class="row">
-            <div class="form-group col-12 text-start">
+            <div class="form-group col-6 text-start">
               <p><strong class="text-success fw-bold">
                   <i class="fa-solid fa-comments-dollar"></i>
                   Pagamento de propina</strong></p>
+            </div>
+            <div class="form-group col-6 text-end">
+              <p class="">
+                <button class="btn btn-sm btn-outline-secondary" @click="mostrar(info.id)">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </p>
             </div>
             <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 text-start">
               <label for="curso" class="text-start">Curso:</label>
@@ -92,23 +102,67 @@
 
             <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 text-start">
               <label for="data">Período do pagamento:</label>
-              <Datepicker v-model="picked" class="form-control form-control-sm fw-bold" :inputFormat="inputFormat"
+              <Datepicker v-model="items.picked" class="form-control form-control-sm fw-bold" :inputFormat="inputFormat"
                 :locale="locale" />
             </div>
             <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 text-start">
               <label for="curso" class="text-start">Cobrança:</label>
               <VueNumberFormat class="form-control form-control-sm text-success fw-bold" disabled
-                v-model:value="cobrancaInfo"
+                v-model:value="items.cobrancaInfo"
                 :options="{ precision: 2, prefix: '', suffix: ' ', isInteger: true, acceptNegative: false, masked: false }">
               </VueNumberFormat>
             </div>
 
             <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 text-start gab-2 grid">
               <label for="curso" class="text-start">Efectuar pagamento:</label>
-              <button class="btn btn-sm btn-outline-primary">
+              <button class="btn btn-sm btn-outline-primary" @click="mensalidade(info.id)">
                 <i class="fa-solid fa-circle-dollar-to-slot"></i> Pagar
               </button>
             </div>
+          </div>
+
+          <!-- Mostrar mais pagamentos -->
+          <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" v-show="mostrarPagamentos">
+
+            <div class="row mt-4 mb-0">
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-start">
+                    <router-link class="btn btn-sm btn-outline-secondary" to="#">
+                        <i class="fa fa-file-word"></i> Exportar mensalidades
+                    </router-link>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <input type="text" placeholder="Procurar mensalidade" class="form-control form-control-sm" v-model="filter"/>
+                </div>
+            </div>
+
+            <div class="card mt-4 mb-0 shadow" v-for="e in estudanteInfo" :key="e.id">
+              <div class="card-body">
+                <div class="row text-start">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <span class="text-secondary">Mensalidade paga: <p><strong>{{ e.data_pagamento }}</strong></p></span>
+                  </div>
+
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                    <span class="text-secondary">Valor pago: <p><strong class="text-success">{{
+                      vueNumberFormat(e.valor_mensalidade, { isInteger: true }) }}</strong></p></span>
+                  </div>
+
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 text-center">
+                    <span class="text-secondary">
+                      Exportar:
+                      <p>
+                      <strong class="text-success">
+                        <a class="btn btn-sm btn-outline-secondary" :href="`${urlExport}${e.id}`" title="Imprimir comprovativo">
+                          <i class="fa fa-file-word"></i>
+                        </a>
+                      </strong></p>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
 
         </div>
@@ -146,6 +200,8 @@ import topoPageComponent from "../partials/topoPageComponent.vue";
 import tabsComponent from "../estudantes/tabsComponent.vue";
 import Datepicker from "vue3-datepicker"
 import { pt, eo, ru } from 'date-fns/locale'
+import showMensalidade from './partialPagamentos/showMensalidadePagComponent.vue'
+import { URL_API } from '../../../../configs/index.js'
 
 export default {
   name: "pagamentos-component",
@@ -157,23 +213,28 @@ export default {
   },
   data() {
     return {
-      picked: new Date(),
       url: window.url + "storage/image/estudantes/",
       url_no_image: window.url + "image/no-Image.jpg",
+      urlExport: URL_API + '/ExportToWordComprovativo/',
 
       editImage: false,
-      items: {},
+      items: {
+        estudante_id: '',
+        cobrancaInfo: '',
+        picked: new Date(),
+      },
       erros: [],
       deleteEstudanteId: "",
       filter: "",
       info: [],
       locale: pt,
+      estudanteID: '',
+      estudanteInfo: [],
 
 
       gradeInfo: "",
       emailInfo: "",
       cursoInfo: "",
-      cobrancaInfo: "",
       adminInfo: "",
       senhaReservaInfo: "",
       inputFormat: "dd-MM-yyyy",
@@ -183,6 +244,7 @@ export default {
       pageTopoIcon: "fa-solid fa-cash-register",
       loading: false,
       btnSaveVariavel: false,
+      mostrarPagamentos: false,
     };
   },
 
@@ -191,7 +253,7 @@ export default {
       .then((response) => {
         this.info = response.data
         this.cursoInfo = this.info.cursos.cursos
-        this.cobrancaInfo = this.info.cursos.cobranca
+        this.items.cobrancaInfo = this.info.cursos.cobranca
       })
       .catch((erro) => console.log(erro))
 
@@ -202,12 +264,54 @@ export default {
   computed: {},
 
   methods: {
-    //const  = require('date-fns-tz')
+    //pagamento Mensalidade
+    mensalidade(idAluno) {
+
+      this.items.estudante_id = idAluno,
+        this.$store.dispatch('pagMensalidade', this.items)
+          .then((response) => {
+            this.$swal.fire({
+              title: 'Sucesso',
+              text: response,
+              icon: 'success',
+              timer: 15000
+            })
+          })
+          .catch((erro) => {
+            console.log(erro)
+            this.$swal.fire({
+              title: 'Erro de pagamento',
+              text: erro,
+              icon: 'warning',
+              timer: 15000
+            })
+          });
+    },
+
+
+    mostrar(id) {
+      this.mostrarPagamentos = true
+      console.log(this.mostrarPagamentos)
+      this.estudanteID = id
+      this.showEstudante()
+    },
+
+    showEstudante() {
+      return this.$store.dispatch('detalhesEstudante', this.estudanteID)
+        .then((response) => {
+          this.estudanteInfo = response.data.mensalidades
+          console.log(response.data.mensalidades)
+        })
+        .catch((erro) => { console.log(erro) })
+    }
+
+
   },
 
   components: {
     topoPageComponent,
-    Datepicker
+    Datepicker,
+
   },
 };
 </script>
@@ -238,5 +342,6 @@ img {
 
 li {
   list-style-type: none;
-}</style>
+}
+</style>
   

@@ -186,7 +186,7 @@
                                     }}</span>
                                     <label for="" class="text-secodary col-12">Transporte</label>
                                     <input type="text" class="form-control form-control-sm"
-                                        placeholder="Informe o emolumento" v-model="items.descricao">
+                                        placeholder="Informe o transporte" v-model="items.descricao">
                                 </div>
 
                                 <div class="form-group col-12 mb-2">

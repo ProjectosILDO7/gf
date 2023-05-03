@@ -6,6 +6,12 @@ const actions = {
         return estudantePagamento.getEstudantePagamento(params)
                              .finally(()=>commit('PRELOADING', false))
     },
+
+    pagMensalidade({commit}, params){
+        commit('PRELOADING', true)
+        return estudantePagamento.pagMensalidade(params)
+                             .finally(()=>commit('PRELOADING', false))
+    },
 }
 
 export default actions

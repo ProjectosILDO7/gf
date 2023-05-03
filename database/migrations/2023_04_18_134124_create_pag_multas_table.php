@@ -19,8 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('estudante_id');
             $table->string('valor_multa');
             $table->string('data_pagamento');
-            $table->string('hora');
-
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('estudante_id')->references('id')->on('estudantes')->onDelete('cascade');
         });

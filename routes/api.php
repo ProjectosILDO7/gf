@@ -15,6 +15,8 @@ use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\MultaController;
+use App\Http\Controllers\Pagamentos\mensalidadeController;
+use App\Http\Controllers\Pagamentos\pagamentosController;
 use App\Http\Controllers\ProvaAtrasadaController;
 use App\Http\Controllers\reserva_senha_control;
 use App\Http\Controllers\TCCController;
@@ -157,6 +159,11 @@ Route::get('/apagarEstudante/{id}', [EstudanteController::class, 'destroy'])->mi
 Route::get('/detalhesEstudante/{id}', [EstudanteController::class, 'show'])->middleware('api');
 Route::get('/reserva_senha_aluno', [reserva_senha_control::class, 'show'])->middleware('api');
 Route::get('/getEstudantePagamento/{id}', [EstudanteController::class, 'show'])->middleware('api');
+
+
+//Pagamentos
+Route::post('/pag_mensalidade', [pagamentosController::class, 'mensalidade'])->middleware('api');
+Route::get('/ExportToWordComprovativo/{id}', [mensalidadeController::class, 'exportWord'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

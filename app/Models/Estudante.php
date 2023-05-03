@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pagamentos\pag_mensalidade;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -36,5 +37,9 @@ class Estudante extends Model
 
     public function senhas(){
         return $this->hasOne(reserva_senha_estudante::class, 'estudante_id', 'id');
+    }
+
+    public function mensalidades(){
+        return $this->hasMany(pag_mensalidade::class, 'estudante_id');
     }
 }
