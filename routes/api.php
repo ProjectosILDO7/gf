@@ -4,7 +4,6 @@
 
 use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComparticipacaoController;
 use App\Http\Controllers\ConfirmacaoController;

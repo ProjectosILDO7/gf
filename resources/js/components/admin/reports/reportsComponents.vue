@@ -1,32 +1,30 @@
 <template>
-    <div class="row mt-4">
-        <h4 class="text-secondary">Relatório</h4>
-        <div class="form-group col-12">
-            <line-chart/>
+    <div class="row">
+        <div class="form-group col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <line-chart-vue/>
+            <p><bar-chart/></p>
         </div>
-<p/>
-        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <polar-chart/>
-        </div>
-        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <doughnut-chart-vue/>
             <pie-chart/>
         </div>
-
     </div>
 </template>
 
 <script>
-import PolarChart from './charts/PolarChart.vue'
-import LineChart from './charts/LineChart.vue'
-import PieChart from './charts/PieChart.vue'
+import doughnutChartVue from './charts/doughnutChart.vue';
+import LineChartVue from './charts/lineChart.vue';
+import pieChart from './charts/pieChart.vue';
+import barChart from './charts/barChart.vue';
 
-export default{
-    name:"Charts",
-    components:{
-        PolarChart,
-        LineChart,
-        PieChart
-    }
-
+export default {
+  name: 'ChartsComponent',
+  components: {
+    doughnutChartVue,
+    LineChartVue,
+    pieChart,
+    barChart
+  },
+  
 }
 </script>

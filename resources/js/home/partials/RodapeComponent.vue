@@ -5,7 +5,7 @@
             <footer class="footer border-top mt-4">
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 mr-auto text-align-sm-logo">
-                        {{ hoje }}-<b>Propy-X</b>, Inc  
+                        {{ hoje }}-<b>Gestão de funcionários</b>, Inc  
                     </div>
                     <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 text-align-sm text-md-end">
                         <ul>

@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Propy-x</title>
+    <title>Gest. Funcionários</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link type="fivicon" rel="icon" href="{{ asset('image/bolsa-de-dinheiro.png') }}">
+    <link type="fivicon" rel="icon" href="{{ asset('image/icon-pessoal.png') }}">
     <!-- Styles -->
     <style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -19,7 +19,9 @@
         }
 
         body {
-            margin: 0
+            margin: 0,
+            background-color: blue !important
+          
         }
 
         a {
@@ -393,16 +395,21 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('js/bootstrap.bundle.min.js') }}"> --}}
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script> --}}
     @vite('resources/css/app.css')
 </head>
 
-<body class="antialiased">
+<body class="antialiased" style="background-image: url('/image/background2-white.jpg'); background-size: cover;">
     <div id="app"></div>
     @vite('resources/js/app.js')
     {{-- <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script> --}}
     <script src="{{ asset('js/Jquery-3.6.3.slim.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+    
     {{-- <script type="text/javascript" src="{{ asset('js/SelectItemSidebar.js') }}"></script> --}}
+    
 </body>
 
 </html>

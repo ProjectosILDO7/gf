@@ -71,7 +71,7 @@
 
         <div class="content">
             <navbar-component />
-            <rodape-component />
+            <dashboard-component-vue v-show="rota"/>
         </div>
     </div>
 </template>
@@ -80,6 +80,8 @@
 import { ref } from 'vue'
 import NavbarComponent from './navBarComponent.vue'
 import RodapeComponent from '@/home/partials/RodapeComponent.vue'
+import dashboardComponentVue from './dashboardComponent.vue'
+//import DashboardComponent from './dashboardComponent.vue'
 
 export default {
     props: {
@@ -128,7 +130,7 @@ export default {
   // Make sidebar relative to the parent (by default the sidebar is relative to the viewport)
   relative: {
     type: Boolean,
-    default: true
+    default: false
   },
 
   // Hide toggle collapse btn
@@ -140,7 +142,7 @@ export default {
   // Sidebar theme (available themes: 'white-theme')
   theme: {
     type: String,
-    default: ''
+    default: 'white'
   },
 
   // Disable hover on collapse mode
@@ -180,14 +182,9 @@ export default {
                         },
                         {
                             href: {name:'admin.notify'},
-                            title: 'Notificação',
-                            icon:'fa-regular fa-bell'
+                            title: 'Gestão de Usuário',
+                            icon:'fa-solid fa-users-gear'
                         },
-                        {
-                            href: {name:'admin.message'},
-                            title: 'Mensagem',
-                            icon:'fa-solid fa-envelope-open-text'
-                        }
                     ]
                 },
                 {
@@ -197,64 +194,30 @@ export default {
                     child:[
                         {
                             href: {name:'admin.curso'},
+                            title: 'Departamentos',
+                            icon:'fa-solid fa-address-book' 
+                        },
+                        {
+                            href:{name:'admin.disciplinas'},
+                            title:'Funcionários',//<i class="fa-solid fa-user-tie"></i>
+                            icon:'fa-solid fa-user-tie'
+                        },
+                        {
+                            href: {name:'admin.curso'},
                             title: 'Cursos',
                             icon:'fa fa-graduation-cap' 
                         },
                         {
                             href:{name:'admin.disciplinas'},
-                            title:'Disciplinas',
+                            title:'Cadeiras',//<i class="fa-solid fa-address-book"></i>
                             icon:'fa-solid fa-book-open-reader'
-                        },
-                        {
-                            href:{name:'admin.graduacao'},
-                            title:'Graduação',
-                            icon:'fa-solid fa-user-graduate'
                         },
                         {
                             href:{name:'admin.estudantes'},
                             title:'Estudantes',
                             icon:'fa-solid fa-users-line'
                         },
-                        {
-                            href:{name:'admin.emolumentos'},
-                            title:'Emolumento',
-                            icon:'fa-solid fa-id-card-clip'
-                        },
-                        {
-                            href:{name:'admin.compart'},
-                            title:'Comparticipação',
-                            icon:'fa-solid fa-circle-dollar-to-slot'
-                        },
-                        {
-                            href:{name:'admin.uniformes'},
-                            title:'Uniforme',
-                            icon:'fa-solid fa-user-tie'
-                        },
-                        {
-                            href:{name:'admin.transporte'},
-                            title:'Transporte',
-                            icon:'fa-solid fa-bus'
-                        },
-                        {
-                            href:{name:'admin.multas'},
-                            title:'Multas',
-                            icon:'fa-solid fa-hand-holding-medical'
-                        },
-                        {
-                            href:{name:'admin.confirmacao'},
-                            title:'Confirmação',
-                            icon:'fa-solid fa-clipboard-check'
-                        },
-                        {
-                            href:{name:'admin.provas_atrasadas'},
-                            title:'Provas em atraso',
-                            icon:'fa-solid fa-spell-check'
-                        },
-                        {
-                            href:{name:'admin.tcc'},
-                            title:'T.C.C',
-                            icon:'fa-solid fa-user-graduate'
-                        },
+                        
                     ]
                 },
                 {
@@ -262,15 +225,26 @@ export default {
                     title:'Relatório',
                     icon:'fa fa-chart-line'
                 }
-            ]
+            ],
+
+            rota:true,
         }
     },
 
-
+created(){
+    //admin.dashboard 
+    console.log(this.$router.currentRoute._value.name)
+    if(this.$router.currentRoute._value.name ==='admin.dashboard' || this.$router.currentRoute._value.name==='admin.home'){
+        this.rota=true
+    }else{
+        this.rota=false
+    }
+},
 
     components:{
         NavbarComponent,
-        RodapeComponent
+        RodapeComponent,
+        dashboardComponentVue
     }
 
 

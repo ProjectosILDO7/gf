@@ -1,28 +1,37 @@
 <template>
-    <div class="card">
-        <div class="card-header">
-            Pagamentos por categoria
-        </div>
-        <div class="card-body">
-            <Pie :data="data" :options="options" />
-        </div>
+    <div class="m-auto mt-4" style="height: 300px; width: 400px; display: flex; flex-direction: column">
+      <p class="m-auto">Alunos activos & Inativos</p>
+      <vue3-chart-js v-bind="{ ...pieChart }" />
     </div>
   </template>
   
-  <script lang="ts">
-  import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-  import { Pie } from 'vue-chartjs'
-  import * as chartConfig from './PieChartConfig.js'
-  
-  ChartJS.register(ArcElement, Tooltip, Legend)
+  <script>
+ import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
+ import zoomPlugin from 'chartjs-plugin-zoom'
   
   export default {
-    name: 'App',
+    name: "pieChart",
     components: {
-      Pie
+      Vue3ChartJs,
     },
-    data() {
-      return chartConfig
-    }
-  }
+    setup() {
+      const pieChart = {
+        type: "pie",
+        data: {
+          labels: ["Activos", "Inativos"],
+          datasets: [
+            {
+              backgroundColor: [ "#00D8FF", "#DD1B16"],
+              data: [80, 10],
+            },
+          ],
+        },
+      };
+  
+      return {
+        pieChart,
+      };
+    },
+  };
   </script>
+  

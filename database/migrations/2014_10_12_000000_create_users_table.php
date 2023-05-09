@@ -15,14 +15,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('departamento_id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('admin')->default('admin_autor');
             $table->string('image')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('cascade');
         });
     }
 
@@ -33,6 +35,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::create('users', function(Blueprint $table){
+            $table->dropForeign('departamento_id');
+            $table->dropColumn('departamento_id');
+        });
         Schema::dropIfExists('users');
     }
 };
