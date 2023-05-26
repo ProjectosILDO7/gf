@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import users from "./modules/users";
 import perfil from "./modules/perfil";
 import curso from "./modules/curso"
+import departamento from "./modules/departamento"
 import disciplinas from "./modules/disciplinas"
 import emolumentos from "./modules/emolumento"
 import uniforme from "./modules/uniforme"
@@ -14,6 +15,7 @@ import tcc from "./modules/tcc"
 import estudantePagamento from "./modules/pagamentos"
 import graduacao from "./modules/graduacao"
 import estudantes from "./modules/estudantes"
+import funcionarios from './modules/funcionarios'
 import senha_reserva from "./modules/senha_reserva"
 import carregar from "./modules/preloading/preloading-carregando.js"
 import preloading_simples from "./modules/preloading/preloading-simples.js"
@@ -24,6 +26,8 @@ export default createStore({
         users,
         perfil,
         curso,
+        departamento,
+        funcionarios,
         disciplinas,
         emolumentos,
         comparticipacao,

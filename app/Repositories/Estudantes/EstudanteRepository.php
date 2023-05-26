@@ -48,25 +48,26 @@ class EstudanteRepository
         }else{
             $image=null;
         }
-        $user=User::create([
-            'name'=>$data['nome'],
-            'email'=>$data['email'],
-            'admin'=>'Estudante',
-            'password'=>bcrypt($this->senha)
-        ]);
 
-        $user_id=$user->id;
+        // $user=User::create([
+        //     'name'=>$data['nome'],
+        //     'email'=>$data['email'],
+        //     'admin'=>'Estudante',
+        //     'password'=>bcrypt($this->senha)
+        // ]);
+
+        //$user_id=$user->id;
 
         $organization_id=Auth()->user()->id;
         
         $saveEstudante = $this->ententy::create([
-            'user_id'=>$user_id,
+            'user_id'=>$this->userID,
             'curso_id'=>$data['curso_id'],
-            'grade_id'=>$data['grade_id'],
+            //'grade_id'=>$data['grade_id'],
             'image'=>$image,
             'nome'=>$data['nome'],
             'numBI'=>$data['numBI'],
-            'organization_id'=>$organization_id
+            //'organization_id'=>$organization_id
         ]);
 
         reserva_senha_estudante::create([

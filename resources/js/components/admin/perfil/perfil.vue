@@ -160,7 +160,7 @@ export default {
             imageChange: true,
             editImage: true,
             btnSaveVariavel: false,
-            url: window.url + "storage/image/users/",
+            url: window.url + "storage/image/funcionarios/",
             url_no_image: window.url + "image/no-Image.jpg",
 
             user: {

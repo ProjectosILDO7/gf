@@ -56,22 +56,12 @@
                 </li>
             </ul>
         </div> -->
-        <sidebar-menu 
-            :menu="menu" 
-            :theme="theme"
-            :width="width"
-            :widthCollapsed="widthCollapsed"
-            :collapsed="collapsed"
-            :rtl="rtl"
-            :relative="relative"
-            :hideToggle="hideToggle"
-            :showOneChild="showOneChild"
-            :showChild="showChild"
-        />
+        <sidebar-menu :menu="menu" :theme="theme" :width="width" :widthCollapsed="widthCollapsed" :collapsed="collapsed"
+            :rtl="rtl" :relative="relative" :hideToggle="hideToggle" :showOneChild="showOneChild" :showChild="showChild" />
 
         <div class="content">
-            <navbar-component />
-            <dashboard-component-vue v-show="rota"/>
+            <navbar-component />         
+            <dashboard-component-vuem v-if="rota" />
         </div>
     </div>
 </template>
@@ -85,78 +75,77 @@ import dashboardComponentVue from './dashboardComponent.vue'
 
 export default {
     props: {
-  // Sidebar menu (required)
-//   menu: {
-//     type: Array,
-//     required: true
-//   },
+        // Sidebar menu (required)
+        //   menu: {
+        //     type: Array,
+        //     required: true
+        //   },
 
-  // Sidebar Collapse state (v-model:collapsed to enable two-way data binding)
-  collapsed: {
-    type: Boolean,
-    default: true
-  },
+        // Sidebar Collapse state (v-model:collapsed to enable two-way data binding)
+        collapsed: {
+            type: Boolean,
+            default: true
+        },
+        // Sidebar width (expanded)
+        width: {
+            type: String,
+            default: '290px'
+        },
 
-  // Sidebar width (expanded)
-  width: {
-    type: String,
-    default: '290px'
-  },
+        // Sidebar width (collapsed)
+        widthCollapsed: {
+            type: String,
+            default: '65px'
+        },
 
-  // Sidebar width (collapsed)
-  widthCollapsed: {
-    type: String,
-    default: '65px'
-  },
+        // Keep only one child opened at a time (first level only)
+        showOneChild: {
+            type: Boolean,
+            default: true
+        },
 
-  // Keep only one child opened at a time (first level only)
-  showOneChild: {
-    type: Boolean,
-    default: true
-  },
+        // Keep all child open
+        showChild: {
+            type: Boolean,
+            default: false
+        },
 
-  // Keep all child open
-  showChild: {
-    type: Boolean,
-    default: false
-  },
+        // Sidebar right to left
+        rtl: {
+            type: Boolean,
+            default: false
+        },
 
-  // Sidebar right to left
-  rtl: {
-    type: Boolean,
-    default: false
-  },
+        // Make sidebar relative to the parent (by default the sidebar is relative to the viewport)
+        relative: {
+            type: Boolean,
+            default: false
+        },
 
-  // Make sidebar relative to the parent (by default the sidebar is relative to the viewport)
-  relative: {
-    type: Boolean,
-    default: false
-  },
+        // Hide toggle collapse btn
+        hideToggle: {
+            type: Boolean,
+            default: false
+        },
 
-  // Hide toggle collapse btn
-  hideToggle: {
-    type: Boolean,
-    default: false
-  },
+        // Sidebar theme (available themes: 'white-theme')
+        theme: {
+            type: String,
+            default: 'white'
+        },
 
-  // Sidebar theme (available themes: 'white-theme')
-  theme: {
-    type: String,
-    default: 'white'
-  },
+        // Disable hover on collapse mode
+        disableHover: {
+            type: Boolean,
+            default: false
+        },
 
-  // Disable hover on collapse mode
-  disableHover: {
-    type: Boolean,
-    default: false
-  },
-
-  // The name of the custom link component (must be registered globally and define item as a prop)
-  linkComponentName: {
-    type: String,
-    default: undefined
-  }
-},
+        // The name of the custom link component (must be registered globally and define item as a prop)
+        linkComponentName: {
+            type: String,
+            default: undefined
+        }
+    },
 
     data() {
         return {
@@ -166,9 +155,9 @@ export default {
                     hiddenOnCollapse: true
                 },
                 {
-                    href: {path:'/admin'},
-                    title: 'Propy-X',
-                    icon: 'fa-solid fa-circle-dollar-to-slot'
+                    href: { path: '/admin' },
+                    title: 'GF',
+                    icon: 'fa-solid fa-users-gear'
                 },
                 {
                     href: '#',
@@ -176,72 +165,68 @@ export default {
                     icon: 'fa-solid fa-circle-user',
                     child: [
                         {
-                            href: {name:'admin.perfil'},
+                            href: { name: 'admin.perfil' },
                             title: 'Perfil',
-                            icon:'fa-regular fa-user'
+                            icon: 'fa-regular fa-user'
                         },
-                        {
-                            href: {name:'admin.notify'},
-                            title: 'Gestão de Usuário',
-                            icon:'fa-solid fa-users-gear'
-                        },
+                        // {
+                        //     href: { name: 'admin.notify' },
+                        //     title: 'Gestão de Usuário',
+                        //     icon: 'fa-solid fa-users-gear'
+                        // },
                     ]
                 },
                 {
-                    href:'#',
-                    title:'Registo de serviços',
-                    icon:'fa fa-database',
-                    child:[
+                    href: '#',
+                    title: 'Registo de serviços',
+                    icon: 'fa fa-database',
+                    child: [
                         {
-                            href: {name:'admin.curso'},
+                            href: { name: 'admin.departamento' },
                             title: 'Departamentos',
-                            icon:'fa-solid fa-address-book' 
+                            icon: 'fa-solid fa-address-book'
                         },
                         {
-                            href:{name:'admin.disciplinas'},
-                            title:'Funcionários',//<i class="fa-solid fa-user-tie"></i>
-                            icon:'fa-solid fa-user-tie'
-                        },
-                        {
-                            href: {name:'admin.curso'},
+                            href: { name: 'admin.curso' },
                             title: 'Cursos',
-                            icon:'fa fa-graduation-cap' 
+                            icon: 'fa fa-graduation-cap'
                         },
                         {
-                            href:{name:'admin.disciplinas'},
-                            title:'Cadeiras',//<i class="fa-solid fa-address-book"></i>
-                            icon:'fa-solid fa-book-open-reader'
+                            href: { name: 'admin.disciplinas' },
+                            title: 'Cadeira/Disciplinas',//<i class="fa-solid fa-user-tie"></i>
+                            icon: 'fa-solid fa-book-open-reader'
                         },
                         {
-                            href:{name:'admin.estudantes'},
-                            title:'Estudantes',
-                            icon:'fa-solid fa-users-line'
+                            href: { name: 'admin.funcionarios' },
+                            title: 'Funcionários',//<i class="fa-solid fa-address-book"></i>
+                            icon: 'fa-solid fa-user-tie'
                         },
-                        
+                        {
+                            href: { name: 'admin.estudantes' },
+                            title: 'Estudantes',
+                            icon: 'fa-solid fa-users-line'
+                        },
+
                     ]
                 },
                 {
-                    href:'#',
-                    title:'Relatório',
-                    icon:'fa fa-chart-line'
+                    href: '#',
+                    title: 'Relatório',
+                    icon: 'fa fa-chart-line'
                 }
             ],
-
-            rota:true,
         }
     },
 
-created(){
-    //admin.dashboard 
-    console.log(this.$router.currentRoute._value.name)
-    if(this.$router.currentRoute._value.name ==='admin.dashboard' || this.$router.currentRoute._value.name==='admin.home'){
-        this.rota=true
-    }else{
-        this.rota=false
-    }
-},
+    created() {
+        //admin.dashboard 
+    },
 
-    components:{
+    computed: {
+        
+    },
+
+    components: {
         NavbarComponent,
         RodapeComponent,
         dashboardComponentVue

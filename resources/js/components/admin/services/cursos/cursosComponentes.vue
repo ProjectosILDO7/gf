@@ -1,7 +1,8 @@
 <template>
     <div class="container mt-4">
 
-        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon" @buscar-curso-id="cleanForm"/>
+        <topo-page-component :namePage="namePage" :nameButton="nameButto" :pageTopoIcon="pageTopoIcon"
+            @buscar-curso-id="cleanForm" />
 
         <br>
 
@@ -9,7 +10,7 @@
             <span class="text-secondary">Total de cursos:</span> <span class="fw-bold">( {{ totalDeCursos }} )</span>
         </div>
 
-        <form class="d-flex" role="search" v-if="totalDeCursos>=6">
+        <form class="d-flex" role="search" v-if="totalDeCursos >= 6">
             <div class="input-group flex-nowrap">
                 <span class="input-group-text" id="addon-wrapping"><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input class="form-control form-control-sm" v-model="filter" type="search" placeholder="Pesquisar"
@@ -17,10 +18,10 @@
             </div>
         </form>
 
-        <div class="row" v-if="courses==''">
-                <div class="form-group col-12 text-danger text-center fw-bold">
-                    De momento não tens nenhum curso cadastrado...
-                </div>
+        <div class="row" v-if="courses == ''">
+            <div class="form-group col-12 text-danger text-center fw-bold">
+                De momento não tens nenhum curso cadastrado...
+            </div>
         </div>
 
         <div class="card mt-2 shadow" v-for="curso in courses" :key="curso.id">
@@ -174,6 +175,22 @@
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
+                                    <span class="text-danger small col-12" v-if="erros.departamento_id">{{
+                                        erros.departamento_id[0]
+                                    }}</span>
+                                    <label for="" class="text-secodary col-12">Associar a um departamento:</label>
+                                    <select class="form-control form-control-sm fw-bold" v-model="items.departamento_id">
+                                        <option disabled class="selected" value="">
+                                            Selessione um departamento
+                                        </option>
+                                        <option :value="departamento.id" v-for="departamento in getDepartamentoID"
+                                            :key="departamento.id">
+                                            {{ departamento.departamento }}
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-12 mb-2">
                                     <span class="text-danger small col-12" v-if="erros.cobranca">{{ erros.cobranca[0]
                                     }}</span>
                                     <label for="" class="text-secodary col-12">(Opcional) valor da cobrança</label>
@@ -225,6 +242,22 @@
                                     <label for="" class="text-secodary col-12">Nome do curso</label>
                                     <input type="text" class="form-control form-control-sm" placeholder="Informe novo curso"
                                         v-model="items.cursos">
+                                </div>
+
+                                <div class="form-group col-12 mb-2">
+                                    <span class="text-danger small col-12" v-if="erros.departamento_id">{{
+                                        erros.departamento_id[0]
+                                    }}</span>
+                                    <label for="" class="text-secodary col-12">Associar a um departamento:</label>
+                                    <select class="form-control form-control-sm fw-bold" v-model="items.departamento_id">
+                                        <option disabled class="selected" value="">
+                                            Selessione um departamento
+                                        </option>
+                                        <option :value="departamento.id" v-for="departamento in getDepartamentoID"
+                                            :key="departamento.id">
+                                            {{ departamento.departamento }}
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group col-12 mb-2">
@@ -332,8 +365,10 @@
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body">
-                                <h5>Cobrança: <span class="text-secondary text-success">{{ vueNumberFormat(info.cobranca,
-                                    { isInteger: true }) }}</span></h5>
+                                <h6>Departamento a que pertence:</h6>
+                                <span class="text-secondary text-success">
+                                    {{ curosDepartamento }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -341,7 +376,16 @@
                     <div class="form-group col-12 mt-4">
                         <div class="card">
                             <div class="card-body">
-                                <p class="text-success">Data de registo:</p>
+                                <h6>Cobrança: <span class="text-secondary text-success">{{ vueNumberFormat(info.cobranca,
+                                    { isInteger: true }) }}</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 mt-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Data de registo:</h6>
                                 <p class="text-secondary topoMargin"><span> {{ formatoDeData }} </span>
                                 </p>
                             </div>
@@ -366,20 +410,22 @@ export default {
 
     data() {
         return {
-            items: { cursos: '', cobranca: '' },
+            items: { cursos: '', departamento_id: '', cobranca: '' },
             erros: [],
             deleteCourseId: '',
             filter: '',
             info: [],
             fomatoData: '',
-            namePage:'Curso',
-            nameButto:'Novo curso',
-            pageTopoIcon:'fa-solid fa-graduation-cap',
-            loading:false
+            namePage: 'Curso',
+            nameButto: 'Novo curso',
+            pageTopoIcon: 'fa-solid fa-graduation-cap',
+            loading: false,
+            curosDepartamento: '',
         }
     },
     created() {
         this.loadingCourse(1)
+        this.loadingDepartamentos()
     },
 
     computed: {
@@ -390,6 +436,10 @@ export default {
 
         totalDeCursos() {
             return this.$store.getters.todosCursosCount
+        },
+
+        getDepartamentoID() {
+            return this.$store.getters.todosDepartamentos(this.filter);
         },
         params() {
             return {
@@ -412,10 +462,10 @@ export default {
 
         detalhes(id) {
             this.info = []
-            this.$store.dispatch('detalhes', id)
+            this.$store.dispatch('detalhesCursos', id)
                 .then((response) => {
                     this.info = response.data
-                    console.log(this.info)
+                    this.curosDepartamento = response.data.departamento.departamento
                 })
                 .catch((error) => {
                     notify({
@@ -426,9 +476,14 @@ export default {
                 })
         },
 
+        loadingDepartamentos() {
+            //var store = useStore()
+            this.$store.dispatch("loadingDepartamentos");
+        },
+
         cleanForm() {
             this.items = { cursos: '', cobranca: '' },
-            this.erros=[]
+                this.erros = []
         },
 
         loadingCourse() {
@@ -488,7 +543,7 @@ export default {
                         text: 'Não foi possível actualizar este curso',
                         type: 'warn'
                     })
-                    this.erros=error.response.data.errors
+                    this.erros = error.response.data.errors
                 })
         },
 
@@ -523,7 +578,7 @@ export default {
 </script>
 
 <style scoped>
-    .topoMargin{
-        margin-top: -5% !important;
-    }
+.topoMargin {
+    margin-top: -3% !important;
+}
 </style>

@@ -59,8 +59,11 @@ export default class cursosService extends BaseService{
     static async detalhes(params){
         return new Promise((resolve, reject)=>{
             this.request({auth:true})
-                .get(`/detalhes/${params}`)
-                .then((resp)=>resolve(resp))
+                .get(`/detalhesCursos/${params}`)
+                .then((resp)=>{
+                    //console.log(resp.data)
+                    resolve(resp)
+                })
                 .catch((erro)=>reject(erro.response.data.errors))
         })
     }

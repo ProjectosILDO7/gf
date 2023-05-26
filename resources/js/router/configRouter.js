@@ -1,4 +1,5 @@
 import Home from "../home/index.vue"
+import Admin from "../components/admin/home.vue"
 
 const routes = [
     
@@ -6,7 +7,7 @@ const routes = [
     {
         path:'/admin',
         name:'admin.home',
-        component:()=>import('../components/admin/home.vue'),
+        component:Admin,
         meta: { auth: true },
         children:[
             {
@@ -45,6 +46,11 @@ const routes = [
                 component:()=>import('../components/admin/services/cursos/cursosComponentes.vue')
             },
             {
+                path:'departamentos',
+                name:'admin.departamento',
+                component:()=>import('../components/admin/services/departamento/departamentoComponentes.vue')
+            },
+            {
                 path:'disciplinas',
                 name:'admin.disciplinas',
                 component:()=>import('../components/admin/services/disciplinas/disciplinasComponent.vue')
@@ -58,6 +64,11 @@ const routes = [
                 path:'assinatura',
                 name:'admin.assinatura',
                 component:()=>import('../components/admin/services/assinatura/assinaturaComponent.vue')
+            },
+            {
+                path:'funcionarios',
+                name:'admin.funcionarios',
+                component:()=>import('../components/admin/services/funcionarios/funcionariosComponent.vue')
             },
             {
                 path:'estudantes',

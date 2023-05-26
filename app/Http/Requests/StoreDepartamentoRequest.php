@@ -13,7 +13,7 @@ class StoreDepartamentoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,17 @@ class StoreDepartamentoRequest extends FormRequest
      */
     public function rules()
     {
+        $id=$this->id ?? '';
         return [
-            //
+            'departamento'=>"required|string|max:255|unique:departamentos,departamento,{$id},id",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'departamento.required'=>"Informe o departamento que pretendes registar",
+            'departamento.unique'=>"Já existe um departamento registado com este nome...!",
         ];
     }
 }

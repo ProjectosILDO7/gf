@@ -20,9 +20,12 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'numBI',
+        'dataValidadeBI',
         'departamento_id',
         'image',
         'password',
+        'status'
     ];
 
     protected $hidden = [
@@ -49,7 +52,13 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function departamento(){
-        return $this->belongsTo(Departamento::class);
+    public function departamentos()
+    {
+        return $this->belongsTo(Departamento::class, 'departamento_id');
+    }
+
+    public function senha()
+    {
+        return $this->hasOne(reserva_senha_funcionario::class, 'user_id');
     }
 }

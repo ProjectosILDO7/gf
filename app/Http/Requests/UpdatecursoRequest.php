@@ -26,6 +26,7 @@ class UpdatecursoRequest extends FormRequest
         $id=$this->id ?? '';
         return [
             'cursos'=>"required|string|max:255|unique:cursos,cursos,{$id},id",
+            'departamento_id'=>'required',
             'cobranca'=>'nullable|numeric',
         ];
     }
@@ -34,6 +35,7 @@ class UpdatecursoRequest extends FormRequest
     {
         return [
             'cursos.required' => 'O campo nome do curso precisa ser preenchido.',
+            'departamento_id.required' => 'Precisas associar este curso a um departamento.',
             'cursos.unique' => 'O curso que pretendes alterar, já existe...!',
             'cursos.string' => 'O campo nome do curso precisa ser do tipo texto.',
             'cobranca.numeric' => 'O campo nome da cobrança precisa ser do tipo numérico.',

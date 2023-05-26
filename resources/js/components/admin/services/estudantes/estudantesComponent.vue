@@ -308,7 +308,7 @@
                   </select>
                 </div>
 
-                <div class="form-group col-12 mb-2">
+                <!-- <div class="form-group col-12 mb-2">
                   <span class="text-danger small col-12" v-if="erros.curso_id">{{ erros.curso_id[0] }}</span>
                   <label for="" class="text-secodary col-12">Inscrever na graduação do(a):</label>
                   <select class="form-control form-control-sm fw-bold" v-model="items.grade_id">
@@ -319,7 +319,7 @@
                       {{ grade.grade }}
                     </option>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="form-group col-12 mb-2" v-if="btnSaveVariavel">
                   <span class="text-danger small col-12" v-if="erros.email">{{

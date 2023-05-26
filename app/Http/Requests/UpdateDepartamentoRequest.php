@@ -13,18 +13,20 @@ class UpdateDepartamentoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'departamento'=>"required|string|max:255",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'departamento.required'=>"Informe o departamento que pretendes registar",
         ];
     }
 }

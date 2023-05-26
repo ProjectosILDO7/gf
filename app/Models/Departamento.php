@@ -13,8 +13,4 @@ class Departamento extends Model
         'departamento'
     ];
 
-
-    public function users(){
-        return $this->hasMany(User::class);
-    }
 }

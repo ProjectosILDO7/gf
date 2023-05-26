@@ -8,16 +8,19 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComparticipacaoController;
 use App\Http\Controllers\ConfirmacaoController;
 use App\Http\Controllers\CursoController;
+use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\EmolumentoController;
 use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
+use App\Http\Controllers\funcionarioController;
 use App\Http\Controllers\GraduacaoController;
 use App\Http\Controllers\MultaController;
 use App\Http\Controllers\Pagamentos\mensalidadeController;
 use App\Http\Controllers\Pagamentos\pagamentosController;
 use App\Http\Controllers\ProvaAtrasadaController;
 use App\Http\Controllers\reserva_senha_control;
+use App\Http\Controllers\serachFuncionariosPresenca;
 use App\Http\Controllers\TCCController;
 use App\Http\Controllers\TransporteController;
 use App\Http\Controllers\UniformeController;
@@ -34,6 +37,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+//routas free
+Route::post('/searchFuncionario/{search}', [serachFuncionariosPresenca::class, 'pesquisar']);
+Route::post('/assinatura/{id}', [serachFuncionariosPresenca::class, 'assinatura']);
+//fim de routas free
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -57,7 +67,15 @@ Route::post('/registerCurso', [CursoController::class, 'store'])->middleware('ap
 Route::get('/getCourse/{id}', [CursoController::class, 'edit'])->middleware('api');
 Route::put('/updateCurso/{id}', [CursoController::class, 'update'])->middleware('api');
 Route::get('/apagarCurso/{id}', [CursoController::class, 'destroy'])->middleware('api');
-Route::get('/detalhes/{id}', [CursoController::class, 'show'])->middleware('api');
+Route::get('/detalhesCursos/{id}', [CursoController::class, 'show'])->middleware('api');
+
+Route::get('/departamentos', [DepartamentoController::class, 'index'])->middleware('api');
+Route::post('/filter', [DepartamentoController::class, 'filter'])->middleware('api');
+Route::post('/registerDepartamento', [DepartamentoController::class, 'store'])->middleware('api');
+Route::get('/getDepartamento/{id}', [DepartamentoController::class, 'edit'])->middleware('api');
+Route::put('/updateDepartamento/{id}', [DepartamentoController::class, 'update'])->middleware('api');
+Route::get('/apagarDepartamento/{id}', [DepartamentoController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesDepartamento/{id}', [DepartamentoController::class, 'show'])->middleware('api');
 
 Route::get('/disciplinas', [DisciplinaController::class, 'index'])->middleware('api');
 Route::post('/filter', [DisciplinaController::class, 'filter'])->middleware('api');
@@ -158,6 +176,18 @@ Route::get('/apagarEstudante/{id}', [EstudanteController::class, 'destroy'])->mi
 Route::get('/detalhesEstudante/{id}', [EstudanteController::class, 'show'])->middleware('api');
 Route::get('/reserva_senha_aluno', [reserva_senha_control::class, 'show'])->middleware('api');
 Route::get('/getEstudantePagamento/{id}', [EstudanteController::class, 'show'])->middleware('api');
+
+Route::get('/funcionarios', [funcionarioController::class, 'index'])->middleware('api');
+Route::post('/filter', [funcionarioController::class, 'filter'])->middleware('api');
+Route::post('/registerFuncionario', [funcionarioController::class, 'store'])->middleware('api');
+Route::get('/getFuncionario/{id}', [funcionarioController::class, 'edit'])->middleware('api');
+Route::put('/updateFuncionario/{id}', [funcionarioController::class, 'update'])->middleware('api');
+Route::get('/apagarFuncionario/{id}', [funcionarioController::class, 'destroy'])->middleware('api');
+Route::put('/inativar/{id}', [funcionarioController::class, 'inativar'])->middleware('api');
+Route::put('/activo/{id}', [funcionarioController::class, 'activo'])->middleware('api');
+Route::get('/detalhesFuncionario/{id}', [funcionarioController::class, 'show'])->middleware('api');
+Route::get('/reserva_senha_funcionario', [reserva_senha_control::class, 'show'])->middleware('api');
+Route::get('/getFuncionarioPagamento/{id}', [funcionarioController::class, 'show'])->middleware('api');
 
 
 //Pagamentos

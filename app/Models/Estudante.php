@@ -12,7 +12,7 @@ class Estudante extends Model
     protected $fillable=[
         'user_id',
         'curso_id',
-        'grade_id',
+        //'grade_id',
         'image',
         'nome',
         'numBI',

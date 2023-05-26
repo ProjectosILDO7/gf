@@ -32,7 +32,7 @@ const actions = {
                              .finally(()=>commit('PRELOADING', false))
     },
 
-    detalhes({commit}, params){
+    detalhesCursos({commit}, params){
         commit('PRELOADING', true)
         return coursesService.detalhes(params)
                              .finally(()=>commit('PRELOADING', false))

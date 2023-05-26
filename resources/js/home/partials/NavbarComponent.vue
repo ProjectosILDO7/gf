@@ -8,10 +8,10 @@
                 <button class="navbar-toggler btn-sm" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="navbar-toggler-icon text-light"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             
                             <router-link class="nav-link active text-light" aria-current="page" :to="{name:'home.service'}">
@@ -25,7 +25,7 @@
                             <router-link class="nav-link text-light" :to="{name:'home.sobre'}">
                                 <i class="fa-solid fa-circle-info"></i> Sobre</router-link>
                         </li>
-                    </ul> -->
+                    </ul>
 
                     <ul class="navbar-nav text-end mb-2 mb-lg-0">
                         <!-- <li class="nav-item">

@@ -39,6 +39,7 @@ class CursosRepository
 
         $saveCurso = $this->ententy::create([
             'cursos' => $data['cursos'],
+            'departamento_id' => $data['departamento_id'],
             'cobranca' => $data['cobranca'],
             'user_id' => $this->userID
         ]);
@@ -76,6 +77,7 @@ class CursosRepository
         $updateCourse = $this->ententy::find($id);
         
         $updateCourse->cursos = $data['cursos'];
+        $updateCourse->departamento_id = $data['departamento_id'];
         $updateCourse->cobranca = $data['cobranca'];
         $updateCourse->save();
 
@@ -99,7 +101,7 @@ class CursosRepository
     }
 
     public function detalhes($id){
-        $detalhes = $this->ententy::find($id);
+        $detalhes = $this->ententy::with('departamento')->find($id);
         if(asset($detalhes)){
             return response()->json($detalhes);
         }else{

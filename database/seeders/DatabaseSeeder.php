@@ -32,9 +32,12 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Ildo Cuema',
             'email' => 'ildocuema@gmail.com',
+            'numBI' => '000583073HA039',
+            'dataValidadeBI' => '03-09-2023',
             'departamento_id' => $dep_id->id,
             'email_verified_at' => now(),
             'password' => bcrypt('password_ildo7Cuema'),
+            'status' => '1',
             'remember_token' => Str::random(1),
         ]);
     }

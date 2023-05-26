@@ -25,6 +25,7 @@ class StorecursoRequest extends FormRequest
     {
         return [
             'cursos'=>'required|string|max:255|unique:cursos',
+            'departamento_id'=>'required',
             'cobranca'=>'nullable|numeric',
         ];
     }
@@ -33,6 +34,7 @@ class StorecursoRequest extends FormRequest
     {
         return [
             'cursos.required' => 'O campo nome do curso precisa ser preenchido.',
+            'departamento_id.required' => 'Precisas associar este curso a um departamento.',
             'cursos.string' => 'O campo nome do curso precisa ser do tipo texto.',
             'cursos.unique' => 'Este curso já está registado no sistema.',
             'cobranca.numeric' => 'O campo nome da cobrança precisa ser do tipo numérico.',

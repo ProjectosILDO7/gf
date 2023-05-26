@@ -6,15 +6,15 @@
                 <button class="navbar-toggler btn-sm" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-bars text-light"></i>
                 </button>
                 <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <router-link class="nav-link active text-white" aria-current="page"
                                 :to="{ name: 'admin.dashboard' }">
-                                <i class="fa-solid fa-house"></i>
-                                Home
+                                <i class="fa-solid fa-gauge-high"></i>
+                                Controle
                             </router-link>
                         </li>
 
@@ -56,10 +56,10 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><router-link class="dropdown-item" :to="{ name: 'admin.perfil' }"><i
                                             class="fa-solid fa-user"></i> Perfil</router-link></li>
-                                <li><router-link class="dropdown-item" :to="{ name: 'admin.users' }"><i
-                                            class="fa-solid fa-users-gear"></i> Usuários</router-link></li>
-                                <li><router-link class="dropdown-item" to="#"><i class="fa-solid fa-bag-shopping"></i> Minha
-                                        assinatura</router-link></li>
+                                <!-- <li><router-link class="dropdown-item" :to="{ name: 'admin.users' }"><i
+                                            class="fa-solid fa-users-gear"></i> Usuários</router-link></li> -->
+                                <!-- <li><router-link class="dropdown-item" to="#"><i class="fa-solid fa-bag-shopping"></i> Minha
+                                        assinatura</router-link></li> -->
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -99,7 +99,7 @@ export default {
     setup() {
         const loading = ref(false)
         const store = useStore()
-        const url = window.url + "storage/image/users/"
+        const url = window.url + "storage/image/funcionarios/"
         const url_no_image = window.url + "image/no-Image.jpg"
 
         const logout = () => {
