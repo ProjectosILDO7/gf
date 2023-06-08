@@ -5,6 +5,7 @@
 use App\Http\Controllers\Api\Auth\RegisterControllerUser;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComparticipacaoController;
 use App\Http\Controllers\ConfirmacaoController;
 use App\Http\Controllers\CursoController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\EstudanteController;
 use App\Http\Controllers\ExportExcelController;
 use App\Http\Controllers\funcionarioController;
 use App\Http\Controllers\GraduacaoController;
+use App\Http\Controllers\graficosController;
 use App\Http\Controllers\MultaController;
 use App\Http\Controllers\Pagamentos\mensalidadeController;
 use App\Http\Controllers\Pagamentos\pagamentosController;
@@ -41,6 +43,7 @@ use Illuminate\Support\Facades\Route;
 //routas free
 Route::post('/searchFuncionario/{search}', [serachFuncionariosPresenca::class, 'pesquisar']);
 Route::post('/assinatura/{id}', [serachFuncionariosPresenca::class, 'assinatura']);
+
 //fim de routas free
 
 
@@ -68,6 +71,14 @@ Route::get('/getCourse/{id}', [CursoController::class, 'edit'])->middleware('api
 Route::put('/updateCurso/{id}', [CursoController::class, 'update'])->middleware('api');
 Route::get('/apagarCurso/{id}', [CursoController::class, 'destroy'])->middleware('api');
 Route::get('/detalhesCursos/{id}', [CursoController::class, 'show'])->middleware('api');
+
+Route::get('/categorias', [CategoriaController::class, 'index'])->middleware('api');
+Route::post('/filter', [CategoriaController::class, 'filter'])->middleware('api');
+Route::post('/registerCategoria', [CategoriaController::class, 'store'])->middleware('api');
+Route::get('/getCategoria/{id}', [CategoriaController::class, 'edit'])->middleware('api');
+Route::put('/updateCategoria/{id}', [CategoriaController::class, 'update'])->middleware('api');
+Route::get('/apagarCategoria/{id}', [CategoriaController::class, 'destroy'])->middleware('api');
+Route::get('/detalhesCategoria/{id}', [CategoriaController::class, 'show'])->middleware('api');
 
 Route::get('/departamentos', [DepartamentoController::class, 'index'])->middleware('api');
 Route::post('/filter', [DepartamentoController::class, 'filter'])->middleware('api');
@@ -188,11 +199,14 @@ Route::put('/activo/{id}', [funcionarioController::class, 'activo'])->middleware
 Route::get('/detalhesFuncionario/{id}', [funcionarioController::class, 'show'])->middleware('api');
 Route::get('/reserva_senha_funcionario', [reserva_senha_control::class, 'show'])->middleware('api');
 Route::get('/getFuncionarioPagamento/{id}', [funcionarioController::class, 'show'])->middleware('api');
+Route::get('/ExportToExcelListaPagamento/{user}', [ExportExcelController::class, 'exportListaPagamento'])->middleware('api');
 
 
 //Pagamentos
 Route::post('/pag_mensalidade', [pagamentosController::class, 'mensalidade'])->middleware('api');
 Route::get('/ExportToWordComprovativo/{id}', [mensalidadeController::class, 'exportWord'])->middleware('api');
+
+Route::get('/getGraficoBarra', [graficosController::class, 'graficoDeBarra'])->middleware('api');
 
 Route::middleware('api')->get('/user', function (Request $request) {
     return $request->user();

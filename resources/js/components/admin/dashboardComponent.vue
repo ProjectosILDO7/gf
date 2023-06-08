@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group col-4 m-auto text-secondary">
                                 <span class="fw-bold h6">
-                                    17.0000
+                                    {{ todosFuncionariosCount }}
                                 </span>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="form-group col-4 m-auto text-secondary">
                                 <span class="fw-bold h6">
-                                    17.0000
+                                    {{ totalDeDepartamento }}
                                 </span>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                             </div>
                             <div class="form-group col-4 m-auto text-secondary">
                                 <span class="fw-bold h6">
-                                    17.0000
+                                    {{ todosAlunosCount }}
                                 </span>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group col-4 m-auto text-secondary">
                                 <span class="fw-bold h6">
-                                    17.0000
+                                    {{ totalDeCursos }}
                                 </span>
                             </div>
                         </div>
@@ -99,7 +99,10 @@
             </div>
 
             <!-- Charts (Gráficos) -->
-            <graficos />
+            <div class="form-group col-12">
+                <graficos />
+            </div>
+            
 
         </div>
 
@@ -109,6 +112,52 @@
 <script>
 import Graficos from './reports/reportsComponents.vue'
 export default {
+    data() {
+        return {
+
+        }
+    },
+
+    created() {
+        this.loadingFuncionarios();
+        this.loadingDepartamentos();
+        this.loadingEstudantes();
+        this.loadingCourse(1);
+    },
+    computed: {
+        totalDeCursos() {
+            return this.$store.getters.todosCursosCount
+        },
+        todosAlunosCount() {
+            return this.$store.getters.todosAlunosCount;
+        },
+        todosFuncionariosCount() {
+            return this.$store.getters.todosFuncionariosCount;
+        },
+
+        totalDeDepartamento() {
+            return this.$store.getters.todosDepartamentoCount
+        },
+    },
+
+    methods: {
+        loadingCourse() {
+            //var store = useStore()
+            this.$store.dispatch('loadingCourse')
+        },
+        loadingEstudantes() {
+            //var store = useStore()
+            this.$store.dispatch("loadingEstudantes");
+        },
+        loadingDepartamentos() {
+            //var store = useStore()
+            this.$store.dispatch('loadingDepartamentos')
+        },
+        loadingFuncionarios() {
+            //var store = useStore()
+            this.$store.dispatch("loadingFuncionarios");
+        },
+    },
     components: {
         Graficos
     }

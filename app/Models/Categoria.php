@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assinatura extends Model
+class Categoria extends Model
 {
     use HasFactory;
-    
     protected $fillable=[
         'user_id',
-        'data_assinatura'
+        'categoria',
+        'remoneracao'
     ];
-
-    public function total_Presencas(){
-        return $this->belongsTo(totalPresenca::class, 'assinaturas_id');
-    }
 }

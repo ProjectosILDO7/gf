@@ -1,7 +1,6 @@
 import BaseService from "./base.service"
 import { TOKEN_NAME } from '@/configs'
 export default class AuthService extends BaseService {
-
     static async auth (params) {
         return new Promise((resolve, reject) => {
             this.request()
@@ -10,7 +9,13 @@ export default class AuthService extends BaseService {
                     localStorage.setItem(TOKEN_NAME, response.data.token)
                     resolve(response)
                 })
-                .catch(error => reject(error.response.data.error))
+                .catch(error =>{ 
+                    if(error.response.status!=429){
+                        reject(error.response.data.error)
+                    }else{
+                        reject(error.response.data.message+', try again later')
+                    }
+                })
         })
     }
 
@@ -18,7 +23,7 @@ export default class AuthService extends BaseService {
         const token = await localStorage.getItem(TOKEN_NAME)
 
         if (!token) {
-            return Promise.reject('Token Not Found')
+            return Promise.reject('Token não encontrado')
         }
 
         return new Promise((resolve, reject) => {

@@ -7,9 +7,8 @@ export default class Http {
         const token = localStorage.getItem(TOKEN_NAME)
 
         const headers = status.auth ? {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         } : {}
-
         this.instance = axios.create({
             baseURL: URL_API,
             headers: headers

@@ -26,6 +26,7 @@ export default {
            commit('PRELOADING', true)
            return AuthService.getMe()
                 .then((user) => commit("SET_USER", user))
+                .catch((erro)=>console.log(erro))
                 .finally(()=>commit('PRELOADING', false))
         },
 

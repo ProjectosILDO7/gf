@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('departamento_id');
+            $table->unsignedBigInteger('categoria_id');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('image')->nullable();
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('departamento_id')->references('id')->on('departamentos')->onDelete('cascade');
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
         });
     }
 
@@ -39,8 +41,10 @@ return new class extends Migration
     public function down()
     {
         Schema::create('users', function(Blueprint $table){
-            $table->dropForeign('departamento_id');
+            $table->dropForeign('users_departamento_id_foreign');
+            $table->dropForeign('users_categoria_id_foreign');
             $table->dropColumn('departamento_id');
+            $table->dropColumn('categoria_id');
         });
         Schema::dropIfExists('users');
     }

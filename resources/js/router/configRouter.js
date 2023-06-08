@@ -46,6 +46,11 @@ const routes = [
                 component:()=>import('../components/admin/services/cursos/cursosComponentes.vue')
             },
             {
+                path:'categoria',
+                name:'admin.categoria',
+                component:()=>import('../components/admin/services/categoria/categoriaComponentes.vue')
+            },
+            {
                 path:'departamentos',
                 name:'admin.departamento',
                 component:()=>import('../components/admin/services/departamento/departamentoComponentes.vue')

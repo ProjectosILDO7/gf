@@ -14,9 +14,9 @@
           <i class="fa-solid fa-file-excel"></i> Exportar Excel
         </download-excel>
 
-        <a href="#" class="btn btn-sm btn-primary ml-2">
+        <a class="btn btn-sm btn-primary ml-2" :href="`${urlExport}${meID}`">
           <i class="fa-solid fa-bag-shopping text-warning"></i>
-          Ver Pagamentos
+          Folha de pagamento
         </a>
 
         <!-- Exportar no plugin xlsx -->
@@ -345,6 +345,20 @@
                   </select>
                 </div>
 
+                <div class="form-group col-12 mb-2">
+                  <span class="text-danger small col-12" v-if="erros.categoria_id">{{ erros.categoria_id[0]
+                  }}</span>
+                  <label for="" class="text-secodary col-12">Associa-lo(a) a uma categoria:</label>
+                  <select class="form-control form-control-sm fw-bold" v-model="items.categoria_id">
+                    <option disabled class="selected" value="">
+                      Selessione uma categoria
+                    </option>
+                    <option :value="category.id" v-for="category in getCategoriaID" :key="category.id">
+                      {{ category.categoria }}
+                    </option>
+                  </select>
+                </div>
+
                 <div class="form-group col-12 mb-2" v-if="btnSaveVariavel">
                   <span class="text-danger small col-12" v-if="erros.email">{{
                     erros.email[0]
@@ -475,11 +489,21 @@
                 </p>
               </div>
             </div>
+
             <div class="card mt-2">
               <div class="card-body">
-                <p class="text-success">Associado ao departamento de:</p>
+                <p class="text-success">Associado(a) a categoria de:</p>
                 <p class="text-secondary mt-0 fw-bold topoMargin">
-                  {{ departamentoInfo }}
+                  {{ categoriaInfo }}
+                </p>
+              </div>
+            </div>
+
+            <div class="card mt-2">
+              <div class="card-body">
+                <p class="text-success">Remoneração mensal:</p>
+                <p class="text-secondary mt-0 fw-bold topoMargin">
+                  {{ vueNumberFormat(remoneracaoInfo, {isInteger:true, precision:0, suffix:',00'})}}
                 </p>
               </div>
             </div>
@@ -525,20 +549,24 @@ import dateFormat from "@vue-formily/date-format";
 import topoPageComponent from "../partials/topoPageComponent.vue";
 import Datepicker from "vue3-datepicker"
 import { pt, eo, ru } from 'date-fns/locale'
+import { URL_API } from '../../../../configs/index.js'
 
 export default {
   name: "funcionario-component",
   emits: ["cleanForm", "buscaFuncionarioID"],
   data() {
     return {
+      urlExport: URL_API + '/ExportToExcelListaPagamento/',
       url: window.url + "storage/image/funcionarios/",
       url_no_image: window.url + "image/no-Image.jpg",
       editImage: false,
+      meID:'',
       locale: pt,
       btnSaveVariavel: false,
       items: {
         user_id: "",
         departamento_id: "",
+        categoria_id: "",
         numBI: "",
         email: "",
         image: null,
@@ -575,6 +603,8 @@ export default {
       info: [],
 
       departamentoInfo: "",
+      categoriaInfo:"",
+      remoneracaoInfo:"",
       emailInfo: "",
       adminInfo: "",
       senhaReservaInfo: "",
@@ -593,6 +623,8 @@ export default {
     this.loadingFuncionarios();
     this.loadingDepartamentos();
     this.loadinReservasSenhas();
+    this.loadingCategorias();
+    this.me()
   },
 
   computed: {
@@ -607,6 +639,10 @@ export default {
 
     getDepartamentoID() {
       return this.$store.getters.todosDepartamentos(this.filter);
+    },
+
+    getCategoriaID() {
+      return this.$store.getters.todasCategorias(this.filter);
     },
 
     getReservaSenha() {
@@ -633,6 +669,10 @@ export default {
   },
 
   methods: {
+    me(){
+           this.$store.dispatch('getMeSemLoading')
+                                .then((resp)=>this.meID=resp.id)
+        },
 
     exportExcel() {
       import('../../../../plugins/Export2Excel').then(excel => {
@@ -712,6 +752,8 @@ export default {
         .then((response) => {
           this.info = response.data;
           this.departamentoInfo = this.info.departamentos.departamento;
+          this.categoriaInfo = this.info.categorias.categoria;
+          this.remoneracaoInfo = this.info.categorias.remoneracao;
           this.emailInfo = this.info.email;
           this.senhaReservaInfo = this.info.senha.senha_reserva;
         })
@@ -745,6 +787,11 @@ export default {
     loadingDepartamentos() {
       //var store = useStore()
       this.$store.dispatch("loadingDepartamentos");
+    },
+
+    loadingCategorias() {
+      //var store = useStore()
+      this.$store.dispatch("loadingCategorias");
     },
 
     loadinReservasSenhas() {

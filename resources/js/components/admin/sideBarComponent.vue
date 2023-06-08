@@ -197,6 +197,11 @@ export default {
                             icon: 'fa-solid fa-book-open-reader'
                         },
                         {
+                            href: { name: 'admin.categoria' },
+                            title: 'Categorias',
+                            icon: 'fa fa-graduation-cap'
+                        },
+                        {
                             href: { name: 'admin.funcionarios' },
                             title: 'Funcionários',//<i class="fa-solid fa-address-book"></i>
                             icon: 'fa-solid fa-user-tie'

@@ -29,6 +29,7 @@ class StoreFuncionarioRequest extends FormRequest
             'numBI'=>'required|string|min:14|max:14',
             'picked'=>'required|string',
             'departamento_id'=>'required',
+            'categoria_id'=>'required',
         ];
     }
 
@@ -43,6 +44,7 @@ class StoreFuncionarioRequest extends FormRequest
             'numBI.max'=>'O nº do documento tem de ter no máximo 14 caracter',
             'picked.required'=>'Preencha a data de validade do documento',
             'departamento_id.required'=>'Selecione um departamento',
+            'categoria_id.required'=>'Selecione uma categoria',
         ];
     }
 }

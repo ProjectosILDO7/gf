@@ -1,20 +1,22 @@
 <template>
     <div class="container mt-2">
         <div class="card shadow m-auto text-center mb-4">
-            <div class="container py-4"><strong>SERVIÇOS</strong></div>
+            <div class="container py-4"><strong>REGISTO DE PONTO</strong></div>
         </div>
 
         <div class="row">
             <div class="form-group col-12">
                 <form>
-                    <input type="text" class="form-control form-control-sm shadow bg-light" placeholder="Pesquisar por nome"
+                    <input type="text" class="form-control form-control-sm shadow bg-light" placeholder="Pesquisar pelo nome completo"
                         v-model="search">
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-sm btn-primary mt-2 shadow" @click="procurar" v-if="search!=''">
+                        <button type="button" class="btn btn-sm btn-primary mt-2 shadow" @click="procurar"
+                            v-if="search != ''">
                             <span v-if="loading">...</span>
                             <span v-else>Procurar</span>
                         </button>
-                        <button type="button" class="btn btn-sm btn-secondary disabled mt-2 shadow" @click="procurar" v-else>
+                        <button type="button" class="btn btn-sm btn-secondary disabled mt-2 shadow" @click="procurar"
+                            v-else>
                             <span v-if="loading">...</span>
                             <span v-else>Procurar</span>
                         </button>
@@ -48,7 +50,8 @@
                                 <td>
                                     <button class="btn btn-sm btn-primary" v-if="user.status == 'Activo'"
                                         @click="assinar(user.id)">
-                                        <i class="fa fa-edit"></i> Assinar presença
+                                        <span v-if="loadingAssinatura"><i class="fa fa-edit"></i>Assinar ...</span>
+                                        <span v-else><i class="fa fa-edit"></i> Assinar presença</span>
                                     </button>
                                     <button class="btn btn-sm btn-danger disabled" v-else>
                                         <i class="fa fa-edit"></i> Não autorizado
@@ -133,9 +136,24 @@ export default {
         assinar(id) {
             this.loadingAssinatura = true
             axios.post(`${URL_API}/assinatura/${id}`)
-                .then((response) => console.log(response))
-                .catch((erro) => console.log(erro))
-                .finally(() => loadingAssinatura = false)
+                .then((response) => {
+                    console.log(response)
+                    this.$swal.fire({
+                        title: 'Sucesso',
+                        text: response.data.mensagem,
+                        icon: 'success',
+                        timer: 15000
+                    })
+                })
+                .catch((erro) => {
+                    this.$swal.fire({
+                        title: 'Erro',
+                        text: erro.response.data.mensagem,
+                        icon: 'info',
+                        timer: 15000
+                    })
+                })
+                .finally(() => this.loadingAssinatura = false)
         },
     },
 

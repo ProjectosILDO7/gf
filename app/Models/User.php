@@ -23,6 +23,7 @@ class User extends Authenticatable implements JWTSubject
         'numBI',
         'dataValidadeBI',
         'departamento_id',
+        'categoria_id',
         'image',
         'password',
         'status'
@@ -57,8 +58,22 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Departamento::class, 'departamento_id');
     }
 
+    public function categorias()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
+
     public function senha()
     {
         return $this->hasOne(reserva_senha_funcionario::class, 'user_id');
     }
+
+    public function assinaturas(){
+        return $this->hasMany(Assinatura::class, 'user_id');
+    }
+
+    public function totalPresencas(){
+        return $this->hasMany(totalPresenca::class, 'assinatura_id');
+    }
+
 }

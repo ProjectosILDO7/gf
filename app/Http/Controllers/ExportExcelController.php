@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\confirmacaoExport;
 use App\Exports\Disciplinas_cursosExport;
 use App\Exports\emolumentoExport;
+use App\Exports\FuncionarioPagamentoExport;
 use App\Exports\multaExport;
 use App\Exports\Prova_atrasadaExport;
 use App\Exports\TccExport;
@@ -59,6 +60,12 @@ class ExportExcelController extends Controller
     {
         
         return Excel::download(new TccExport($user), 'Lista de valores de Tcc.xlsx');
+    }
+
+    public function exportListaPagamento($user) 
+    {
+        
+        return Excel::download(new FuncionarioPagamentoExport($user), 'Lista de pagamento de Funcionário.xlsx');
     }
 
 }

@@ -24,7 +24,7 @@ class FuncionarioRepository
     public function getFuncionarios()
     {
         
-        $funcionario = $this->ententy::with('departamentos')->where('status', "!=", 1)->orderBy('name', 'asc')->get();
+        $funcionario = $this->ententy::with('departamentos', 'categorias', 'assinaturas')->where('status', "!=", 1)->orderBy('name', 'asc')->get();
             if (asset($funcionario)) {
                 return response()->json($funcionario);
             } else {
@@ -51,6 +51,7 @@ class FuncionarioRepository
             'image'=>$image,
             'dataValidadeBI'=>$data['picked'],
             'departamento_id'=>$data['departamento_id'],
+            'categoria_id'=>$data['categoria_id'],
             'password'=>bcrypt($this->senha),
             'status'=>'Activo'
         ]);
@@ -78,7 +79,7 @@ class FuncionarioRepository
     public function getFuncionario($id)
     {
         //dd($id);
-        $getFuncionario = $this->ententy::with('departamentos')->find($id);
+        $getFuncionario = $this->ententy::with('departamentos', 'categorias')->find($id);
         if (asset($getFuncionario)) {
             return response()->json([
                 'getFuncionario' => $getFuncionario
@@ -136,20 +137,28 @@ class FuncionarioRepository
         if($request->departamento_id){
             $data['departamento_id']=$request->departamento_id;
         }
+
+        if($request->categoria_id){
+            $data['categoria_id']=$request->categoria_id;
+        }
         
         if($request->picked){
             $data['dataValidadeBI']=$request->picked;
         }
+        $tamanhoImagem=strlen($request->image);
 
-        if($request->image){  
-            //Se existir uma imagem na pasta de estudante de referencia entao apaga-se esta e cadastra-se outra
-            if(Storage::exists('/image/funcionarios/'.$updateFuncionario->image)){
-                Storage::delete('/image/funcionarios/'.$updateFuncionario->image);
+        if($tamanhoImagem >20){
+            if($request->image){  
+                //Se existir uma imagem na pasta de estudante de referencia entao apaga-se esta e cadastra-se outra
+                if(Storage::exists('/image/funcionarios/'.$updateFuncionario->image)){
+                    Storage::delete('/image/funcionarios/'.$updateFuncionario->image);
+                }
+                $data['image']=time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
+                Image::make($request->image)->save(public_path('storage/image/funcionarios/'.$data['image']));
+            }else{
+                $data['image']=null;
             }
-            $data['image']=time() . '.' . explode('/', explode(':', substr($request->image, 0, strpos($request->image, ';')))[1])[1];
-            Image::make($request->image)->save(public_path('storage/image/funcionarios/'.$data['image']));
-        }else{
-            $data['image']=null;
+
         }
 
         $updateFuncionario->update($data);
@@ -183,7 +192,7 @@ class FuncionarioRepository
     }
 
     public function detalhes($id){
-        $detalhes = $this->ententy::with('departamentos', 'senha')->find($id);
+        $detalhes = $this->ententy::with('departamentos', 'senha', 'categorias')->find($id);
         if(asset($detalhes)){
             return response()->json($detalhes);
         }else{
