@@ -75,6 +75,11 @@ const routes = [
                 name:'admin.funcionarios',
                 component:()=>import('../components/admin/services/funcionarios/funcionariosComponent.vue')
             },
+            // {
+            //     path:'graficos',
+            //     name:'admin.graficos',
+            //     component:()=>import('../components/admin/services/reports/charts/reportsComponents.vue')
+            // },
             {
                 path:'estudantes',
                 name:'admin.estudantes',

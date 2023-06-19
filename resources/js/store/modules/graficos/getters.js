@@ -1,6 +1,7 @@
 const getters = {
-    presencaMensal(state){
-        return state.items.filter(graf =>graf.user_id)
+    graficoDeBarra(state){
+        console.log(state)
+        return state.items.filter(graf =>graf.mes)
     },
 }
 

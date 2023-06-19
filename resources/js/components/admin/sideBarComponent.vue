@@ -215,7 +215,7 @@ export default {
                     ]
                 },
                 {
-                    href: '#',
+                    href: "#",
                     title: 'Relatório',
                     icon: 'fa fa-chart-line'
                 }

@@ -4,7 +4,6 @@ const getters = {
     },
 
     todosNomesDepartamentos(state){
-        console.log(state)
         return state.items.filter(dep =>dep.departamento)
     },
 

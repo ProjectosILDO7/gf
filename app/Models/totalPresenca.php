@@ -15,5 +15,7 @@ class totalPresenca extends Model
         'total'
     ];
 
-    
+    public function totalPresencas(){
+        return $this->belongsTo(User::class);
+    }
 }

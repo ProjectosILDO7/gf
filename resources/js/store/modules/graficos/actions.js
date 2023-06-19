@@ -5,7 +5,7 @@ const actions = {
     loadingGraficoDeBarra({commit}){
         commit('PRELOADING', true)
         return graficos.getGraficoBarra()
-                        .then(response =>response.data.gBarra/*commit('ADD_ALL_GRAFICOS', response.data.gBarra)*/)
+                        .then(response =>response/*commit('ADD_ALL_GRAFICOS', response.data.gBarra)*/)
                         .catch(error=>console.log(error))
                         .finally(()=>commit('PRELOADING', false))
     },

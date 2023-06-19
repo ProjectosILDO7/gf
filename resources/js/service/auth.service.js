@@ -11,7 +11,12 @@ export default class AuthService extends BaseService {
                 })
                 .catch(error =>{ 
                     if(error.response.status!=429){
-                        reject(error.response.data.error)
+                        if(error.response.status==500){
+                            reject(error.response.status)
+                        }else{
+                            reject(error.response.data.error)
+                        }
+                        
                     }else{
                         reject(error.response.data.message+', try again later')
                     }

@@ -60,7 +60,7 @@
     <div class="box">
 
         <div class="col-12 text-light text-center mt-0 mb-2">
-            <b>Login</b>
+            <b>Conectar-se</b>
         </div>
 
         <form @submit.prevent="auth">
@@ -144,11 +144,20 @@ export default {
                     router.push({ name: 'admin.home' }) 
                 })
                 .catch((erro) => {
-                    notify({
+                    if(erro==500){
+                        notify({
+                        title: 'Erro',
+                        text: 'Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente',
+                        type: 'warn'
+                    })
+                    }else{
+                        notify({
                         title: 'Erro',
                         text: erro,
                         type: 'warn'
                     })
+                    }
+                    
                 })
                 .finally(() => loading.value = false)
 

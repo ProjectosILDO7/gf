@@ -15,6 +15,7 @@ import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import JsonExcel from "vue-json-excel3"
 import {Tabs, Tab} from 'vue3-tabs-component';
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueApexCharts from "vue3-apexcharts";
 import 'sweetalert2/dist/sweetalert2.min.css';
 //import Select2 from "vue3-select2-component"
 
@@ -36,6 +37,7 @@ const app = createApp(App)
       //app.component('Select2', Select2)
       app.use(VueNumberFormat, {prefix:'', isInteger: true})
       app.use(VueSweetalert2)
+      app.use(VueApexCharts);
       app.mount('#app');
       
 
